@@ -1,0 +1,10 @@
+name = "grillz"
+compatibility_date = "2024-01-01"
+
+[env.production]
+# Production deployment will use custom domain
+route = { pattern = "cartfullofx.com", custom_domain = true }
+
+[env.staging]
+# Staging deployment will use pages.dev subdomain
+# This will be available at grillz-staging.pages.dev
