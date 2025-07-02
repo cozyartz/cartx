@@ -1,0 +1,293 @@
+---
+export interface Props {
+  // Basic SEO
+  title: string;
+  description: string;
+  keywords: string;
+  canonical?: string;
+  
+  // Open Graph / Social Media
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogUrl?: string;
+  twitterImage?: string;
+  
+  // Business Information
+  businessName: string;
+  phone: string;
+  email?: string;
+  address: {
+    street?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country?: string;
+  };
+  
+  // Geographic Data
+  geo: {
+    latitude: number;
+    longitude: number;
+  };
+  
+  // Service Areas
+  serviceAreas: string[];
+  citiesServed: string[];
+  
+  // Schema.org Data
+  schema: {
+    businessType?: string;
+    foundingDate?: string;
+    naics?: string;
+    services: Array<{
+      name: string;
+      description: string;
+      price?: string;
+      priceType?: 'fixed' | 'quote' | 'included';
+    }>;
+    awards?: string[];
+    socialMedia?: {
+      facebook?: string;
+      instagram?: string;
+      linkedin?: string;
+      twitter?: string;
+    };
+  };
+  
+  // Additional Options
+  robotsContent?: string;
+  language?: string;
+  region?: string;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  canonical,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  ogUrl,
+  twitterImage,
+  businessName,
+  phone,
+  email,
+  address,
+  geo,
+  serviceAreas,
+  citiesServed,
+  schema,
+  robotsContent = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  language = "en",
+  region = "US"
+} = Astro.props;
+
+// Defaults
+const defaultOgTitle = ogTitle || title;
+const defaultOgDescription = ogDescription || description;
+const defaultOgImage = ogImage || `${ogUrl || canonical}/og-image.jpg`;
+const defaultTwitterImage = twitterImage || `${ogUrl || canonical}/twitter-image.jpg`;
+const currentYear = new Date().getFullYear();
+---
+
+<!-- Basic Meta Tags -->
+<meta charset="UTF-8" />
+<title>{title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content={businessName} />
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content={defaultOgTitle} />
+<meta property="og:description" content={defaultOgDescription} />
+<meta property="og:type" content="website" />
+{ogUrl && <meta property="og:url" content={ogUrl} />}
+<meta property="og:image" content={defaultOgImage} />
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={defaultOgTitle} />
+<meta name="twitter:description" content={defaultOgDescription} />
+<meta name="twitter:image" content={defaultTwitterImage} />
+
+<!-- SEO Meta Tags -->
+<meta name="robots" content={robotsContent} />
+<meta name="googlebot" content="index, follow" />
+<meta name="bingbot" content="index, follow" />
+<meta name="rating" content="General" />
+<meta name="revisit-after" content="1 days" />
+<meta name="distribution" content="global" />
+<meta name="language" content={language.toUpperCase()} />
+<meta name="geo.region" content={`${region}-${address.state}`} />
+<meta name="geo.placename" content={`${address.city}, ${address.state} ${address.zip}`} />
+<meta name="geo.position" content={`${geo.latitude};${geo.longitude}`} />
+<meta name="ICBM" content={`${geo.latitude}, ${geo.longitude}`} />
+
+<!-- Location and Coverage Meta Tags -->
+<meta name="location" content={`${address.state}, United States`} />
+<meta name="coverage" content={address.state} />
+<meta name="target" content="all" />
+<meta name="audience" content="all" />
+<meta name="web_author" content={businessName} />
+<meta name="owner" content={businessName} />
+{canonical && <meta name="url" content={canonical} />}
+{canonical && <meta name="identifier-URL" content={canonical} />}
+<meta name="category" content="business" />
+<meta name="coverage" content="Worldwide" />
+<meta name="distribution" content="Global" />
+<meta name="rating" content="General" />
+<meta name="subject" content="Web Design, Digital Marketing, SEO Services" />
+<meta name="copyright" content={businessName} />
+
+<!-- Canonical URL -->
+{canonical && <link rel="canonical" href={canonical} />}
+
+<!-- Preload Critical Resources -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" as="style" />
+<link rel="dns-prefetch" href="//fonts.googleapis.com" />
+<link rel="dns-prefetch" href="//fonts.gstatic.com" />
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+
+<!-- Organization Schema -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": businessName,
+  "alternateName": [businessName.split(' ')[0], `${businessName.split(' ')[0]} Media`, `${businessName.split(' ')[0]} Web Design`],
+  "description": description,
+  "url": canonical,
+  "telephone": phone,
+  "email": email,
+  "foundingDate": schema.foundingDate || "2023",
+  "logo": `${canonical}/logo.png`,
+  "image": [`${canonical}/hero-image.jpg`, `${canonical}/team-photo.jpg`],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": address.street,
+    "addressLocality": address.city,
+    "addressRegion": address.state,
+    "postalCode": address.zip,
+    "addressCountry": address.country || "United States"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": geo.latitude,
+    "longitude": geo.longitude
+  },
+  "serviceArea": serviceAreas.map(area => ({
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "latitude": geo.latitude,
+      "longitude": geo.longitude
+    },
+    "geoRadius": "160934"
+  })),
+  "areaServed": citiesServed,
+  "slogan": `${address.state}'s Premier Web Design & Digital Marketing Agency`,
+  "knowsAbout": ["Web Design", "Website Development", "SEO", "Search Engine Optimization", "Digital Marketing", "Google Maps Listing", "Local SEO", "Social Media Marketing", "E-commerce", "WordPress", "Responsive Design", "Mobile Optimization", "Conversion Optimization", "Brand Development", "Content Marketing", "Online Advertising", "Google Ads", "Facebook Ads", "Website Maintenance", "Domain Registration", "Web Hosting", "SSL Certificates", "Website Security"],
+  "naics": schema.naics || "541511",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Web Design & Digital Marketing Services", 
+    "itemListElement": schema.services.map(service => ({
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": service.name,
+        "description": service.description,
+        "provider": {
+          "@type": "Organization",
+          "name": businessName
+        }
+      },
+      "price": service.price || "Contact for Quote",
+      "priceCurrency": "USD",
+      "priceValidUntil": `${currentYear + 1}-12-31`,
+      "availability": "https://schema.org/InStock",
+      "businessFunction": "https://schema.org/Sell"
+    }))
+  },
+  "award": schema.awards || [],
+  "founder": {
+    "@type": "Person",
+    "name": "Owner",
+    "jobTitle": "Founder & CEO"
+  },
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": "1-10"
+  },
+  "sameAs": schema.socialMedia ? Object.values(schema.socialMedia).filter(Boolean) : [],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": phone,
+      "contactType": "customer service",
+      "areaServed": address.state,
+      "availableLanguage": "English"
+    },
+    {
+      "@type": "ContactPoint", 
+      "telephone": phone,
+      "contactType": "sales",
+      "areaServed": address.state,
+      "availableLanguage": "English"
+    }
+  ]
+})} />
+
+<!-- Website Schema -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": title,
+  "url": canonical,
+  "description": description,
+  "publisher": {
+    "@type": "Organization",
+    "name": businessName
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": `${canonical}?q={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  },
+  "inLanguage": `${language}-${region}`,
+  "copyrightYear": currentYear.toString(),
+  "copyrightHolder": {
+    "@type": "Organization",
+    "name": businessName
+  }
+})} />
+
+<!-- Local Business Schema -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": schema.businessType || "LocalBusiness",
+  "name": businessName,
+  "description": description,
+  "url": canonical,
+  "telephone": phone,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": address.street,
+    "addressLocality": address.city,
+    "addressRegion": address.state,
+    "postalCode": address.zip,
+    "addressCountry": address.country || "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": geo.latitude,
+    "longitude": geo.longitude
+  },
+  "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00",
+  "priceRange": "$500-$3500",
+  "paymentAccepted": ["Cash", "Credit Card", "Check", "Invoice"],
+  "currenciesAccepted": "USD",
+  "keywords": keywords
+})} />

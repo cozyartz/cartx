@@ -1,10 +1,19 @@
-name = "grillz"
+name = "cartfullofx"
 compatibility_date = "2024-01-01"
+pages_build_output_dir = "dist"
 
 [env.production]
-# Production deployment will use custom domain
-route = { pattern = "cartfullofx.com", custom_domain = true }
+# Production deployment for cartfullofx.com (main Cozyartz site)
+compatibility_date = "2024-01-01"
 
-[env.staging]
+[env.cartx]
+# Cartx demo site for cartx.cartfullofx.com
+compatibility_date = "2024-01-01"
+
+[env.salsas]
+# Salsas demo site for salsas.cartfullofx.com
+compatibility_date = "2024-01-01"
+
+[env.preview]
 # Staging deployment will use pages.dev subdomain
-# This will be available at grillz-staging.pages.dev
+compatibility_date = "2024-01-01"

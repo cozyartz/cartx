@@ -8,8 +8,8 @@
 }
 
 @keyframes neon-pulse {
-  from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4); }
-  to { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6); }
+  from { text-shadow: 0 0 15px rgba(51, 65, 85, 0.8), 0 0 30px rgba(20, 184, 166, 0.6), 0 0 45px rgba(51, 65, 85, 0.4); }
+  to { text-shadow: 0 0 25px rgba(51, 65, 85, 1), 0 0 40px rgba(20, 184, 166, 0.8), 0 0 60px rgba(51, 65, 85, 0.6); }
 }
 
 @keyframes float {
@@ -40,17 +40,30 @@
 
 /* Custom CSS Classes */
 .gradient-bg {
-  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 20%, #FFD23F 40%, #FF8C42 60%, #E63946 80%, #FF6B35 100%);
-  background-size: 600% 600%;
-  animation: gradient-shift 12s ease infinite;
+  background: #0A0A0A;
+  position: relative;
+}
+
+.gradient-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #334155 0%, #14B8A6 25%, #1E293B 50%, #0F766E 75%, #334155 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+  opacity: 0.05;
+  z-index: 0;
 }
 
 .hero-glow {
-  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(51, 65, 85, 0.15) 0%, rgba(20, 184, 166, 0.1) 50%, transparent 70%);
 }
 
 .neon-glow {
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
+  text-shadow: 0 0 15px rgba(51, 65, 85, 0.8), 0 0 30px rgba(20, 184, 166, 0.6), 0 0 45px rgba(51, 65, 85, 0.4);
   animation: neon-pulse 2s ease-in-out infinite alternate;
 }
 
@@ -64,8 +77,9 @@
 
 .glass-effect {
   backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid rgba(51, 65, 85, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .menu-card {
@@ -73,8 +87,9 @@
 }
 
 .menu-card:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(51, 65, 85, 0.2);
+  background: rgba(26, 26, 26, 0.9);
 }
 
 .pulse-button {
@@ -90,7 +105,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
   animation: shine 3s infinite;
 }
 
@@ -103,14 +118,47 @@
 }
 
 .menu-item-hover:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(135deg, rgba(51, 65, 85, 0.15), rgba(20, 184, 166, 0.1));
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(51, 65, 85, 0.3);
+  border-color: rgba(51, 65, 85, 0.3);
 }
 
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Typography Improvements */
+.professional-spacing {
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.professional-text {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.refined-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced Menu Typography */
+.menu-title {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.menu-price {
+  font-weight: 900;
+  font-feature-settings: 'tnum';
+}
+
+.menu-description {
+  line-height: 1.5;
+  font-weight: 400;
 }
 
 /* Font loading optimization */
@@ -122,4 +170,241 @@ html {
 @font-face {
   font-family: 'Inter';
   font-display: swap;
+}
+
+/* Responsive heading adjustments */
+@media (max-width: 480px) {
+  .responsive-heading {
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+    line-height: 1;
+  }
+}
+
+@media (max-width: 320px) {
+  .responsive-heading {
+    font-size: clamp(1.2rem, 7vw, 1.8rem);
+  }
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 768px) {
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-text-center {
+    text-align: center;
+  }
+  
+  .mobile-full-width {
+    width: 100%;
+  }
+  
+  .mobile-larger-touch {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+}
+
+/* Info Page Specific Styles */
+
+/* Floating Particles */
+.floating-particles {
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, #334155, #14B8A6);
+  border-radius: 50%;
+  animation: float-particle 15s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Special Offer Banner */
+.special-offer-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.special-offer-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(51, 65, 85, 0.1), transparent);
+  animation: special-shine 3s infinite;
+}
+
+@keyframes special-shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Service Card Animations */
+.service-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(51, 65, 85, 0.05), transparent);
+  transition: left 0.5s ease;
+}
+
+.service-card:hover::before {
+  left: 100%;
+}
+
+.service-icon {
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 10px 30px rgba(51, 65, 85, 0.4);
+}
+
+/* Toast Notification Styles */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  transform: translateX(400px);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 350px;
+  opacity: 0;
+}
+
+.toast-notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-content {
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(51, 65, 85, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.toast-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #334155, #14B8A6);
+  animation: toast-progress 5s linear;
+}
+
+@keyframes toast-progress {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
+.toast-icon {
+  background: linear-gradient(135deg, #334155, #14B8A6);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: toast-icon-pulse 2s infinite;
+}
+
+@keyframes toast-icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.toast-icon i {
+  color: white;
+  font-size: 18px;
+}
+
+.toast-text h4 {
+  color: #14B8A6;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+.toast-text p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.toast-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.toast-close:hover {
+  color: #14B8A6;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Toast Adjustments */
+@media (max-width: 768px) {
+  .toast-notification {
+    left: 20px;
+    right: 20px;
+    max-width: none;
+    transform: translateY(-100px);
+  }
+  
+  .toast-notification.show {
+    transform: translateY(0);
+  }
 }

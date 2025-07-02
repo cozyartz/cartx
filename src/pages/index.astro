@@ -1,97 +1,148 @@
 ---
 import '../styles/global.css';
+import SEO from '../components/SEO.astro';
 
-const menu = [
+const services = [
   {
-    section: "Burgers",
-    items: [
-      { name: "Big Grill Burger", description: "Our signature beef patty with all the fixings", price: "$8.50" },
-      { name: "Cheese Burger", description: "Classic beef patty with melted cheese", price: "$5.50" },
-      { name: "Regular Hamburger", description: "Fresh ground beef, lettuce, tomato, onion", price: "$5.00" },
-      { name: "Hamburger Delux", description: "Premium burger with bacon and special sauce", price: "$6.00" },
-      { name: "Chee/Burger Delux", description: "Deluxe cheeseburger with all the extras", price: "$6.50" },
-    ],
+    icon: "fas fa-globe",
+    title: "Professional Web Development",
+    description: "Custom-designed websites that look amazing and convert visitors into customers",
+    details: ["Responsive design", "Mobile optimization", "Fast loading speeds", "Modern aesthetics"]
   },
   {
-    section: "Chicken",
-    items: [
-      { name: "Chicken Tenders", description: "Hand-breaded and fried to perfection", price: "$6.50" },
-      { name: "Per Wing", description: "Fresh chicken wings", price: "$3.00" },
-      { name: "6 Wings", description: "Half dozen wings with your choice of sauce", price: "$11.00" },
-      { name: "Wing Dinner", description: "Wings with fries and drink", price: "$14.00" },
-      { name: "12 Wings", description: "Full dozen wings for sharing", price: "$18.00" },
-    ],
+    icon: "fas fa-search",
+    title: "SEO & Google Maps Listing",
+    description: "Get found by customers searching for your business online",
+    details: ["Google My Business setup", "Local SEO optimization", "Search engine visibility", "Google Maps integration"]
   },
   {
-    section: "BBQ",
-    items: [
-      { name: "Rib (Only)", description: "Tender, smoky ribs", price: "$11.50" },
-      { name: "Rib Dinner", description: "Ribs with two sides", price: "$15.50" },
-      { name: "Rib Tips (Only)", description: "Flavorful rib tips", price: "$11.00" },
-      { name: "Rib Tip Dinner", description: "Rib tips with two sides", price: "$15.00" },
-    ],
+    icon: "fas fa-chart-line",
+    title: "Digital Marketing",
+    description: "Comprehensive marketing strategies to grow your business",
+    details: ["Social media management", "Content marketing", "Online advertising", "Brand development"]
   },
   {
-    section: "Fish",
-    items: [
-      { name: "Catfish (Only)", description: "Fresh fried catfish fillets", price: "$11.00" },
-      { name: "Catfish Dinner", description: "Catfish with two sides", price: "$14.00" },
-    ],
+    icon: "fas fa-server",
+    title: "Domain & Hosting",
+    description: "Professional domain name and reliable hosting included",
+    details: ["Custom domain name", "SSL certificate", "99.9% uptime guarantee", "Daily backups"]
   },
   {
-    section: "Hot Dogs",
-    items: [
-      { name: "Regular Hotdog", description: "All-beef hot dog with classic toppings", price: "$2.50" },
-      { name: "Chilli Cheese Dog", description: "Hot dog topped with chili and cheese", price: "$3.50" },
-    ],
+    icon: "fas fa-tools",
+    title: "Monthly Maintenance",
+    description: "Ongoing support and updates to keep your site running perfectly",
+    details: ["Security updates", "Content updates", "Performance monitoring", "Technical support"]
   },
   {
-    section: "Sides",
-    items: [
-      { name: "Spaghetti", description: "Classic pasta side", price: "$4.00" },
-      { name: "Bake Beans", description: "Homestyle baked beans", price: "$4.00" },
-      { name: "Potato Salad", description: "Creamy homemade potato salad", price: "$4.00" },
-      { name: "Fries", description: "Golden crispy french fries", price: "$2.00" },
-    ],
+    icon: "fas fa-rocket",
+    title: "Fast Setup & Launch",
+    description: "Get your business online quickly with our streamlined process",
+    details: ["Quick turnaround", "Professional design", "Content creation", "Launch support"]
   },
+  {
+    icon: "fas fa-helicopter",
+    title: "Part 107 Drone Services",
+    description: "FAA certified drone pilot for aerial photography, videography, and commercial drone operations",
+    details: ["Aerial photography & video", "Real estate marketing", "Construction site surveys", "Event coverage"]
+  }
 ];
 
-const specialOffer = {
-  name: "Try Our Nachos",
-  price: "$7.50",
-  description: "Loaded with cheese, jalapeños, and your choice of toppings"
-};
-
 const businessInfo = {
-  name: "Grillz on Wheelz",
-  tagline: "Fast Foods",
-  phone: "(269) 419-5393",
-  location: "508 Upton Ave, Springfield MI",
-  nextTo: "Next To Beller's Party Store!",
-  hours: {
-    open: "TUE - SAT 12 NOON - 9PM",
-    closed: "CLOSED SUN - MON"
-  }
+  agency: "Cozyartz Media Group",
+  tagline: "WOSB Certified Small Business",
+  specialOffer: "$500",
+  normalPrice: "$1,250 - $3,500",
+  phone: "(269) 261-0069"
 };
 
+const michiganCities = [
+  "Battle Creek", "Kalamazoo", "Grand Rapids", "Detroit", "Lansing", "Ann Arbor", 
+  "Flint", "Sterling Heights", "Warren", "Dearborn", "Livonia", "Troy", "Canton", 
+  "Westland", "Farmington Hills", "Southfield", "Wyoming", "Rochester Hills", 
+  "Taylor", "Pontiac", "Royal Oak", "Novi", "Dearborn Heights", "Jackson", 
+  "Saginaw", "Bay City", "Midland", "Mount Pleasant", "Marquette", "Traverse City"
+];
 
+const portfolioSites = [
+  {
+    name: "Cartx on Wheelz",
+    type: "Food Truck",
+    location: "Springfield, MI",
+    url: "/cartx",
+    description: "Premium fast food truck with mobile ordering"
+  },
+  {
+    name: "Coming Soon - Salsas Cantina",
+    type: "Mexican Restaurant",
+    location: "Battle Creek, MI",
+    url: "#",
+    description: "Authentic Mexican cuisine with online ordering"
+  }
+];
 ---
 
 <html lang="en" class="scroll-smooth">
   <head>
-    <meta charset="UTF-8" />
-    <title>Grillz on Wheelz - Delicious Fast Food That Delivers</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Grillz on Wheelz - Premium fast food truck serving burgers, wings, BBQ & more in Springfield MI. Call (269) 419-5393 to order! Website by Cozyartz Media Group." />
-    <meta name="keywords" content="food truck, fast food, burgers, chicken wings, BBQ, Springfield MI, Battle Creek, Michigan, restaurant, takeout, delivery" />
-    <meta name="author" content="Cozyartz Media Group - WOSB Certified Small Business" />
-    <meta property="og:title" content="Grillz on Wheelz - Premium Fast Food Truck Springfield MI" />
-    <meta property="og:description" content="Fresh burgers, wings, BBQ & more from Springfield's hottest food truck. Call (269) 419-5393 to order!" />
-    <meta property="og:type" content="restaurant" />
-    <meta property="og:url" content="https://grillzonwheelz.com" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Grillz on Wheelz - Premium Fast Food Truck" />
-    <meta name="twitter:description" content="Fresh burgers, wings, BBQ & more. Call (269) 419-5393!" />
+    <SEO 
+      title="Cozyartz Media Group | #1 Web Design & Digital Marketing Agency in Michigan | WOSB Certified"
+      description="🚀 Michigan's Premier Web Design Agency! Professional websites, SEO, Google Maps listing & digital marketing for small businesses. WOSB Certified. Serving Battle Creek, Kalamazoo, Grand Rapids, Detroit & all of Michigan. Special offer: $500 (normally $1,250-$3,500). Call (269) 261-0069!"
+      keywords="web design Michigan, digital marketing Michigan, SEO Michigan, website development Battle Creek, website design Kalamazoo, web designer Grand Rapids, small business websites Michigan, Google Maps listing Michigan, professional web development, WOSB certified web design, Michigan small business marketing, responsive web design Michigan, e-commerce websites Michigan, local SEO Michigan, website maintenance Michigan, Part 107 drone services Michigan, aerial photography Michigan, drone pilot Battle Creek, commercial drone services, real estate drone photography Michigan, construction drone surveys Michigan"
+      canonical="https://cartfullofx.com/"
+      ogTitle="🚀 Cozyartz Media Group - Michigan's #1 Web Design & Digital Marketing Agency | WOSB Certified"
+      ogDescription="🚀 Transform your Michigan business with professional web design, SEO, and digital marketing! WOSB Certified agency serving Battle Creek, Kalamazoo, Grand Rapids, Detroit & beyond. Special offer: $500 (normally $1,250-$3,500). Call (269) 261-0069!"
+      ogUrl="https://cartfullofx.com"
+      ogImage="https://cartfullofx.com/cozyartz-og-image.jpg"
+      twitterImage="https://cartfullofx.com/cozyartz-twitter-image.jpg"
+      businessName="Cozyartz Media Group"
+      phone="(269) 261-0069"
+      email="info@cartfullofx.com"
+      address={{
+        city: "Battle Creek",
+        state: "Michigan",
+        zip: "49015",
+        country: "United States"
+      }}
+      geo={{
+        latitude: 42.3211,
+        longitude: -85.1797
+      }}
+      serviceAreas={["Michigan"]}
+      citiesServed={michiganCities}
+      schema={{
+        foundingDate: "2023",
+        naics: "541511",
+        services: [
+          {
+            name: "Professional Website Development",
+            description: "Custom website design and development with responsive design, mobile optimization, and SEO integration",
+            price: "500",
+            priceType: "fixed"
+          },
+          {
+            name: "SEO & Google Maps Listing",
+            description: "Complete SEO optimization and Google My Business setup for maximum local visibility",
+            priceType: "included"
+          },
+          {
+            name: "Part 107 Drone Services",
+            description: "FAA certified commercial drone pilot services including aerial photography, videography, real estate marketing, and construction site surveys",
+            priceType: "quote"
+          }
+        ],
+        awards: ["WOSB Certified Small Business", "SBA Women-Owned Small Business Certification"],
+        socialMedia: {
+          facebook: "https://www.facebook.com/cozyartzmedia",
+          instagram: "https://www.instagram.com/cozyartzmedia",
+          linkedin: "https://www.linkedin.com/company/cozyartz-media-group",
+          twitter: "https://twitter.com/cozyartzmedia"
+        }
+      }}
+    />
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,209 +151,280 @@ const businessInfo = {
   <body class="min-h-screen gradient-bg font-inter">
     
     <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden w-full mx-auto">
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
       
       <!-- Hero Glow Effect -->
       <div class="hero-glow absolute inset-0 w-full h-full"></div>
       
+      <!-- Floating particles background -->
+      <div class="floating-particles absolute inset-0 pointer-events-none">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+      
       <!-- Main Hero Content -->
       <div class="slide-in max-w-6xl mx-auto relative z-10">
-        <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black neon-glow mb-6 relative px-2 font-fredoka text-neon-gold">
-          <span class="sparkle">🔥</span> GRILLZ ON WHEELZ <span class="sparkle">🔥</span>
-        </h1>
-        
-        <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-8 opacity-90 px-4">
-          <i class="fas fa-fire"></i> PREMIUM FAST FOOD THAT HITS DIFFERENT <i class="fas fa-fire"></i>
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 px-4">
-          <a href="tel:(269)419-5393" 
-             class="pulse-button bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-black px-6 sm:px-8 py-3 sm:py-4 rounded-full text-lg sm:text-xl md:text-2xl shadow-2xl transform transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center">
-            <i class="fas fa-phone"></i> ORDER NOW: (269) 419-5393
-          </a>
+        <div class="glass-effect rounded-3xl p-8 md:p-12 mb-8 border border-dark-border">
+          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black neon-glow mb-6 font-fredoka text-accent-slate professional-spacing">
+            <span class="sparkle">✨</span> COZYARTZ MEDIA GROUP <span class="sparkle">🚀</span>
+          </h1>
           
-          <div class="glass-effect px-4 sm:px-6 py-2 sm:py-3 rounded-full text-white font-semibold text-sm sm:text-base text-center">
-            <i class="fas fa-map-marker-alt"></i> {businessInfo.location}
+          <p class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-8 opacity-95 professional-text">
+            Michigan's Premier Web Design & Digital Marketing Agency • WOSB Certified
+          </p>
+          
+          <!-- Special Offer Banner -->
+          <div class="special-offer-banner glass-effect rounded-2xl p-6 md:p-8 mb-8 border-2 border-accent-slate/40">
+            <div class="text-accent-teal text-3xl mb-3">💡</div>
+            <h2 class="text-2xl md:text-3xl font-black text-accent-slate mb-4 font-fredoka">
+              LIMITED TIME SPECIAL OFFER
+            </h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-4">
+              <div class="text-center">
+                <div class="text-gray-400 line-through text-lg md:text-xl">Normally {businessInfo.normalPrice}</div>
+                <div class="text-4xl md:text-5xl font-black text-accent-teal">{businessInfo.specialOffer}</div>
+                <div class="text-white font-semibold">One-time setup</div>
+              </div>
+              <div class="text-accent-slate text-3xl hidden md:block">→</div>
+              <div class="text-center">
+                <div class="text-white/80 text-lg">Plus monthly service fee</div>
+                <div class="text-accent-teal-light font-bold">Ongoing maintenance & support</div>
+              </div>
+            </div>
+            <p class="text-white/90 text-lg leading-relaxed">
+              <strong>Why this special price?</strong> We're establishing ourselves as Michigan's #1 web design agency! 
+              Get professional web development, SEO, and digital marketing at an unbeatable price.
+            </p>
           </div>
-        </div>
-        
-        <!-- Hours Display -->
-        <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto mb-8 px-4">
-          <div class="glass-effect rounded-2xl p-4 sm:p-6 text-center">
-            <div class="text-green-400 font-black text-lg sm:text-xl mb-2"><i class="fas fa-circle text-green-400"></i> OPEN</div>
-            <div class="text-white font-bold text-sm sm:text-lg">{businessInfo.hours.open}</div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <a href="tel:(269)261-0069" 
+               class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-8 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center">
+              <i class="fas fa-phone"></i> CALL NOW: {businessInfo.phone}
+            </a>
+            
+            <button id="show-toast" class="glass-effect px-6 py-3 rounded-full text-white font-semibold text-lg hover:bg-white/10 transition-all duration-300 w-full sm:w-auto">
+              <i class="fas fa-info-circle"></i> Learn More
+            </button>
           </div>
-          <div class="glass-effect rounded-2xl p-4 sm:p-6 text-center">
-            <div class="text-red-400 font-black text-lg sm:text-xl mb-2"><i class="fas fa-circle text-red-400"></i> CLOSED</div>
-            <div class="text-white font-bold text-sm sm:text-lg">{businessInfo.hours.closed}</div>
+          
+          <!-- Michigan Cities We Serve -->
+          <div class="glass-effect rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
+            <h3 class="text-xl font-bold text-white mb-4 text-center">
+              <i class="fas fa-map-marker-alt text-accent-slate"></i> Proudly Serving All of Michigan
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 text-sm text-white/70">
+              {michiganCities.slice(0, 18).map((city) => (
+                <div class="text-center hover:text-accent-teal transition-colors duration-300">
+                  {city}
+                </div>
+              ))}
+              <div class="text-center text-accent-slate font-semibold">
+                + Many More!
+              </div>
+            </div>
           </div>
-        </div>
-        
-        <p class="text-white font-semibold text-sm sm:text-lg opacity-80 px-4 text-center">
-          {businessInfo.nextTo}
-        </p>
-        
-        <!-- Scroll Down Arrow -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group" id="scroll-arrow">
-          <div class="text-white text-2xl group-hover:text-yellow-400 transition-all duration-300 animate-bounce"><i class="fas fa-chevron-down"></i></div>
-          <p class="text-white font-medium mt-1 text-sm group-hover:text-yellow-400 transition-all duration-300">VIEW MENU</p>
         </div>
       </div>
     </section>
 
-    <!-- Menu Section -->
-    <section class="min-h-screen py-20 px-4 w-full mx-auto">
+    <!-- Services Section -->
+    <section class="py-20 px-4">
       <div class="max-w-7xl mx-auto">
         
-        <!-- Menu Header -->
+        <!-- Section Header -->
         <div class="text-center mb-16 slide-in">
-          <h2 class="text-5xl md:text-6xl font-black text-white neon-glow mb-4 font-fredoka">
-            OUR MENU
+          <h2 class="text-4xl md:text-5xl font-black text-white neon-glow mb-6 font-fredoka professional-spacing">
+            EVERYTHING YOUR BUSINESS NEEDS TO DOMINATE ONLINE
           </h2>
-          <p class="text-xl text-white/80 font-medium max-w-2xl mx-auto">
-            Fresh ingredients, bold flavors, and unbeatable prices. Every item made to order!
+          <p class="text-xl text-white/85 font-medium max-w-3xl mx-auto leading-relaxed">
+            From professional website design to Google Maps listing, we handle it all so you can focus on what you do best - running your business!
           </p>
         </div>
 
-        <!-- Special Offer Banner -->
-        <div class="text-center mb-12 slide-in">
-          <div class="glass-effect rounded-3xl p-8 max-w-2xl mx-auto border-2 border-yellow-400/30">
-            <div class="text-yellow-400 text-2xl mb-2">✨</div>
-            <h3 class="text-3xl font-black text-yellow-400 mb-3 font-fredoka">
-              {specialOffer.name}
-            </h3>
-            <p class="text-white/90 mb-4 text-lg">{specialOffer.description}</p>
-            <div class="text-4xl font-black text-yellow-400">{specialOffer.price}</div>
+        <!-- Portfolio Showcase -->
+        <div class="text-center mb-16 slide-in">
+          <h3 class="text-3xl font-black text-white mb-8 font-fredoka">
+            <span class="sparkle">🎯</span> OUR RECENT WORK <span class="sparkle">💼</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {portfolioSites.map((site) => (
+              <div class="glass-effect rounded-2xl p-6 border border-dark-border hover:border-accent-slate/30 transition-all duration-300">
+                <h4 class="text-xl font-bold text-accent-slate mb-2">{site.name}</h4>
+                <p class="text-white/80 mb-2">{site.type} • {site.location}</p>
+                <p class="text-white/70 text-sm mb-4">{site.description}</p>
+                {site.url !== "#" ? (
+                  <a href={site.url} class="text-accent-teal hover:text-accent-teal-light transition-colors font-medium">
+                    View Live Site →
+                  </a>
+                ) : (
+                  <span class="text-white/50 text-sm">Coming Soon</span>
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
-        <!-- Modern Menu Grid -->
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 justify-center">
-          {menu.map((section, index) => {
-            const iconClass = section.section === 'Burgers' ? 'fas fa-burger' : 
-                             section.section === 'Chicken' ? 'fas fa-drumstick-bite' :
-                             section.section === 'BBQ' ? 'fas fa-fire' :
-                             section.section === 'Fish' ? 'fas fa-fish' :
-                             section.section === 'Hot Dogs' ? 'fas fa-hotdog' :
-                             section.section === 'Sides' ? 'fas fa-utensils' : 'fas fa-utensils';
-            
-            return (
-              <div class="glass-effect rounded-3xl p-6 sm:p-8 border border-white/20 slide-in menu-card mx-auto w-full max-w-sm" 
-                   style={`animation-delay: ${index * 0.1}s;`}>
-                
-                {/* Icon Header */}
-                <div class="text-center mb-4 sm:mb-6">
-                  <div class="bg-gradient-to-br from-yellow-400 to-orange-500 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
-                    <i class={`${iconClass} text-xl sm:text-2xl text-red-800`}></i>
-                  </div>
-                  <h3 class="text-xl sm:text-2xl font-black text-white mb-2 font-fredoka">
-                    {section.section}
-                  </h3>
-                  <div class="w-12 sm:w-16 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto rounded-full"></div>
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
+          {services.map((service, index) => (
+            <div class="glass-effect rounded-3xl p-8 border border-dark-border slide-in service-card hover:border-accent-slate/30 transition-all duration-500" 
+                 style={`animation-delay: ${index * 0.1}s;`}>
+              
+              <!-- Service Icon -->
+              <div class="text-center mb-6">
+                <div class="bg-gradient-to-br from-accent-slate to-accent-teal w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg service-icon">
+                  <i class={`${service.icon} text-2xl text-white`}></i>
                 </div>
-                
-                {/* Menu Items */}
-                <ul class="space-y-2 sm:space-y-3">
-                  {section.items.map((item) => (
-                    <li class="bg-white/5 rounded-xl p-3 sm:p-4 menu-item-hover border border-white/10 group">
-                      <div class="flex justify-between items-start mb-1 sm:mb-2">
-                        <div class="font-bold text-white text-base sm:text-lg group-hover:text-yellow-200 transition-colors pr-2">{item.name}</div>
-                        <div class="font-black text-yellow-400 text-lg sm:text-xl group-hover:text-yellow-300 transition-colors flex-shrink-0">{item.price}</div>
-                      </div>
-                      <div class="text-white/70 text-xs sm:text-sm leading-relaxed group-hover:text-white/80 transition-colors">{item.description}</div>
-                    </li>
-                  ))}
-                </ul>
+                <h3 class="text-xl font-black text-white mb-3 font-fredoka">
+                  {service.title}
+                </h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-accent-slate to-accent-teal mx-auto rounded-full"></div>
               </div>
-            )
-          })}
+              
+              <!-- Service Description -->
+              <p class="text-white/80 text-center mb-6 leading-relaxed">
+                {service.description}
+              </p>
+              
+              <!-- Service Details -->
+              <ul class="space-y-2">
+                {service.details.map((detail) => (
+                  <li class="text-white/70 text-sm flex items-center">
+                    <i class="fas fa-check text-accent-slate mr-3 flex-shrink-0"></i>
+                    {detail}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <!-- Call to Action -->
-        <div class="text-center mt-16 slide-in">
-          <div class="glass-effect rounded-3xl p-8 max-w-4xl mx-auto">
-            <h3 class="text-3xl font-black text-white mb-4 font-fredoka">
-              <span class="sparkle">✨</span> Ready to Order? <span class="sparkle">🚀</span>
+        <!-- Value Proposition -->
+        <div class="text-center slide-in">
+          <div class="glass-effect rounded-3xl p-8 md:p-12 max-w-4xl mx-auto border border-dark-border">
+            <h3 class="text-3xl md:text-4xl font-black text-white mb-6 font-fredoka">
+              <span class="sparkle">🎯</span> Why Choose Cozyartz Media Group? <span class="sparkle">⭐</span>
             </h3>
-            <p class="text-white/80 text-lg mb-6">
-              Call us now and taste the difference quality makes!
-            </p>
-            <a href="tel:(269)419-5393" 
-               class="pulse-button bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white font-black px-12 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 inline-block">
-              <i class="fas fa-phone mr-3"></i>CALL (269) 419-5393
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <div class="text-center">
+                <div class="text-4xl mb-3">🏆</div>
+                <h4 class="text-xl font-bold text-accent-slate mb-2">WOSB Certified</h4>
+                <p class="text-white/70">Women-Owned Small Business certified by the SBA</p>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl mb-3">⚡</div>
+                <h4 class="text-xl font-bold text-accent-slate mb-2">Fast Results</h4>
+                <p class="text-white/70">Get online quickly with our streamlined process</p>
+              </div>
+              <div class="text-center">
+                <div class="text-4xl mb-3">🔧</div>
+                <h4 class="text-xl font-bold text-accent-slate mb-2">Full Service</h4>
+                <p class="text-white/70">Everything you need under one roof</p>
+              </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-accent-slate/20 to-accent-teal/20 rounded-2xl p-6 mb-8">
+              <p class="text-white text-lg leading-relaxed">
+                <strong class="text-accent-slate">The Problem:</strong> Your amazing business can't be found online. 
+                Customers are searching for what you offer, but they're finding your competitors instead.
+              </p>
+              <p class="text-white text-lg leading-relaxed mt-4">
+                <strong class="text-accent-teal">The Solution:</strong> Professional web presence + Google Maps listing + SEO 
+                = More customers finding YOU when they search.
+              </p>
+            </div>
+            
+            <a href="tel:(269)261-0069" 
+               class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-12 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 inline-block">
+              <i class="fas fa-rocket mr-3"></i>GET STARTED TODAY
             </a>
           </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="text-center mt-16 pt-8 border-t border-white/20">
-          <div class="text-white/60 font-medium mb-6">
-            Follow us for daily specials and food truck locations!
-          </div>
-          
-          <!-- Design Agency Credit -->
-          <div class="text-center text-white/30 text-xs mb-4">
-            Website by <span class="text-white/50 font-medium">Cozyartz Media Group</span>
-          </div>
-          
-          <div class="text-white/40 text-sm">
-            © {new Date().getFullYear()} Grillz on Wheelz. All rights reserved.
-          </div>
-        </footer>
       </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-12 px-4 border-t border-dark-border">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-white/60 font-medium mb-6">
+          Ready to transform your business? Let's make it happen!
+        </div>
+        
+        <div class="text-center text-white/40 text-sm mb-4">
+          <span class="text-white/60 font-medium">{businessInfo.agency}</span> • {businessInfo.tagline}
+        </div>
+        
+        <div class="text-white/40 text-sm">
+          © {new Date().getFullYear()} {businessInfo.agency}. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification">
+      <div class="toast-content">
+        <div class="toast-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <div class="toast-text">
+          <h4>💡 Pro Tip</h4>
+          <p>87% of consumers read online reviews before visiting a business. Let's get you found!</p>
+        </div>
+        <button id="close-toast" class="toast-close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
     
-    <!-- Scroll Behavior Script -->
+    <!-- Scripts -->
     <script is:inline>
       document.addEventListener('DOMContentLoaded', function() {
-        const scrollArrow = document.getElementById('scroll-arrow');
-        const menuSection = document.querySelector('section:nth-child(2)');
-        
-        if (scrollArrow && menuSection) {
-          scrollArrow.addEventListener('click', function() {
-            menuSection.scrollIntoView({ behavior: 'smooth' });
+        // Toast functionality
+        const showToastBtn = document.getElementById('show-toast');
+        const toast = document.getElementById('toast');
+        const closeToastBtn = document.getElementById('close-toast');
+
+        function showToast() {
+          toast.classList.add('show');
+          setTimeout(() => {
+            hideToast();
+          }, 5000);
+        }
+
+        function hideToast() {
+          toast.classList.remove('show');
+        }
+
+        showToastBtn?.addEventListener('click', showToast);
+        closeToastBtn?.addEventListener('click', hideToast);
+
+        // Auto-show toast after 3 seconds
+        setTimeout(showToast, 3000);
+
+        // Floating particles animation
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach((particle, index) => {
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+          particle.style.animationDelay = index * 0.5 + 's';
+        });
+
+        // Service card hover effects
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+          card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
           });
-        }
+          
+          card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+          });
+        });
       });
-    </script>
-    
-    <!-- Structured Data for Local Business SEO -->
-    <script type="application/ld+json" is:inline>
-    {
-      "@context": "https://schema.org",
-      "@type": "Restaurant",
-      "name": "Grillz on Wheelz",
-      "description": "Premium fast food truck serving burgers, wings, BBQ and more in Springfield, Michigan",
-      "telephone": "(269) 419-5393",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "508 Upton Ave",
-        "addressLocality": "Springfield",
-        "addressRegion": "MI",
-        "addressCountry": "US"
-      },
-      "openingHours": [
-        "Tu-Sa 12:00-21:00"
-      ],
-      "servesCuisine": ["American", "Fast Food", "BBQ"],
-      "priceRange": "$",
-      "hasMenu": true,
-      "acceptsReservations": false,
-      "takeAway": true,
-      "serviceType": "Food Truck",
-      "knowsAbout": ["Burgers", "Chicken Wings", "BBQ", "Hot Dogs", "Fast Food"],
-      "founder": {
-        "@type": "Organization",
-        "name": "Cozyartz Media Group",
-        "description": "WOSB Certified Small Business specializing in web design and digital marketing",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Battle Creek",
-          "addressRegion": "MI",
-          "addressCountry": "US"
-        }
-      }
-    }
     </script>
   </body>
 </html>

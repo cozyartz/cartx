@@ -1,5 +1,5 @@
 {
-  "name": "grillz",
+  "name": "cartx",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,8 +7,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "wrangler pages deploy dist",
-    "deploy:staging": "wrangler pages deploy dist --project-name grillz-staging",
+    "deploy": "wrangler pages deploy dist --project-name cartfullofx",
+    "deploy:cartx": "wrangler pages deploy dist --project-name cartx-cartfullofx",
+    "deploy:salsas": "wrangler pages deploy dist --project-name salsas-cartfullofx",
+    "deploy:staging": "wrangler pages deploy dist --project-name cartfullofx-staging",
     "wrangler:dev": "wrangler pages dev dist --compatibility-date=2024-01-01"
   },
   "dependencies": {
