@@ -1,11 +1,11 @@
-name = "cartfullofx"
-compatibility_date = "2024-01-01"
+name = "cartx"
+compatibility_date = "2024-07-01"
 pages_build_output_dir = "dist"
 
 [env.production]
-# Production deployment for cartfullofx.com (main Cozyartz site)
-compatibility_date = "2024-01-01"
+# Production deployment for cartfullofx.com
+compatibility_date = "2024-07-01"
 
-[env.preview]
-# Staging deployment will use pages.dev subdomain
-compatibility_date = "2024-01-01"
+[env.preview]  
+# Preview deployments for PR testing
+compatibility_date = "2024-07-01"
