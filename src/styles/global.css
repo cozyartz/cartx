@@ -8,8 +8,8 @@
 }
 
 @keyframes neon-pulse {
-  from { text-shadow: 0 0 15px rgba(51, 65, 85, 0.8), 0 0 30px rgba(20, 184, 166, 0.6), 0 0 45px rgba(51, 65, 85, 0.4); }
-  to { text-shadow: 0 0 25px rgba(51, 65, 85, 1), 0 0 40px rgba(20, 184, 166, 0.8), 0 0 60px rgba(51, 65, 85, 0.6); }
+  from { text-shadow: 0 0 15px rgba(51, 65, 85, 0.8), 0 0 30px rgba(8, 145, 178, 0.6), 0 0 45px rgba(51, 65, 85, 0.4); }
+  to { text-shadow: 0 0 25px rgba(51, 65, 85, 1), 0 0 40px rgba(8, 145, 178, 0.8), 0 0 60px rgba(51, 65, 85, 0.6); }
 }
 
 @keyframes float {
@@ -35,7 +35,7 @@
 
 @keyframes sparkle {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(1.2); }
+  50% { opacity: 1; transform: scale(1); }
 }
 
 /* Custom CSS Classes */
@@ -51,7 +51,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #334155 0%, #14B8A6 25%, #1E293B 50%, #0F766E 75%, #334155 100%);
+  background: linear-gradient(135deg, #334155 0%, #0891B2 25%, #1E293B 50%, #0E7490 75%, #334155 100%);
   background-size: 400% 400%;
   animation: gradient-shift 8s ease infinite;
   opacity: 0.05;
@@ -59,12 +59,11 @@
 }
 
 .hero-glow {
-  background: radial-gradient(circle at center, rgba(51, 65, 85, 0.15) 0%, rgba(20, 184, 166, 0.1) 50%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(51, 65, 85, 0.15) 0%, rgba(8, 145, 178, 0.1) 50%, transparent 70%);
 }
 
 .neon-glow {
-  text-shadow: 0 0 15px rgba(51, 65, 85, 0.8), 0 0 30px rgba(20, 184, 166, 0.6), 0 0 45px rgba(51, 65, 85, 0.4);
-  animation: neon-pulse 2s ease-in-out infinite alternate;
+  text-shadow: 0 0 15px rgba(51, 65, 85, 0.8), 0 0 30px rgba(8, 145, 178, 0.6), 0 0 45px rgba(51, 65, 85, 0.4);
 }
 
 .float-animation {
@@ -93,7 +92,6 @@
 }
 
 .pulse-button {
-  animation: pulse-button 2s infinite;
   position: relative;
   overflow: hidden;
 }
@@ -118,7 +116,7 @@
 }
 
 .menu-item-hover:hover {
-  background: linear-gradient(135deg, rgba(51, 65, 85, 0.15), rgba(20, 184, 166, 0.1));
+  background: linear-gradient(135deg, rgba(51, 65, 85, 0.15), rgba(8, 145, 178, 0.1));
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(51, 65, 85, 0.3);
   border-color: rgba(51, 65, 85, 0.3);
@@ -218,7 +216,7 @@ html {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: linear-gradient(45deg, #334155, #14B8A6);
+  background: linear-gradient(45deg, #334155, #0891B2);
   border-radius: 50%;
   animation: float-particle 15s linear infinite;
   opacity: 0.3;
@@ -332,7 +330,7 @@ html {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #334155, #14B8A6);
+  background: linear-gradient(90deg, #334155, #0891B2);
   animation: toast-progress 5s linear;
 }
 
@@ -342,7 +340,7 @@ html {
 }
 
 .toast-icon {
-  background: linear-gradient(135deg, #334155, #14B8A6);
+  background: linear-gradient(135deg, #334155, #0891B2);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -350,12 +348,11 @@ html {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  animation: toast-icon-pulse 2s infinite;
 }
 
 @keyframes toast-icon-pulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1); }
 }
 
 .toast-icon i {
@@ -364,7 +361,7 @@ html {
 }
 
 .toast-text h4 {
-  color: #14B8A6;
+  color: #0891B2;
   font-weight: 700;
   margin: 0 0 8px 0;
   font-size: 16px;
@@ -391,7 +388,7 @@ html {
 }
 
 .toast-close:hover {
-  color: #14B8A6;
+  color: #0891B2;
   background: rgba(255, 255, 255, 0.1);
 }
 

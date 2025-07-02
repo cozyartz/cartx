@@ -3,7 +3,7 @@ export interface Props {
   // Basic SEO
   title: string;
   description: string;
-  keywords: string;
+  keywords?: string;
   canonical?: string;
   
   // Open Graph / Social Media
@@ -31,28 +31,16 @@ export interface Props {
     longitude: number;
   };
   
-  // Service Areas
-  serviceAreas: string[];
-  citiesServed: string[];
-  
-  // Schema.org Data
-  schema: {
-    businessType?: string;
-    foundingDate?: string;
-    naics?: string;
-    services: Array<{
-      name: string;
-      description: string;
-      price?: string;
-      priceType?: 'fixed' | 'quote' | 'included';
-    }>;
-    awards?: string[];
-    socialMedia?: {
-      facebook?: string;
-      instagram?: string;
-      linkedin?: string;
-      twitter?: string;
-    };
+  // Business Data
+  businessType?: string;
+  services?: string[];
+  hours?: string[];
+  foundingDate?: string;
+  copyrightYear?: string;
+  ownerInfo?: {
+    name?: string;
+    type?: string;
+    established?: string;
   };
   
   // Additional Options
@@ -64,7 +52,7 @@ export interface Props {
 const {
   title,
   description,
-  keywords,
+  keywords = "",
   canonical,
   ogTitle,
   ogDescription,
@@ -76,9 +64,12 @@ const {
   email,
   address,
   geo,
-  serviceAreas,
-  citiesServed,
-  schema,
+  businessType = "LocalBusiness",
+  services = [],
+  hours = [],
+  foundingDate = "2017",
+  copyrightYear,
+  ownerInfo,
   robotsContent = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   language = "en",
   region = "US"
@@ -90,6 +81,8 @@ const defaultOgDescription = ogDescription || description;
 const defaultOgImage = ogImage || `${ogUrl || canonical}/og-image.jpg`;
 const defaultTwitterImage = twitterImage || `${ogUrl || canonical}/twitter-image.jpg`;
 const currentYear = new Date().getFullYear();
+const businessCopyrightYear = copyrightYear || currentYear.toString();
+const businessFoundingDate = foundingDate;
 ---
 
 <!-- Basic Meta Tags -->
@@ -156,14 +149,11 @@ const currentYear = new Date().getFullYear();
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": businessName,
-  "alternateName": [businessName.split(' ')[0], `${businessName.split(' ')[0]} Media`, `${businessName.split(' ')[0]} Web Design`],
   "description": description,
   "url": canonical,
   "telephone": phone,
   "email": email,
-  "foundingDate": schema.foundingDate || "2023",
-  "logo": `${canonical}/logo.png`,
-  "image": [`${canonical}/hero-image.jpg`, `${canonical}/team-photo.jpg`],
+  "foundingDate": businessFoundingDate,
   "address": {
     "@type": "PostalAddress",
     "streetAddress": address.street,
@@ -172,72 +162,47 @@ const currentYear = new Date().getFullYear();
     "postalCode": address.zip,
     "addressCountry": address.country || "United States"
   },
+  "copyrightYear": businessCopyrightYear,
+  "copyrightHolder": {
+    "@type": "Organization",
+    "name": ownerInfo?.name || businessName,
+    "description": ownerInfo?.type || "Local Business"
+  },
   "geo": {
     "@type": "GeoCoordinates",
     "latitude": geo.latitude,
     "longitude": geo.longitude
   },
-  "serviceArea": serviceAreas.map(area => ({
-    "@type": "GeoCircle",
-    "geoMidpoint": {
-      "@type": "GeoCoordinates",
-      "latitude": geo.latitude,
-      "longitude": geo.longitude
-    },
-    "geoRadius": "160934"
-  })),
-  "areaServed": citiesServed,
-  "slogan": `${address.state}'s Premier Web Design & Digital Marketing Agency`,
-  "knowsAbout": ["Web Design", "Website Development", "SEO", "Search Engine Optimization", "Digital Marketing", "Google Maps Listing", "Local SEO", "Social Media Marketing", "E-commerce", "WordPress", "Responsive Design", "Mobile Optimization", "Conversion Optimization", "Brand Development", "Content Marketing", "Online Advertising", "Google Ads", "Facebook Ads", "Website Maintenance", "Domain Registration", "Web Hosting", "SSL Certificates", "Website Security"],
-  "naics": schema.naics || "541511",
-  "hasOfferCatalog": {
+  "areaServed": {
+    "@type": "City",
+    "name": address.city,
+    "containedInPlace": {
+      "@type": "State",
+      "name": address.state
+    }
+  },
+  "hasOfferCatalog": services.length > 0 ? {
     "@type": "OfferCatalog",
-    "name": "Web Design & Digital Marketing Services", 
-    "itemListElement": schema.services.map(service => ({
+    "name": `${businessName} Services`,
+    "itemListElement": services.map(service => ({
       "@type": "Offer",
       "itemOffered": {
         "@type": "Service",
-        "name": service.name,
-        "description": service.description,
+        "name": service,
         "provider": {
           "@type": "Organization",
           "name": businessName
         }
-      },
-      "price": service.price || "Contact for Quote",
-      "priceCurrency": "USD",
-      "priceValidUntil": `${currentYear + 1}-12-31`,
-      "availability": "https://schema.org/InStock",
-      "businessFunction": "https://schema.org/Sell"
+      }
     }))
-  },
-  "award": schema.awards || [],
-  "founder": {
-    "@type": "Person",
-    "name": "Owner",
-    "jobTitle": "Founder & CEO"
-  },
-  "numberOfEmployees": {
-    "@type": "QuantitativeValue",
-    "value": "1-10"
-  },
-  "sameAs": schema.socialMedia ? Object.values(schema.socialMedia).filter(Boolean) : [],
-  "contactPoint": [
-    {
-      "@type": "ContactPoint",
-      "telephone": phone,
-      "contactType": "customer service",
-      "areaServed": address.state,
-      "availableLanguage": "English"
-    },
-    {
-      "@type": "ContactPoint", 
-      "telephone": phone,
-      "contactType": "sales",
-      "areaServed": address.state,
-      "availableLanguage": "English"
-    }
-  ]
+  } : undefined,
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": phone,
+    "contactType": "customer service",
+    "areaServed": address.state,
+    "availableLanguage": "English"
+  }
 })} />
 
 <!-- Website Schema -->
@@ -257,17 +222,21 @@ const currentYear = new Date().getFullYear();
     "query-input": "required name=search_term_string"
   },
   "inLanguage": `${language}-${region}`,
-  "copyrightYear": currentYear.toString(),
+  "copyrightYear": businessCopyrightYear,
   "copyrightHolder": {
     "@type": "Organization",
-    "name": businessName
-  }
+    "name": ownerInfo?.name || businessName,
+    "foundingDate": businessFoundingDate,
+    "description": ownerInfo?.type || "Professional Service Provider"
+  },
+  "dateCreated": businessFoundingDate,
+  "dateModified": new Date().toISOString().split('T')[0]
 })} />
 
 <!-- Local Business Schema -->
 <script type="application/ld+json" is:inline set:html={JSON.stringify({
   "@context": "https://schema.org",
-  "@type": schema.businessType || "LocalBusiness",
+  "@type": businessType,
   "name": businessName,
   "description": description,
   "url": canonical,
@@ -285,9 +254,24 @@ const currentYear = new Date().getFullYear();
     "latitude": geo.latitude,
     "longitude": geo.longitude
   },
-  "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00",
-  "priceRange": "$500-$3500",
-  "paymentAccepted": ["Cash", "Credit Card", "Check", "Invoice"],
+  "openingHours": hours.length > 0 ? hours.map(hour => {
+    const [day, time] = hour.split(': ');
+    const dayCode = {
+      'Monday': 'Mo', 'Tuesday': 'Tu', 'Wednesday': 'We', 
+      'Thursday': 'Th', 'Friday': 'Fr', 'Saturday': 'Sa', 'Sunday': 'Su'
+    }[day] || 'Mo';
+    return `${dayCode} ${time.replace(' AM', '').replace(' PM', '').replace(/(\d+):(\d+)/g, '$1:$2')}`;
+  }) : undefined,
+  "paymentAccepted": ["Cash", "Credit Card"],
   "currenciesAccepted": "USD",
-  "keywords": keywords
+  "keywords": keywords,
+  "servesCuisine": businessType === "Restaurant" ? "American" : undefined,
+  "hasMenu": businessType === "Restaurant" || businessType === "FoodTruck" ? canonical + "#menu" : undefined,
+  "copyrightYear": businessCopyrightYear,
+  "copyrightHolder": {
+    "@type": "Organization",
+    "name": ownerInfo?.name || businessName,
+    "foundingDate": businessFoundingDate
+  },
+  "dateEstablished": businessFoundingDate
 })} />

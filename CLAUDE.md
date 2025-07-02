@@ -30,10 +30,22 @@ This is a **multi-tenant landing page business** designed to dominate local SEO 
 - `npm run preview` - Preview the built site locally
 - `npm run wrangler:dev` - Test with Cloudflare Workers runtime locally
 
+### Client Migration Workflow
+- `npm run migrate grillz --dry-run` - Test migration without making changes
+- `npm run migrate:grillz` - Extract grillz to standalone project
+- `npm run deploy:grillz` - Extract and deploy grillz to Cloudflare Pages
+- `npm run migrate:salsas` - Extract salsas to standalone project  
+- `npm run deploy:salsas` - Extract and deploy salsas to Cloudflare Pages
+- `npm run test:config` - Test URL generation and deployment modes
+
 ### Deployment
 - `npm run deploy` - Deploy to production (cartfullofx.com)
 - `npm run deploy:staging` - Deploy to staging environment
 - `npm run build && npm run deploy` - Full build and deploy to production
+
+### Business Generation
+- `node generate-business.js` - Interactive business configuration generator
+- `npm run generate` - Alias for business generator
 
 ### Wrangler Commands
 - `wrangler pages deployment list --project-name cartx` - List deployments
@@ -157,3 +169,141 @@ The project uses custom design tokens:
 - **Brand Consistency**: Uniform styling and Cozyartz attribution
 
 The project is configured for both static and server-side rendering, allowing for dynamic functionality while maintaining performance benefits of edge deployment. All sites work together to establish Cozyartz Media Group as the premier web development authority in Michigan.
+
+## 🚀 Client Migration Workflow
+
+### Zero-Cost Development Strategy
+This system allows you to develop client sites without upfront domain costs, then seamlessly migrate to standalone domains when clients approve.
+
+#### Development Phase
+- **Add business to `src/data/businesses.js`**
+- **Test locally**: `http://localhost:4321/grillz`
+- **Deploy for demo**: Business appears at `cartfullofx.com/grillz`
+- **Show professional portfolio** with futuristic carousel
+
+#### Client Approval & Migration
+- **Extract to standalone**: `npm run migrate:grillz`
+- **Deploy standalone site**: `npm run deploy:grillz`
+- **Preview at**: `https://grillz.pages.dev`
+- **Connect custom domain** when client purchases
+
+#### Business Configuration Structure
+```javascript
+// In src/data/businesses.js
+businessname: {
+  // Standard business information...
+  businessName: "Business Name",
+  phone: "(269) 261-0069",
+  
+  // Deployment configuration
+  deployment: {
+    subdomain: "businessname.cartfullofx.com",
+    customDomain: null,              // Set when client buys domain
+    cloudflareProjectId: null,       // Set after deployment  
+    migrationReady: true            // Ready for standalone deployment
+  }
+}
+```
+
+#### URL Behavior by Deployment Mode
+- **Development**: `cartfullofx.com/grillz` (BASE_PATH=/grillz)
+- **Subdomain**: `grillz.cartfullofx.com` (future enhancement)
+- **Standalone**: `grillz.pages.dev` → `grillz.com` (BASE_PATH=/)
+
+#### Migration Benefits
+- ✅ No upfront domain costs during development
+- ✅ Professional client demos with portfolio showcase
+- ✅ One-command migration to standalone sites
+- ✅ Automatic URL adaptation for deployment modes
+- ✅ Scalable workflow for unlimited clients
+
+### Migration Script Features
+- **Dry run testing**: `--dry-run` flag for safe testing
+- **Automatic extraction**: Copies and configures standalone project
+- **Deployment instructions**: Generates step-by-step guide
+- **Cloudflare integration**: Direct deployment with `--deploy` flag
+
+## 🚀 Quick Business Page Generation System
+
+### Rapid Page Creation Workflow
+
+#### Method 1: Automated Generator (Recommended)
+```bash
+node generate-business.js
+```
+Interactive script that auto-generates business configurations with Michigan city data, SEO keywords, and business type templates.
+
+#### Method 2: Manual Configuration  
+Add businesses directly to `src/pages/[business].astro` businessConfigs object.
+
+### 📋 Business Type Templates
+
+#### Restaurant Template
+```javascript
+businessname: {
+  title: "Business Name - Authentic [Cuisine] Cuisine",
+  description: "Authentic [cuisine] restaurant in [City], Michigan. [Unique selling point].",
+  businessType: "Restaurant",
+  services: ["Dine-In Service", "Takeout & Delivery", "Catering", "Private Events"],
+  keywords: ["restaurant [city]", "authentic [cuisine] Michigan", "[specialty dish]"]
+}
+```
+
+#### Hair Salon Template
+```javascript
+businessname: {
+  title: "Business Name - Hair Salon & Beauty Services", 
+  businessType: "BeautySalon",
+  services: ["Hair Cuts & Styling", "Hair Coloring", "Highlights", "Bridal Hair"],
+  keywords: ["hair salon [city]", "hair stylist Michigan", "bridal hair"]
+}
+```
+
+#### Auto Repair Template
+```javascript
+businessname: {
+  title: "Business Name - Auto Repair & Service",
+  businessType: "AutomotiveBusiness", 
+  services: ["Oil Changes", "Brake Repair", "Engine Diagnostics", "Tire Service"],
+  keywords: ["auto repair [city]", "car service Michigan", "brake repair"]
+}
+```
+
+### 🎯 Client Sales Process
+
+#### Demo Generation Steps
+1. Research target business (website, Google listing, competitors)
+2. Run `node generate-business.js` to create configuration
+3. Add config to [business].astro file
+4. Deploy demo: `npm run build && npm run deploy`
+5. Present live demo at [business].cartfullofx.com
+
+#### Sales Presentation Script
+"I've created a professional website demo for [Business Name] at [business].cartfullofx.com. This showcases mobile-optimized design, local SEO for [City] searches, and professional contact integration. Same quality for $XXX setup + $XX/month hosting."
+
+#### Pricing Structure
+- Landing Page: $500-800
+- Hosting: $25-50/month
+- SEO Setup: $200 one-time
+- Rush Delivery: +50%
+
+### 🔧 Development Shortcuts
+
+#### Michigan Cities with Coordinates
+Battle Creek (42.3211,-85.1797), Kalamazoo (42.2917,-85.5872), Grand Rapids (42.9634,-85.6681), Detroit (42.3314,-83.0458)
+
+#### Testing Checklist
+- [ ] Page loads at /[businessname]
+- [ ] Mobile responsive
+- [ ] SEO meta tags populated  
+- [ ] Cozyartz attribution present
+- [ ] Contact info accurate
+
+#### Common Business Categories
+Food Service, Personal Care, Automotive, Home Services, Professional Services, Retail, Healthcare
+
+### 📈 SEO Keywords Template
+- "[Service] [City]" (primary)
+- "[Service] [City] Michigan" 
+- "[Business type] near me"
+- "Best [service] [City]"

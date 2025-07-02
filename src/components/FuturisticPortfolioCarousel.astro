@@ -1,0 +1,488 @@
+---
+import { getPortfolioBusinesses, getCurrentDeploymentMode, DEPLOYMENT_MODES } from '../data/businesses.js';
+
+const portfolioBusinesses = getPortfolioBusinesses();
+const deploymentMode = getCurrentDeploymentMode();
+const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
+---
+
+<div class="futuristic-portfolio-carousel relative overflow-hidden">
+  <!-- Carousel Header -->
+  <div class="text-center mb-8">
+    <h3 class="text-3xl md:text-4xl font-black text-white mb-4 font-fredoka">
+      <span class="sparkle">🎯</span> LIVE PORTFOLIO SHOWCASE <span class="sparkle">💼</span>
+    </h3>
+    <p class="text-white/80 text-lg max-w-2xl mx-auto">
+      Experience our latest creations - Professional websites delivering real results for Michigan businesses
+    </p>
+  </div>
+
+  <!-- Carousel Container -->
+  <div class="carousel-wrapper relative">
+    <!-- Background Effects -->
+    <div class="carousel-bg-effect absolute inset-0 opacity-30"></div>
+    
+    <!-- Main Carousel Track -->
+    <div class="carousel-track" id="portfolioTrack">
+      {portfolioBusinesses.map((business, index) => (
+        <div class="carousel-slide" data-index={index}>
+          <div class="portfolio-card glass-effect rounded-3xl p-8 border border-dark-border hover:border-accent-slate/50 transition-all duration-500">
+            
+            <!-- Card Header -->
+            <div class="card-header mb-6">
+              <div class="flex items-center justify-between mb-4">
+                <div class="business-type-badge bg-gradient-to-r from-accent-slate/20 to-accent-teal/20 px-4 py-2 rounded-full border border-accent-slate/30">
+                  <span class="text-accent-teal text-sm font-bold">{business.businessType}</span>
+                </div>
+                <div class="status-indicator">
+                  <div class="flex items-center space-x-2">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-green-400 text-xs font-semibold uppercase tracking-wider">LIVE</span>
+                    {business.deployment?.migrationReady && isDevelopment && (
+                      <div class="ml-2 px-2 py-1 bg-blue-500/20 border border-blue-400/30 rounded-full">
+                        <span class="text-blue-300 text-xs font-semibold">MIGRATION READY</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              <h4 class="text-2xl font-black text-white mb-2 font-fredoka">{business.businessName}</h4>
+              <p class="text-accent-slate text-lg mb-4">{business.address.city}, {business.address.state}</p>
+            </div>
+
+            <!-- Preview Window -->
+            <div class="preview-window relative mb-6 bg-gradient-to-br from-gray-900 to-black rounded-2xl p-6 border border-accent-slate/20">
+              <div class="browser-chrome flex items-center space-x-2 mb-4">
+                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                <div class="flex-1 bg-gray-800 rounded px-3 py-1 ml-4">
+                  <span class="text-gray-400 text-xs">
+                    {isDevelopment ? `cartfullofx.com${business.url}` : business.url.replace('https://', '')}
+                  </span>
+                </div>
+              </div>
+              
+              <!-- Mock Website Preview -->
+              <div class="website-preview bg-gradient-to-br from-accent-slate/10 to-accent-teal/10 rounded-lg p-4 min-h-[120px] border border-accent-slate/10">
+                <div class="preview-content">
+                  <div class="preview-header mb-3">
+                    <div class="w-3/4 h-3 bg-accent-slate/30 rounded mb-2"></div>
+                    <div class="w-1/2 h-2 bg-accent-teal/30 rounded"></div>
+                  </div>
+                  <div class="preview-body space-y-2">
+                    <div class="w-full h-2 bg-white/10 rounded"></div>
+                    <div class="w-5/6 h-2 bg-white/10 rounded"></div>
+                    <div class="w-2/3 h-2 bg-white/10 rounded"></div>
+                  </div>
+                </div>
+                
+                <!-- Hover Overlay -->
+                <div class="preview-overlay absolute inset-0 bg-gradient-to-br from-accent-slate/20 to-accent-teal/20 rounded-lg opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                  <div class="text-white font-bold text-lg">
+                    <i class="fas fa-external-link-alt mr-2"></i>
+                    View Live Site
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Business Info -->
+            <div class="business-info mb-6">
+              <p class="text-white/80 mb-4 leading-relaxed">
+                {business.portfolioDescription}
+              </p>
+              
+              <!-- Key Services -->
+              <div class="services-preview flex flex-wrap gap-2 mb-4">
+                {business.services.slice(0, 3).map((service) => (
+                  <span class="service-tag bg-accent-slate/10 text-accent-teal px-3 py-1 rounded-full text-sm border border-accent-slate/20">
+                    {service}
+                  </span>
+                ))}
+                {business.services.length > 3 && (
+                  <span class="service-tag bg-accent-teal/10 text-accent-slate px-3 py-1 rounded-full text-sm border border-accent-teal/20">
+                    +{business.services.length - 3} more
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="card-actions flex flex-col sm:flex-row gap-3">
+              <a href={business.url} 
+                 class="view-site-btn bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 text-center shadow-lg">
+                <i class="fas fa-external-link-alt mr-2"></i>
+                View Live Demo
+              </a>
+              <button class="info-btn glass-effect text-accent-teal border border-accent-teal/30 hover:bg-accent-teal/10 font-semibold px-6 py-3 rounded-full transition-all duration-300">
+                <i class="fas fa-info-circle mr-2"></i>
+                Project Details
+              </button>
+            </div>
+
+            <!-- Holographic Corner Effects -->
+            <div class="holo-corner holo-corner-tl"></div>
+            <div class="holo-corner holo-corner-tr"></div>
+            <div class="holo-corner holo-corner-bl"></div>
+            <div class="holo-corner holo-corner-br"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="carousel-controls flex justify-center items-center mt-8 space-x-4">
+      <button id="prevBtn" class="nav-btn glass-effect w-12 h-12 rounded-full flex items-center justify-center text-white hover:text-accent-teal transition-all duration-300 border border-accent-slate/30">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      
+      <!-- Dots Indicator -->
+      <div class="dots-container flex space-x-2">
+        {portfolioBusinesses.map((_, index) => (
+          <button class="carousel-dot w-3 h-3 rounded-full bg-white/30 hover:bg-accent-teal transition-all duration-300" data-index={index}></button>
+        ))}
+      </div>
+      
+      <button id="nextBtn" class="nav-btn glass-effect w-12 h-12 rounded-full flex items-center justify-center text-white hover:text-accent-teal transition-all duration-300 border border-accent-slate/30">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Auto-play Toggle -->
+    <div class="carousel-status flex justify-center mt-4">
+      <button id="playPauseBtn" class="play-pause-btn glass-effect px-4 py-2 rounded-full text-white/70 hover:text-accent-teal transition-all duration-300 text-sm border border-accent-slate/20">
+        <i class="fas fa-pause mr-2"></i>
+        <span id="playPauseText">Auto-playing</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Carousel Base Styles */
+.futuristic-portfolio-carousel {
+  --carousel-duration: 5000ms;
+  --transition-duration: 800ms;
+}
+
+.carousel-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  perspective: 1200px;
+}
+
+.carousel-track {
+  position: relative;
+  display: flex;
+  transition: transform var(--transition-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  flex-shrink: 0;
+  padding: 0 2rem;
+  opacity: 0.7;
+  transform: scale(0.95) rotateY(5deg);
+  transition: all var(--transition-duration) cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  transform: scale(1) rotateY(0deg);
+}
+
+/* Portfolio Card Styles */
+.portfolio-card {
+  position: relative;
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-10px) rotateX(5deg);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(59, 130, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Holographic Corner Effects */
+.holo-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #3b82f6, #06b6d4) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.portfolio-card:hover .holo-corner {
+  opacity: 1;
+}
+
+.holo-corner-tl {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.holo-corner-tr {
+  top: -1px;
+  right: -1px;
+  border-width: 2px 2px 0 0;
+}
+
+.holo-corner-bl {
+  bottom: -1px;
+  left: -1px;
+  border-width: 0 0 2px 2px;
+}
+
+.holo-corner-br {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Preview Window Styles */
+.preview-window {
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-window:hover .preview-overlay {
+  opacity: 1;
+}
+
+.website-preview {
+  position: relative;
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(31, 41, 55, 0.9) 100%);
+}
+
+/* Background Effects */
+.carousel-bg-effect {
+  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  animation: pulse-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.5; transform: scale(1.05); }
+}
+
+/* Navigation Styles */
+.nav-btn:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: scale(1.1);
+}
+
+.carousel-dot.active {
+  background: linear-gradient(45deg, #3b82f6, #06b6d4);
+  transform: scale(1.3);
+}
+
+/* Business Type Badge */
+.business-type-badge {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+
+/* Service Tags */
+.service-tag {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+}
+
+.service-tag:hover {
+  background: rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .carousel-slide {
+    padding: 0 1rem;
+  }
+  
+  .portfolio-card {
+    padding: 1.5rem;
+  }
+  
+  .preview-window {
+    min-height: 100px;
+  }
+}
+
+/* Animation Classes */
+.slide-in {
+  animation: slideInUp 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<script>
+class FuturisticPortfolioCarousel {
+  constructor() {
+    this.track = document.getElementById('portfolioTrack');
+    this.slides = document.querySelectorAll('.carousel-slide');
+    this.dots = document.querySelectorAll('.carousel-dot');
+    this.prevBtn = document.getElementById('prevBtn');
+    this.nextBtn = document.getElementById('nextBtn');
+    this.playPauseBtn = document.getElementById('playPauseBtn');
+    this.playPauseText = document.getElementById('playPauseText');
+    
+    this.currentIndex = 0;
+    this.isPlaying = true;
+    this.interval = null;
+    
+    this.init();
+  }
+  
+  init() {
+    this.updateSlides();
+    this.setupEventListeners();
+    this.startAutoPlay();
+  }
+  
+  setupEventListeners() {
+    this.prevBtn?.addEventListener('click', () => this.prevSlide());
+    this.nextBtn?.addEventListener('click', () => this.nextSlide());
+    this.playPauseBtn?.addEventListener('click', () => this.toggleAutoPlay());
+    
+    // Dot navigation
+    this.dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => this.goToSlide(index));
+    });
+    
+    // Pause on hover
+    this.track?.addEventListener('mouseenter', () => this.pauseAutoPlay());
+    this.track?.addEventListener('mouseleave', () => {
+      if (this.isPlaying) this.startAutoPlay();
+    });
+    
+    // Touch/swipe support
+    let startX = 0;
+    let startY = 0;
+    
+    this.track?.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+    
+    this.track?.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    });
+    
+    this.track?.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = startX - endX;
+      const diffY = startY - endY;
+      
+      // Horizontal swipe
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          this.nextSlide();
+        } else {
+          this.prevSlide();
+        }
+      }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') this.prevSlide();
+      if (e.key === 'ArrowRight') this.nextSlide();
+      if (e.key === ' ') {
+        e.preventDefault();
+        this.toggleAutoPlay();
+      }
+    });
+  }
+  
+  updateSlides() {
+    // Update transform
+    const translateX = -this.currentIndex * 100;
+    this.track.style.transform = `translateX(${translateX}%)`;
+    
+    // Update active states
+    this.slides.forEach((slide, index) => {
+      slide.classList.toggle('active', index === this.currentIndex);
+    });
+    
+    this.dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === this.currentIndex);
+    });
+  }
+  
+  nextSlide() {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+    this.updateSlides();
+  }
+  
+  prevSlide() {
+    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+    this.updateSlides();
+  }
+  
+  goToSlide(index) {
+    this.currentIndex = index;
+    this.updateSlides();
+  }
+  
+  startAutoPlay() {
+    if (this.interval) return;
+    this.interval = setInterval(() => {
+      this.nextSlide();
+    }, 5000);
+  }
+  
+  pauseAutoPlay() {
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
+    }
+  }
+  
+  toggleAutoPlay() {
+    this.isPlaying = !this.isPlaying;
+    
+    if (this.isPlaying) {
+      this.startAutoPlay();
+      this.playPauseText.textContent = 'Auto-playing';
+      this.playPauseBtn.querySelector('i').className = 'fas fa-pause mr-2';
+    } else {
+      this.pauseAutoPlay();
+      this.playPauseText.textContent = 'Paused';
+      this.playPauseBtn.querySelector('i').className = 'fas fa-play mr-2';
+    }
+  }
+}
+
+// Initialize carousel when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  new FuturisticPortfolioCarousel();
+});
+</script>

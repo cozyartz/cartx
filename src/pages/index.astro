@@ -1,6 +1,9 @@
 ---
 import '../styles/global.css';
 import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FuturisticPortfolioCarousel from '../components/FuturisticPortfolioCarousel.astro';
 
 const services = [
   {
@@ -63,22 +66,6 @@ const michiganCities = [
   "Saginaw", "Bay City", "Midland", "Mount Pleasant", "Marquette", "Traverse City"
 ];
 
-const portfolioSites = [
-  {
-    name: "Cartx on Wheelz",
-    type: "Food Truck",
-    location: "Springfield, MI",
-    url: "/cartx",
-    description: "Premium fast food truck with mobile ordering"
-  },
-  {
-    name: "Coming Soon - Salsas Cantina",
-    type: "Mexican Restaurant",
-    location: "Battle Creek, MI",
-    url: "#",
-    description: "Authentic Mexican cuisine with online ordering"
-  }
-];
 ---
 
 <html lang="en" class="scroll-smooth">
@@ -106,37 +93,25 @@ const portfolioSites = [
         latitude: 42.3211,
         longitude: -85.1797
       }}
-      serviceAreas={["Michigan"]}
-      citiesServed={michiganCities}
-      schema={{
-        foundingDate: "2023",
-        naics: "541511",
-        services: [
-          {
-            name: "Professional Website Development",
-            description: "Custom website design and development with responsive design, mobile optimization, and SEO integration",
-            price: "500",
-            priceType: "fixed"
-          },
-          {
-            name: "SEO & Google Maps Listing",
-            description: "Complete SEO optimization and Google My Business setup for maximum local visibility",
-            priceType: "included"
-          },
-          {
-            name: "Part 107 Drone Services",
-            description: "FAA certified commercial drone pilot services including aerial photography, videography, real estate marketing, and construction site surveys",
-            priceType: "quote"
-          }
-        ],
-        awards: ["WOSB Certified Small Business", "SBA Women-Owned Small Business Certification"],
-        socialMedia: {
-          facebook: "https://www.facebook.com/cozyartzmedia",
-          instagram: "https://www.instagram.com/cozyartzmedia",
-          linkedin: "https://www.linkedin.com/company/cozyartz-media-group",
-          twitter: "https://twitter.com/cozyartzmedia"
-        }
-      }}
+      businessType="ProfessionalService"
+      services={[
+        "Professional Website Development",
+        "SEO & Digital Marketing", 
+        "Google Maps Listing",
+        "Domain & Hosting",
+        "Monthly Maintenance",
+        "Part 107 Drone Services"
+      ]}
+      hours={[
+        "Monday: 9:00 AM - 5:00 PM",
+        "Tuesday: 9:00 AM - 5:00 PM", 
+        "Wednesday: 9:00 AM - 5:00 PM",
+        "Thursday: 9:00 AM - 5:00 PM",
+        "Friday: 9:00 AM - 5:00 PM",
+        "Saturday: 10:00 AM - 2:00 PM",
+        "Sunday: Closed"
+      ]}
+      foundingDate="2017"
     />
     
     <!-- Favicon and Icons -->
@@ -144,14 +119,18 @@ const portfolioSites = [
     <link rel="manifest" href="/site.webmanifest" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   </head>
   <body class="min-h-screen gradient-bg font-inter">
     
+    <!-- Header -->
+    <Header />
+    
     <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden pt-20" id="home">
       
       <!-- Hero Glow Effect -->
       <div class="hero-glow absolute inset-0 w-full h-full"></div>
@@ -169,7 +148,7 @@ const portfolioSites = [
       <div class="slide-in max-w-6xl mx-auto relative z-10">
         <div class="glass-effect rounded-3xl p-8 md:p-12 mb-8 border border-dark-border">
           <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black neon-glow mb-6 font-fredoka text-accent-slate professional-spacing">
-            <span class="sparkle">✨</span> COZYARTZ MEDIA GROUP <span class="sparkle">🚀</span>
+            <span class="sparkle" aria-hidden="true">✨</span> COZYARTZ MEDIA GROUP <span class="sparkle" aria-hidden="true">🚀</span>
           </h1>
           
           <p class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-8 opacity-95 professional-text">
@@ -178,7 +157,7 @@ const portfolioSites = [
           
           <!-- Special Offer Banner -->
           <div class="special-offer-banner glass-effect rounded-2xl p-6 md:p-8 mb-8 border-2 border-accent-slate/40">
-            <div class="text-accent-teal text-3xl mb-3">💡</div>
+            <div class="text-accent-teal text-3xl mb-3" aria-hidden="true">💡</div>
             <h2 class="text-2xl md:text-3xl font-black text-accent-slate mb-4 font-fredoka">
               LIMITED TIME SPECIAL OFFER
             </h2>
@@ -202,19 +181,20 @@ const portfolioSites = [
           
           <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <a href="tel:(269)261-0069" 
-               class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-8 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center">
-              <i class="fas fa-phone"></i> CALL NOW: {businessInfo.phone}
+               class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-8 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center focus:outline-none focus:ring-4 focus:ring-accent-teal/50"
+               aria-label="Call Cozyartz Media Group at (269) 261-0069">
+              <i class="fas fa-phone" aria-hidden="true"></i> CALL NOW: {businessInfo.phone}
             </a>
             
-            <button id="show-toast" class="glass-effect px-6 py-3 rounded-full text-white font-semibold text-lg hover:bg-white/10 transition-all duration-300 w-full sm:w-auto">
-              <i class="fas fa-info-circle"></i> Learn More
+            <button id="show-toast" class="glass-effect px-6 py-3 rounded-full text-white font-semibold text-lg hover:bg-white/10 transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-4 focus:ring-white/30" aria-label="Show more information about our services">
+              <i class="fas fa-info-circle" aria-hidden="true"></i> Learn More
             </button>
           </div>
           
           <!-- Michigan Cities We Serve -->
           <div class="glass-effect rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
             <h3 class="text-xl font-bold text-white mb-4 text-center">
-              <i class="fas fa-map-marker-alt text-accent-slate"></i> Proudly Serving All of Michigan
+              <i class="fas fa-map-marker-alt text-accent-slate" aria-hidden="true"></i> Proudly Serving All of Michigan
             </h3>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 text-sm text-white/70">
               {michiganCities.slice(0, 18).map((city) => (
@@ -232,7 +212,7 @@ const portfolioSites = [
     </section>
 
     <!-- Services Section -->
-    <section class="py-20 px-4">
+    <section class="py-20 px-4" id="web-design">
       <div class="max-w-7xl mx-auto">
         
         <!-- Section Header -->
@@ -245,27 +225,9 @@ const portfolioSites = [
           </p>
         </div>
 
-        <!-- Portfolio Showcase -->
-        <div class="text-center mb-16 slide-in">
-          <h3 class="text-3xl font-black text-white mb-8 font-fredoka">
-            <span class="sparkle">🎯</span> OUR RECENT WORK <span class="sparkle">💼</span>
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {portfolioSites.map((site) => (
-              <div class="glass-effect rounded-2xl p-6 border border-dark-border hover:border-accent-slate/30 transition-all duration-300">
-                <h4 class="text-xl font-bold text-accent-slate mb-2">{site.name}</h4>
-                <p class="text-white/80 mb-2">{site.type} • {site.location}</p>
-                <p class="text-white/70 text-sm mb-4">{site.description}</p>
-                {site.url !== "#" ? (
-                  <a href={site.url} class="text-accent-teal hover:text-accent-teal-light transition-colors font-medium">
-                    View Live Site →
-                  </a>
-                ) : (
-                  <span class="text-white/50 text-sm">Coming Soon</span>
-                )}
-              </div>
-            ))}
-          </div>
+        <!-- Portfolio Carousel -->
+        <div class="mb-16 slide-in">
+          <FuturisticPortfolioCarousel />
         </div>
 
         <!-- Services Grid -->
@@ -276,8 +238,8 @@ const portfolioSites = [
               
               <!-- Service Icon -->
               <div class="text-center mb-6">
-                <div class="bg-gradient-to-br from-accent-slate to-accent-teal w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg service-icon">
-                  <i class={`${service.icon} text-2xl text-white`}></i>
+                <div class="bg-gradient-to-br from-accent-slate to-accent-teal w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg service-icon" role="img" aria-label={`${service.title} service icon`}>
+                  <i class={`${service.icon} text-2xl text-white`} aria-hidden="true"></i>
                 </div>
                 <h3 class="text-xl font-black text-white mb-3 font-fredoka">
                   {service.title}
@@ -294,7 +256,7 @@ const portfolioSites = [
               <ul class="space-y-2">
                 {service.details.map((detail) => (
                   <li class="text-white/70 text-sm flex items-center">
-                    <i class="fas fa-check text-accent-slate mr-3 flex-shrink-0"></i>
+                    <i class="fas fa-check text-accent-slate mr-3 flex-shrink-0" aria-hidden="true"></i>
                     {detail}
                   </li>
                 ))}
@@ -307,21 +269,21 @@ const portfolioSites = [
         <div class="text-center slide-in">
           <div class="glass-effect rounded-3xl p-8 md:p-12 max-w-4xl mx-auto border border-dark-border">
             <h3 class="text-3xl md:text-4xl font-black text-white mb-6 font-fredoka">
-              <span class="sparkle">🎯</span> Why Choose Cozyartz Media Group? <span class="sparkle">⭐</span>
+              <span class="sparkle" aria-hidden="true">🎯</span> Why Choose Cozyartz Media Group? <span class="sparkle" aria-hidden="true">⭐</span>
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div class="text-center">
-                <div class="text-4xl mb-3">🏆</div>
+                <div class="text-4xl mb-3" role="img" aria-label="Trophy icon representing WOSB Certification">🏆</div>
                 <h4 class="text-xl font-bold text-accent-slate mb-2">WOSB Certified</h4>
                 <p class="text-white/70">Women-Owned Small Business certified by the SBA</p>
               </div>
               <div class="text-center">
-                <div class="text-4xl mb-3">⚡</div>
+                <div class="text-4xl mb-3" role="img" aria-label="Lightning bolt icon representing fast results">⚡</div>
                 <h4 class="text-xl font-bold text-accent-slate mb-2">Fast Results</h4>
                 <p class="text-white/70">Get online quickly with our streamlined process</p>
               </div>
               <div class="text-center">
-                <div class="text-4xl mb-3">🔧</div>
+                <div class="text-4xl mb-3" role="img" aria-label="Tools icon representing full service">🔧</div>
                 <h4 class="text-xl font-bold text-accent-slate mb-2">Full Service</h4>
                 <p class="text-white/70">Everything you need under one roof</p>
               </div>
@@ -339,8 +301,9 @@ const portfolioSites = [
             </div>
             
             <a href="tel:(269)261-0069" 
-               class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-12 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 inline-block">
-              <i class="fas fa-rocket mr-3"></i>GET STARTED TODAY
+               class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-12 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 inline-block focus:outline-none focus:ring-4 focus:ring-accent-teal/50"
+               aria-label="Call to get started with Cozyartz Media Group today">
+              <i class="fas fa-rocket mr-3" aria-hidden="true"></i>GET STARTED TODAY
             </a>
           </div>
         </div>
@@ -348,21 +311,7 @@ const portfolioSites = [
     </section>
 
     <!-- Footer -->
-    <footer class="text-center py-12 px-4 border-t border-dark-border">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-white/60 font-medium mb-6">
-          Ready to transform your business? Let's make it happen!
-        </div>
-        
-        <div class="text-center text-white/40 text-sm mb-4">
-          <span class="text-white/60 font-medium">{businessInfo.agency}</span> • {businessInfo.tagline}
-        </div>
-        
-        <div class="text-white/40 text-sm">
-          © {new Date().getFullYear()} {businessInfo.agency}. All rights reserved.
-        </div>
-      </div>
-    </footer>
+    <Footer />
 
     <!-- Toast Notification -->
     <div id="toast" class="toast-notification">
@@ -374,8 +323,8 @@ const portfolioSites = [
           <h4>💡 Pro Tip</h4>
           <p>87% of consumers read online reviews before visiting a business. Let's get you found!</p>
         </div>
-        <button id="close-toast" class="toast-close">
-          <i class="fas fa-times"></i>
+        <button id="close-toast" class="toast-close" aria-label="Close notification">
+          <i class="fas fa-times" aria-hidden="true"></i>
         </button>
       </div>
     </div>

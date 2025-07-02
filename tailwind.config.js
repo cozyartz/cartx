@@ -12,11 +12,11 @@ export default {
       colors: {
         // Cozyartz Media Brand Colors
         'accent-slate': '#334155',
-        'accent-teal': '#14B8A6',
+        'accent-teal': '#0891B2',
         'accent-slate-light': '#475569',
-        'accent-teal-light': '#2DD4BF',
+        'accent-teal-light': '#0EA5E9',
         'accent-slate-dark': '#1E293B',
-        'accent-teal-dark': '#0F766E',
+        'accent-teal-dark': '#0E7490',
         'dark-bg': '#0A0A0A',
         'dark-surface': '#1A1A1A',
         'dark-border': '#2A2A2A',

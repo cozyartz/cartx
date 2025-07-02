@@ -11,7 +11,16 @@
     "deploy:cartx": "wrangler pages deploy dist --project-name cartx-cartfullofx",
     "deploy:salsas": "wrangler pages deploy dist --project-name salsas-cartfullofx",
     "deploy:staging": "wrangler pages deploy dist --project-name cartfullofx-staging",
-    "wrangler:dev": "wrangler pages dev dist --compatibility-date=2024-01-01"
+    "wrangler:dev": "wrangler pages dev dist --compatibility-date=2024-01-01",
+    "generate": "node generate-business.js",
+    "quick-deploy": "npm run build && npm run deploy",
+    "demo-deploy": "npm run build && npm run deploy:staging",
+    "migrate": "node scripts/migrate-business.js",
+    "migrate:grillz": "node scripts/migrate-business.js grillz",
+    "migrate:salsas": "node scripts/migrate-business.js salsas",
+    "deploy:grillz": "node scripts/migrate-business.js grillz --deploy",
+    "deploy:salsas": "node scripts/migrate-business.js salsas --deploy",
+    "test:config": "node scripts/test-configurations.js"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.0",

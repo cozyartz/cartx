@@ -1,0 +1,114 @@
+---
+     // Header component for Cozyartz Media Group
+     ---
+     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent">
+       <div class="container mx-auto px-6 py-4">
+         <div class="flex items-center justify-between">
+           <!-- Logo -->
+           <div class="flex items-center space-x-3">
+             <!-- Cloudflare Image via Signed URL -->
+             <img 
+               src="/cmgLogo.png" 
+               alt="Cozyartz Media Group Logo" 
+               class="h-12 w-12 object-contain"
+               loading="lazy"
+              onerror="this.src='/favicon.svg'"
+             >
+             <div class="text-white">
+               <h1 class="text-xl font-bold">COZYARTZ</h1>
+               <p class="text-xs text-accent-teal tracking-wider">MEDIA GROUP</p>
+             </div>
+           </div>
+           <!-- Desktop Navigation -->
+           <nav class="hidden md:flex items-center space-x-8">
+             <a href="#home" class="text-white hover:text-accent-teal transition-colors">Home</a>
+             <div class="relative group">
+               <button class="flex items-center text-white hover:text-accent-teal transition-colors">
+                 Services <i class="fas fa-chevron-down ml-1 text-sm"></i>
+               </button>
+               <div class="absolute top-full left-0 mt-2 w-64 bg-dark-surface rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-dark-border">
+                 <a href="#web-design" class="block px-4 py-3 text-white hover:bg-accent-teal/20 rounded-t-lg">Web Design & Development</a>
+                 <a href="#seo" class="block px-4 py-3 text-white hover:bg-accent-teal/20">SEO & Digital Marketing</a>
+                 <a href="#hosting" class="block px-4 py-3 text-white hover:bg-accent-teal/20">Domain & Hosting</a>
+                 <a href="#drone" class="block px-4 py-3 text-white hover:bg-accent-teal/20 rounded-b-lg">Part 107 Drone Services</a>
+               </div>
+             </div>
+             <a href="#portfolio" class="text-white hover:text-accent-teal transition-colors">Portfolio</a>
+             <a href="#about" class="text-white hover:text-accent-teal transition-colors">About</a>
+             <a href="tel:(269)261-0069" class="bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white px-6 py-2 rounded-full transition-all duration-300 font-semibold">
+               Contact
+             </a>
+           </nav>
+           <!-- Mobile Menu Button -->
+           <button 
+             id="mobile-menu-button"
+             class="md:hidden text-white focus:outline-none"
+             aria-label="Toggle mobile menu"
+           >
+             <i id="menu-icon" class="fas fa-bars text-xl"></i>
+           </button>
+         </div>
+         <!-- Mobile Navigation -->
+         <nav id="mobile-menu" class="md:hidden mt-4 pb-4 border-t border-dark-border hidden">
+           <div class="flex flex-col space-y-4 pt-4">
+             <a href="#home" class="text-white hover:text-accent-teal transition-colors">Home</a>
+             <a href="#web-design" class="text-white hover:text-accent-teal transition-colors">Web Design & Development</a>
+             <a href="#seo" class="text-white hover:text-accent-teal transition-colors">SEO & Digital Marketing</a>
+             <a href="#hosting" class="text-white hover:text-accent-teal transition-colors">Domain & Hosting</a>
+             <a href="#drone" class="text-white hover:text-accent-teal transition-colors">Part 107 Drone Services</a>
+             <a href="#portfolio" class="text-white hover:text-accent-teal transition-colors">Portfolio</a>
+             <a href="#about" class="text-white hover:text-accent-teal transition-colors">About</a>
+             <a href="tel:(269)261-0069" class="bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white px-6 py-2 rounded-full transition-all duration-300 text-center font-semibold">
+               Contact
+             </a>
+           </div>
+         </nav>
+       </div>
+     </header>
+
+     <script is:inline>
+       document.addEventListener('DOMContentLoaded', function() {
+         const header = document.getElementById('header');
+         const mobileMenuButton = document.getElementById('mobile-menu-button');
+         const mobileMenu = document.getElementById('mobile-menu');
+         const menuIcon = document.getElementById('menu-icon');
+         let isMenuOpen = false;
+
+         function handleScroll() {
+           if (window.scrollY > 50) {
+             header.classList.add('bg-dark-surface/95', 'backdrop-blur-md', 'shadow-lg');
+             header.classList.remove('bg-transparent');
+           } else {
+             header.classList.remove('bg-dark-surface/95', 'backdrop-blur-md', 'shadow-lg');
+             header.classList.add('bg-transparent');
+           }
+         }
+
+         function toggleMobileMenu() {
+           isMenuOpen = !isMenuOpen;
+           if (isMenuOpen) {
+             mobileMenu.classList.remove('hidden');
+             menuIcon.classList.remove('fa-bars');
+             menuIcon.classList.add('fa-times');
+           } else {
+             mobileMenu.classList.add('hidden');
+             menuIcon.classList.remove('fa-times');
+             menuIcon.classList.add('fa-bars');
+           }
+         }
+
+         function closeMobileMenu() {
+           if (isMenuOpen) {
+             toggleMobileMenu();
+           }
+         }
+
+         window.addEventListener('scroll', handleScroll);
+         mobileMenuButton?.addEventListener('click', toggleMobileMenu);
+         const mobileMenuLinks = mobileMenu?.querySelectorAll('a');
+         mobileMenuLinks?.forEach(link => {
+           link.addEventListener('click', closeMobileMenu);
+         });
+         handleScroll();
+       });
+     </script>
