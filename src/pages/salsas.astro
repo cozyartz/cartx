@@ -1,0 +1,428 @@
+---
+import '../styles/global.css';
+import { getBusinessConfig } from '../data/businesses.js';
+
+const config = getBusinessConfig('salsas');
+
+// Transform menu data to match template format
+const menu = [
+  {
+    category: 'Appetizers',
+    description: 'Start your meal with our delicious appetizers',
+    items: config.menu.appetizers,
+  },
+  {
+    category: 'Tacos', 
+    description: 'Authentic tacos made with fresh ingredients',
+    items: config.menu.tacos,
+  },
+  {
+    category: 'Burritos',
+    description: 'Large flour tortillas filled with your favorite ingredients', 
+    items: config.menu.burritos,
+  },
+  {
+    category: 'Fajitas & Platters',
+    description: 'Sizzling platters served with rice, beans, and tortillas',
+    items: config.menu.fajitasPlatters,
+  },
+  {
+    category: 'Desserts',
+    description: 'Sweet endings to your meal',
+    items: config.menu.desserts,
+  },
+];
+
+const restaurantInfo = {
+  name: config.businessName,
+  location: `${config.address.city}, ${config.address.state}`,
+  phone: config.phone,
+  email: config.restaurantInfo.email,
+  address: config.restaurantInfo.realAddress,
+  hours: {
+    "Mon-Thu": "11:00 AM - 9:00 PM",
+    "Fri-Sat": "11:00 AM - 10:00 PM", 
+    "Sunday": "12:00 PM - 8:00 PM"
+  }
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salsa's Mexican Restaurant - Authentic Mexican Food in Battle Creek, MI</title>
+  <meta name="description" content="Experience authentic Mexican cuisine at Salsa's Restaurant in Battle Creek, Michigan. Fresh ingredients, traditional recipes, and exceptional flavors.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-body bg-gradient-to-br from-dark-300 via-dark-200 to-dark-100 min-h-screen text-white">
+  <!-- Hero Section -->
+  <header class="relative bg-gradient-to-br from-dark-300 via-dark-200 to-dark-100 text-white py-8 lg:py-12 overflow-hidden">
+    <!-- Background pattern -->
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute inset-0 bg-gradient-to-r from-salsa-red/20 via-salsa-orange/20 to-salsa-red/20"></div>
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center">
+        <!-- Logo Section with Character -->
+        <div class="flex justify-center items-center mb-6 relative">
+          <!-- Main SALSAS Text with Gradient Effect -->
+          <div class="relative">
+            <h1 class="salsa-logo-text text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold font-display tracking-wider bg-gradient-to-r from-salsa-red via-salsa-orange to-salsa-yellow bg-clip-text text-transparent">
+              SALSAS
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl font-semibold tracking-widest opacity-90 mt-2">
+              MEXICAN RESTAURANT
+            </p>
+          </div>
+          
+          <!-- Chili Character -->
+          <div class="hidden lg:block absolute -right-20 xl:-right-32 top-1/2 transform -translate-y-1/2">
+            <div class="relative">
+              <!-- Sombrero -->
+              <div class="sombrero w-16 h-16 xl:w-20 xl:h-20 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-full relative mb-1">
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 w-12 h-6 xl:w-16 xl:h-8 bg-gradient-to-r from-red-500 via-green-500 to-red-500 rounded-t-full"></div>
+              </div>
+              
+              <!-- Chili Body -->
+              <div class="chili-body w-12 h-20 xl:w-16 xl:h-24 bg-gradient-to-b from-red-500 to-red-700 rounded-full relative mx-auto">
+                <!-- Eyes -->
+                <div class="absolute top-3 left-2 w-2 h-2 bg-white rounded-full"></div>
+                <div class="absolute top-3 right-2 w-2 h-2 bg-white rounded-full"></div>
+                <!-- Mustache -->
+                <div class="absolute top-6 left-1/2 transform -translate-x-1/2 w-6 h-1 bg-black rounded-full"></div>
+                <!-- Thumbs up hand -->
+                <div class="absolute -left-4 top-8 w-4 h-6 bg-white rounded-full rotate-12">
+                  <div class="absolute top-0 left-1/2 w-2 h-3 bg-white rounded-full transform -translate-x-1/2 -translate-y-1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <p class="text-xl sm:text-2xl mb-6 opacity-85 flex items-center justify-center gap-2">
+          <svg class="w-6 h-6 text-salsa-yellow" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+          </svg>
+          Battle Creek, Michigan
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-6">
+          <div class="flex items-center gap-3 text-lg bg-salsa-red/30 backdrop-blur-sm rounded-full px-6 py-3 border border-salsa-red/20">
+            <svg class="w-5 h-5 text-salsa-yellow" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+            </svg>
+            <span class="font-semibold">{restaurantInfo.phone}</span>
+          </div>
+          <div class="flex items-center gap-3 text-lg bg-salsa-green/30 backdrop-blur-sm rounded-full px-6 py-3 border border-salsa-green/20">
+            <svg class="w-5 h-5 text-salsa-yellow" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+            </svg>
+            <span class="font-semibold">4.8★ Reviews</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick Info Bar -->
+  <div class="bg-gradient-to-r from-salsa-green/90 to-salsa-green text-white py-4">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap justify-center items-center gap-6 text-center">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-salsa-yellow" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+          </svg>
+          <div>
+            <div class="font-semibold">Open Today</div>
+            <div class="text-sm opacity-90">11:00 AM - 9:00 PM</div>
+          </div>
+        </div>
+        <div class="bg-salsa-yellow text-salsa-green px-6 py-2 rounded-full font-bold text-lg flex items-center gap-2">
+          <span class="emoji text-xl">🌮</span>
+          <span>Order Online Available</span>
+        </div>
+        <div class="text-center">
+          <div class="font-semibold">Fresh Daily</div>
+          <div class="text-sm opacity-90">Made from scratch</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-dark-200/95 backdrop-blur-sm shadow-lg sticky top-0 z-40 border-b border-gray-700">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex justify-between items-center">
+        <a href="/" class="flex items-center gap-2">
+          <svg class="w-6 h-6 text-salsa-red" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+          </svg>
+          <span class="text-xl font-display font-bold text-salsa-red">Salsa's</span>
+        </a>
+        <div class="hidden md:flex gap-6">
+          <a href="/" class="text-salsa-red font-semibold">Menu</a>
+          <a href="/about" class="text-gray-300 hover:text-salsa-red transition-colors font-semibold">About</a>
+          <a href="#contact" class="text-gray-300 hover:text-salsa-red transition-colors font-semibold">Contact</a>
+        </div>
+        <div class="md:hidden">
+          <button class="text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menu Search -->
+  <div class="bg-dark-200/90 backdrop-blur-sm shadow-lg border-b border-gray-700">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-center gap-4">
+        <svg class="w-5 h-5 text-salsa-red" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        </svg>
+        <input 
+          type="text" 
+          placeholder="Search our menu..." 
+          class="flex-1 max-w-md px-4 py-2 bg-dark-100 border-2 border-salsa-orange/50 rounded-full focus:outline-none focus:border-salsa-red transition-colors text-white placeholder-gray-400"
+          id="menuSearch"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Section -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-display font-bold text-salsa-red mb-4">Our Menu</h2>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        Experience authentic Mexican flavors made with fresh ingredients and traditional recipes passed down through generations.
+      </p>
+    </div>
+
+    <div class="space-y-16">
+      {menu.map((section) => (
+        <section key={section.category} class="menu-section">
+          <div class="text-center mb-8">
+            <h3 class="text-3xl md:text-4xl font-display font-bold text-salsa-red mb-2 border-b-4 border-salsa-orange inline-block pb-2">
+              {section.category}
+            </h3>
+            <p class="text-gray-300 mt-4 text-lg">{section.description}</p>
+          </div>
+          
+          <div class="grid gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {section.items.map((item) => (
+              <div key={item.name} 
+                   class="menu-item bg-dark-100/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl card-hover border-l-4 border-salsa-orange hover:border-salsa-red group relative overflow-hidden transition-all duration-300">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-salsa-yellow/20 to-salsa-orange/20 rounded-bl-full transform translate-x-6 -translate-y-6 group-hover:scale-110 transition-transform duration-300"></div>
+                <div class="relative z-10">
+                  <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
+                    <h4 class="font-bold text-lg text-white group-hover:text-salsa-red transition-colors flex-1 pr-2 leading-tight">
+                      {item.name}
+                    </h4>
+                    <span class="text-xl font-bold text-white bg-gradient-to-r from-salsa-red to-salsa-orange px-4 py-2 rounded-full shadow-md group-hover:scale-105 transition-transform duration-300">
+                      {item.price}
+                    </span>
+                  </div>
+                  {item.description && (
+                    <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors">
+                      {item.description}
+                    </p>
+                  )}
+                  <div class="mt-4 flex justify-between items-center">
+                    <div class="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} class="w-4 h-4 text-salsa-yellow" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                      ))}
+                    </div>
+                    <button class="text-salsa-red font-semibold text-sm hover:text-salsa-orange transition-colors hidden sm:block">
+                      Add to Order →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </main>
+
+  <!-- Call to Action Section -->
+  <section class="bg-gradient-to-r from-salsa-red to-salsa-orange text-white py-16 mt-16">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Ready to Order?</h2>
+      <p class="text-xl mb-8 opacity-90">Experience the authentic taste of Mexico today!</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button class="bg-salsa-yellow text-salsa-red px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors">
+          Order Online
+        </button>
+        <button class="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-salsa-red transition-colors">
+          Call {restaurantInfo.phone}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hours & Location -->
+  <section class="bg-dark-200/50 py-16">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="text-center">
+          <h3 class="text-2xl font-display font-bold text-salsa-red mb-4">Hours of Operation</h3>
+          <div class="space-y-2">
+            {Object.entries(restaurantInfo.hours).map(([days, hours]) => (
+              <div key={days} class="flex justify-center items-center gap-3">
+                <span class="font-semibold text-white w-20 text-left">{days}:</span>
+                <span class="text-gray-300">{hours}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <h3 class="text-2xl font-display font-bold text-salsa-red mb-4">Visit Us</h3>
+          <div class="space-y-3">
+            <div class="flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 text-salsa-red" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-white text-center">{restaurantInfo.address}</span>
+            </div>
+            <div class="flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 text-salsa-red" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+              </svg>
+              <span class="text-white">{restaurantInfo.phone}</span>
+            </div>
+            <div class="mt-4">
+              <button class="bg-salsa-green text-white px-6 py-3 rounded-full font-bold hover:bg-green-600 transition-colors">
+                Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark-300 text-white py-12 border-t border-gray-700">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center md:text-left">
+          <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+            <svg class="w-8 h-8 text-salsa-yellow" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+            </svg>
+            <h4 class="text-2xl font-display font-bold">Salsa's</h4>
+          </div>
+          <p class="text-gray-300">
+            Authentic Mexican cuisine made with love and tradition since day one.
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+          <div class="space-y-2">
+            <a href="#menu" class="block text-gray-300 hover:text-white transition-colors">Menu</a>
+            <a href="#hours" class="block text-gray-300 hover:text-white transition-colors">Hours</a>
+            <a href="#location" class="block text-gray-300 hover:text-white transition-colors">Location</a>
+            <a href="#contact" class="block text-gray-300 hover:text-white transition-colors">Contact</a>
+          </div>
+        </div>
+        
+        <div class="text-center md:text-right">
+          <h4 class="text-xl font-bold mb-4">Connect With Us</h4>
+          <p class="text-gray-300 mb-4">Follow us for specials & updates</p>
+          <div class="flex justify-center md:justify-end gap-4">
+            <button class="text-gray-300 hover:text-white transition-colors">Facebook</button>
+            <button class="text-gray-300 hover:text-white transition-colors">Instagram</button>
+            <button class="text-gray-300 hover:text-white transition-colors">Yelp</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-600 mt-8 pt-8 text-center">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-gray-300">
+            © 2024 Salsa's Mexican Restaurant. All rights reserved.
+          </p>
+          <p class="text-sm text-gray-400">
+            Website coded with <span class="text-cyan-400">❤️</span> by <a href="https://cozyartzmediagroup.com" class="text-cyan-400 hover:text-cyan-300 transition-colors font-semibold">Cozyartz Media Group</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Menu search functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('menuSearch');
+      const menuItems = document.querySelectorAll('.menu-item');
+      const menuSections = document.querySelectorAll('.menu-section');
+
+      searchInput?.addEventListener('input', function(e) {
+        const target = e.target as HTMLInputElement;
+        const searchTerm = target.value.toLowerCase();
+        
+        menuItems.forEach(item => {
+          const itemName = item.querySelector('h4')?.textContent?.toLowerCase() || '';
+          const itemDescription = item.querySelector('p')?.textContent?.toLowerCase() || '';
+          
+          const element = item as HTMLElement;
+          if (itemName.includes(searchTerm) || itemDescription.includes(searchTerm)) {
+            element.style.display = 'block';
+          } else {
+            element.style.display = 'none';
+          }
+        });
+
+        // Hide empty sections
+        menuSections.forEach(section => {
+          const visibleItems = section.querySelectorAll('.menu-item[style="display: block"], .menu-item:not([style*="display: none"])');
+          const sectionElement = section as HTMLElement;
+          if (visibleItems.length === 0 && searchTerm !== '') {
+            sectionElement.style.display = 'none';
+          } else {
+            sectionElement.style.display = 'block';
+          }
+        });
+      });
+      
+      // Add scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fadeInUp');
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.menu-section').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>

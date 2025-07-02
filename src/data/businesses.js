@@ -66,6 +66,48 @@ export const businessConfigs = {
       "Catering Services",
       "Private Event Bookings"
     ],
+    // Complete menu data structure
+    menu: {
+      burgers: [
+        { name: "Big Grill Burger", description: "Our signature beef patty with all the fixings", price: "$8.50" },
+        { name: "Cheese Burger", description: "Classic beef patty with melted cheese", price: "$5.50" },
+        { name: "Regular Hamburger", description: "Fresh ground beef, lettuce, tomato, onion", price: "$5.00" },
+        { name: "Hamburger Delux", description: "Premium burger with bacon and special sauce", price: "$6.00" },
+        { name: "Chee/Burger Delux", description: "Deluxe cheeseburger with all the extras", price: "$6.50" }
+      ],
+      chicken: [
+        { name: "Chicken Tenders", description: "Hand-breaded and fried to perfection", price: "$6.50" },
+        { name: "Per Wing", description: "Fresh chicken wings", price: "$3.00" },
+        { name: "6 Wings", description: "Half dozen wings with your choice of sauce", price: "$11.00" },
+        { name: "Wing Dinner", description: "Wings with fries and drink", price: "$14.00" },
+        { name: "12 Wings", description: "Full dozen wings for sharing", price: "$18.00" }
+      ],
+      bbq: [
+        { name: "Rib (Only)", description: "Tender, smoky ribs", price: "$11.50" },
+        { name: "Rib Dinner", description: "Ribs with two sides", price: "$15.50" },
+        { name: "Rib Tips (Only)", description: "Flavorful rib tips", price: "$11.00" },
+        { name: "Rib Tip Dinner", description: "Rib tips with two sides", price: "$15.00" }
+      ],
+      fish: [
+        { name: "Catfish (Only)", description: "Fresh fried catfish fillets", price: "$11.00" },
+        { name: "Catfish Dinner", description: "Catfish with two sides", price: "$14.00" }
+      ],
+      hotDogs: [
+        { name: "Regular Hotdog", description: "All-beef hot dog with classic toppings", price: "$2.50" },
+        { name: "Chilli Cheese Dog", description: "Hot dog topped with chili and cheese", price: "$3.50" }
+      ],
+      sides: [
+        { name: "Spaghetti", description: "Classic pasta side", price: "$4.00" },
+        { name: "Bake Beans", description: "Homestyle baked beans", price: "$4.00" },
+        { name: "Potato Salad", description: "Creamy homemade potato salad", price: "$4.00" },
+        { name: "Fries", description: "Golden crispy french fries", price: "$2.00" }
+      ]
+    },
+    specialOffer: {
+      name: "Try Our Nachos",
+      price: "$7.50",
+      description: "Loaded with cheese, jalapeños, and your choice of toppings"
+    },
     heroTitle: "Gourmet Street Food",
     heroSubtitle: "Battle Creek's premier food truck serving fresh, bold flavors",
     ctaText: "Find Our Location",
@@ -129,6 +171,53 @@ export const businessConfigs = {
       "Catering & Party Platters",
       "Takeout & Delivery"
     ],
+    // Complete menu data structure from salsas.astro
+    menu: {
+      appetizers: [
+        { name: "GUACAMOLE FRESCO", price: "$14.99", description: "Fresh avocados, lime, cilantro, onions, and jalapeños. Served with crispy tortilla chips." },
+        { name: "QUESO FUNDIDO", price: "$11.99", description: "Melted cheese with chorizo, served with warm tortillas." },
+        { name: "CHICKEN WINGS", price: "$13.50", description: "10 pieces of crispy wings with your choice of sauce." },
+        { name: "CAMARONES GRATINADOS", price: "$13.99", description: "Grilled shrimp topped with melted cheese and pico de gallo." },
+        { name: "POLLO GRATINADO", price: "$12.99", description: "Grilled chicken breast topped with melted cheese and pico de gallo." },
+        { name: "VEGGIES GRATINADOS", price: "$10.50", description: "Grilled vegetables topped with melted cheese." }
+      ],
+      tacos: [
+        { name: "TACOS DE CARNE ASADA", price: "$14.99", description: "Three grilled steak tacos with onions and cilantro." },
+        { name: "TACOS AL PASTOR", price: "$13.99", description: "Three marinated pork tacos with pineapple, onions, and cilantro." },
+        { name: "TACOS DE CARNITAS", price: "$13.99", description: "Three slow-cooked pork tacos with onions and cilantro." },
+        { name: "FISH TACOS", price: "$15.99", description: "Three grilled fish tacos with cabbage slaw and chipotle sauce." },
+        { name: "TACOS DE POLLO", price: "$12.99", description: "Three seasoned chicken tacos with lettuce, tomato, and cheese." },
+        { name: "STREET TACOS", price: "$11.99", description: "Four mini tacos with your choice of meat, onions, and cilantro." }
+      ],
+      burritos: [
+        { name: "BURRITO CALIFORNIA", price: "$16.99", description: "Carne asada, french fries, cheese, guacamole, and sour cream." },
+        { name: "BURRITO SUPREMO", price: "$14.99", description: "Choice of meat with rice, beans, lettuce, tomato, cheese, and sour cream." },
+        { name: "CARNITAS BURRITO", price: "$15.50", description: "Slow-cooked pork with rice, beans, onions, and cilantro." },
+        { name: "VEGGIE BURRITO", price: "$12.99", description: "Grilled vegetables, rice, black beans, lettuce, and guacamole." },
+        { name: "BREAKFAST BURRITO", price: "$11.99", description: "Eggs, chorizo, potatoes, cheese, and salsa verde." },
+        { name: "WET BURRITO", price: "$16.50", description: "Any burrito topped with red or green sauce and melted cheese." }
+      ],
+      fajitasPlatters: [
+        { name: "FAJITA BEEF OR CHICKEN", price: "$19.99", description: "Sizzling strips of meat with peppers and onions." },
+        { name: "MIXED FAJITAS", price: "$21.99", description: "Combination of beef and chicken fajitas." },
+        { name: "TEXAS FAJITAS", price: "$23.99", description: "Beef, chicken, and shrimp fajitas." },
+        { name: "FAJITAS FOR TWO", price: "$34.99", description: "Large portion perfect for sharing." },
+        { name: "DEL MAR FAJITAS", price: "$26.99", description: "Shrimp and scallop fajitas with vegetables." },
+        { name: "SHRIMP FAJITAS", price: "$25.99", description: "Grilled shrimp with peppers and onions." }
+      ],
+      desserts: [
+        { name: "FLAN", price: "$6.99", description: "Traditional Mexican custard with caramel sauce." },
+        { name: "CHURROS", price: "$7.99", description: "Fried pastry sticks with cinnamon sugar and chocolate sauce." },
+        { name: "TRES LECHES CAKE", price: "$7.50", description: "Sponge cake soaked in three kinds of milk." },
+        { name: "FRIED ICE CREAM", price: "$6.99", description: "Vanilla ice cream in a crispy coating." },
+        { name: "SOPAPILLAS", price: "$5.99", description: "Fried pastry with honey and cinnamon." }
+      ]
+    },
+    // Restaurant info from salsas.astro
+    restaurantInfo: {
+      email: "rsalsasbc@gmail.com",
+      realAddress: "555 E. Emmett St. Battle Creek MI, Battle Creek, MI, United States, Michigan"
+    },
     heroTitle: "Authentic Mexican Cuisine",
     heroSubtitle: "Traditional flavors and fresh ingredients in Battle Creek",
     ctaText: "Order Now",
