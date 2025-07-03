@@ -10,13 +10,13 @@ export default {
         'inter': ['Inter', 'sans-serif'],
       },
       colors: {
-        // Cozyartz Media Brand Colors
+        // Cozyartz Media Brand Colors - Leadfoot Grey Theme
         'accent-slate': '#334155',
-        'accent-teal': '#0891B2',
+        'accent-teal': '#6B7280', // Leadfoot grey (similar to Ford's leadfoot grey)
         'accent-slate-light': '#475569',
-        'accent-teal-light': '#0EA5E9',
+        'accent-teal-light': '#9CA3AF', // Lighter leadfoot grey
         'accent-slate-dark': '#1E293B',
-        'accent-teal-dark': '#0E7490',
+        'accent-teal-dark': '#4B5563', // Darker leadfoot grey
         'dark-bg': '#0A0A0A',
         'dark-surface': '#1A1A1A',
         'dark-border': '#2A2A2A',
