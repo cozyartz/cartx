@@ -26,6 +26,17 @@ export const businessConfigs = {
     description: "Premium gourmet street food from Battle Creek's favorite food truck. Fresh ingredients, bold flavors, and authentic recipes served daily across Michigan.",
     businessName: "Grillz Food Truck",
     phone: "(269) 261-0069",
+    // Template Configuration
+    layoutType: "foodtruck",
+    components: {
+      hero: "food-truck", // urban street style hero
+      menu: "pricing", // price-focused menu display
+      branding: {
+        sparkles: true,
+        neonEffects: true,
+        animations: ["pulse", "glow"]
+      }
+    },
     // Custom styling for Grillz
     theme: {
       primaryColor: "#DC2626", // red-600
@@ -131,6 +142,21 @@ export const businessConfigs = {
     description: "Authentic Mexican restaurant serving traditional dishes, fresh salsas, and margaritas in Battle Creek, Michigan. Family recipes with genuine flavors.",
     businessName: "Salsas Mexican Restaurant",
     phone: "(269) 555-0147",
+    // Template Configuration
+    layoutType: "restaurant",
+    components: {
+      hero: "character", // mascot character hero
+      menu: "categories", // category-based menu with search
+      branding: {
+        mascot: {
+          type: "chili-pepper",
+          accessories: ["sombrero"],
+          personality: "friendly"
+        },
+        search: true,
+        culturalTheme: "mexican"
+      }
+    },
     // Custom styling for Salsas
     theme: {
       primaryColor: "#16A34A", // green-600
@@ -241,6 +267,18 @@ export const businessConfigs = {
     description: "Battle Creek's premier potato bar featuring signature loaded spuds, tacos, fresh salads, and more. From our famous Taco Spud to BBQ Chicken - we load it up fresh!",
     businessName: "Load-a-Spud Potato Bar",
     phone: "(269) 555-7783",
+    // Template Configuration
+    layoutType: "restaurant",
+    components: {
+      hero: "comfort", // comfort food styling
+      menu: "numbered", // numbered menu items
+      branding: {
+        emoji: "🥔",
+        animations: ["bounce"],
+        comfort: true,
+        numberedItems: true
+      }
+    },
     // Custom styling for Load-a-Spud
     theme: {
       primaryColor: "#8B4513", // saddle brown

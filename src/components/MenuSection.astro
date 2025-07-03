@@ -1,0 +1,461 @@
+---
+export interface Props {
+  menu: any[];
+  config: any;
+  displayType?: 'categories' | 'pricing' | 'numbered' | 'grid';
+  showSearch?: boolean;
+  theme?: {
+    primaryColor?: string;
+    secondaryColor?: string;
+    accentColor?: string;
+  };
+}
+
+const { 
+  menu, 
+  config, 
+  displayType = 'categories',
+  showSearch = false,
+  theme = {}
+} = Astro.props;
+
+// Default theme colors
+const primaryColor = theme.primaryColor || config.theme?.primaryColor || '#DC2626';
+const secondaryColor = theme.secondaryColor || config.theme?.secondaryColor || '#F97316';
+const accentColor = theme.accentColor || config.theme?.accentColor || '#FBBF24';
+
+// Menu display configuration based on display type
+const getMenuConfig = (type: string) => {
+  switch (type) {
+    case 'pricing':
+      return {
+        showPrices: true,
+        showIcons: true,
+        layout: 'card',
+        emphasis: 'price'
+      };
+    case 'numbered':
+      return {
+        showNumbers: true,
+        showPrices: true,
+        layout: 'list',
+        emphasis: 'items'
+      };
+    case 'grid':
+      return {
+        showPrices: true,
+        showIcons: false,
+        layout: 'grid',
+        emphasis: 'visual'
+      };
+    default: // categories
+      return {
+        showPrices: true,
+        showIcons: false,
+        layout: 'card',
+        emphasis: 'categories'
+      };
+  }
+};
+
+const menuConfig = getMenuConfig(displayType);
+
+// Icon mapping for different menu sections
+const getIconClass = (sectionName: string) => {
+  const iconMap = {
+    'burgers': 'fas fa-burger',
+    'chicken': 'fas fa-drumstick-bite', 
+    'bbq': 'fas fa-fire',
+    'fish': 'fas fa-fish',
+    'hotdogs': 'fas fa-hotdog',
+    'sides': 'fas fa-utensils',
+    'appetizers': 'fas fa-leaf',
+    'tacos': 'fas fa-pepper-hot',
+    'burritos': 'fas fa-burrito',
+    'fajitas': 'fas fa-fire',
+    'fajitasplatters': 'fas fa-fire',
+    'desserts': 'fas fa-ice-cream',
+    'signaturespuds': 'fas fa-seedling',
+    'loadataco': 'fas fa-pepper-hot',
+    'loadasalad': 'fas fa-leaf',
+    'beverages': 'fas fa-glass-water',
+    'snacks': 'fas fa-cookie-bite'
+  };
+  return iconMap[sectionName.toLowerCase().replace(/\s+/g, '')] || 'fas fa-utensils';
+};
+
+// Format section name for display
+const formatSectionName = (name: string) => {
+  return name.replace(/([A-Z])/g, ' $1')
+             .replace(/^./, str => str.toUpperCase())
+             .trim();
+};
+---
+
+<div class="menu-section-component" data-display-type={displayType}>
+  <!-- Menu Search (if enabled) -->
+  {showSearch && (
+    <div class="menu-search-container bg-dark-200/90 backdrop-blur-sm shadow-lg border-b border-gray-700 sticky top-0 z-30">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex items-center justify-center gap-4">
+          <svg class="w-5 h-5 text-menu-primary" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
+          <input 
+            type="text" 
+            placeholder="Search our menu..." 
+            class="flex-1 max-w-md px-4 py-2 bg-dark-100 border-2 border-menu-secondary/50 rounded-full focus:outline-none focus:border-menu-primary transition-colors text-white placeholder-gray-400"
+            id="menuSearch"
+          />
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Menu Header -->
+  <div class="menu-header text-center mb-12">
+    <h2 class="text-4xl md:text-5xl font-display font-bold text-menu-primary mb-4">Our Menu</h2>
+    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+      {config.description || "Fresh ingredients and authentic flavors made with care"}
+    </p>
+  </div>
+
+  <!-- Menu Content -->
+  <div class="menu-content space-y-16">
+    {menu.map((section) => (
+      <section class="menu-category" data-category={section.category || section.section}>
+        <!-- Category Header -->
+        <div class="category-header text-center mb-8">
+          {menuConfig.showIcons && (
+            <div class="category-icon bg-gradient-to-br from-menu-primary to-menu-secondary w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <i class={`${getIconClass(section.category || section.section)} text-2xl text-white`}></i>
+            </div>
+          )}
+          <h3 class="text-3xl md:text-4xl font-display font-bold text-menu-primary mb-2 border-b-4 border-menu-secondary inline-block pb-2">
+            {formatSectionName(section.category || section.section)}
+          </h3>
+          {section.description && (
+            <p class="text-gray-300 mt-4 text-lg">{section.description}</p>
+          )}
+        </div>
+        
+        <!-- Menu Items -->
+        {menuConfig.layout === 'grid' ? (
+          <div class="menu-items-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {section.items.map((item, index) => (
+              <div class="menu-item-grid bg-dark-100/80 backdrop-blur-sm rounded-xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-menu-secondary hover:border-menu-primary group">
+                <div class="flex flex-col h-full">
+                  <h4 class="font-bold text-lg text-white group-hover:text-menu-primary transition-colors mb-2">
+                    {menuConfig.showNumbers && item.number ? `${item.number}. ` : ''}{item.name}
+                  </h4>
+                  {item.description && (
+                    <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors flex-grow mb-3">
+                      {item.description}
+                    </p>
+                  )}
+                  <div class="flex justify-between items-center">
+                    {menuConfig.showPrices && item.price && (
+                      <span class="text-xl font-bold text-menu-accent group-hover:text-menu-accent-light transition-colors">
+                        {item.price}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : menuConfig.layout === 'list' ? (
+          <div class="menu-items-list space-y-3 max-w-4xl mx-auto">
+            {section.items.map((item, index) => (
+              <div class="menu-item-list bg-dark-100/80 backdrop-blur-sm rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-menu-secondary hover:border-menu-primary group">
+                <div class="flex justify-between items-start gap-4">
+                  <div class="flex-grow">
+                    <h4 class="font-bold text-lg text-white group-hover:text-menu-primary transition-colors">
+                      {menuConfig.showNumbers && (item.number || index + 1) ? `${item.number || index + 1}. ` : ''}{item.name}
+                    </h4>
+                    {item.description && (
+                      <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors mt-1">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+                  {menuConfig.showPrices && item.price && (
+                    <span class="text-xl font-bold text-menu-accent group-hover:text-menu-accent-light transition-colors flex-shrink-0">
+                      {item.price}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="menu-items-card grid gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {section.items.map((item, index) => (
+              <div class="menu-item-card bg-dark-100/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-menu-secondary hover:border-menu-primary group relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-menu-accent/20 to-menu-secondary/20 rounded-bl-full transform translate-x-6 -translate-y-6 group-hover:scale-110 transition-transform duration-300"></div>
+                <div class="relative z-10">
+                  <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
+                    <h4 class="font-bold text-lg text-white group-hover:text-menu-primary transition-colors flex-1 pr-2 leading-tight">
+                      {menuConfig.showNumbers && (item.number || index + 1) ? `${item.number || index + 1}. ` : ''}{item.name}
+                    </h4>
+                    {menuConfig.showPrices && item.price && (
+                      <span class="text-xl font-bold text-white bg-gradient-to-r from-menu-primary to-menu-secondary px-4 py-2 rounded-full shadow-md group-hover:scale-105 transition-transform duration-300">
+                        {item.price}
+                      </span>
+                    )}
+                  </div>
+                  {item.description && (
+                    <p class="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors mb-4">
+                      {item.description}
+                    </p>
+                  )}
+                  <div class="flex justify-between items-center">
+                    <div class="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <svg class="w-4 h-4 text-menu-accent" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                      ))}
+                    </div>
+                    <button class="text-menu-primary font-semibold text-sm hover:text-menu-secondary transition-colors hidden sm:block">
+                      Add to Order →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    ))}
+  </div>
+</div>
+
+<style define:vars={{
+  menuPrimary: primaryColor,
+  menuSecondary: secondaryColor,
+  menuAccent: accentColor,
+  menuAccentLight: accentColor + 'dd'
+}}>
+.menu-section-component {
+  --menu-primary: var(--menuPrimary);
+  --menu-secondary: var(--menuSecondary);
+  --menu-accent: var(--menuAccent);
+  --menu-accent-light: var(--menuAccentLight);
+}
+
+/* Color classes */
+.text-menu-primary { color: var(--menu-primary); }
+.text-menu-secondary { color: var(--menu-secondary); }
+.text-menu-accent { color: var(--menu-accent); }
+.text-menu-accent-light { color: var(--menu-accent-light); }
+.bg-menu-primary { background-color: var(--menu-primary); }
+.bg-menu-secondary { background-color: var(--menu-secondary); }
+.border-menu-primary { border-color: var(--menu-primary); }
+.border-menu-secondary { border-color: var(--menu-secondary); }
+
+/* Dark theme */
+.dark-200 { background-color: #374151; }
+.dark-100 { background-color: #4b5563; }
+
+/* Font classes */
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+/* Menu search styling */
+#menuSearch {
+  background: rgba(31, 41, 55, 0.8);
+  border: 2px solid rgba(var(--menu-secondary), 0.5);
+}
+
+#menuSearch:focus {
+  border-color: var(--menu-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--menu-primary), 0.2);
+}
+
+/* Menu item interactions */
+.menu-item-card:hover,
+.menu-item-grid:hover,
+.menu-item-list:hover {
+  transform: translateY(-2px);
+}
+
+.menu-item-card,
+.menu-item-grid,
+.menu-item-list {
+  transition: all 0.3s ease;
+}
+
+/* Category headers */
+.category-header h3 {
+  position: relative;
+}
+
+.category-header h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, var(--menu-primary), var(--menu-secondary));
+  border-radius: 2px;
+}
+
+/* Category icons */
+.category-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Grid layout specific */
+.menu-items-grid .menu-item-grid {
+  min-height: 200px;
+}
+
+/* List layout specific */
+.menu-items-list .menu-item-list {
+  border-radius: 12px;
+}
+
+/* Card layout specific */
+.menu-items-card {
+  gap: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .menu-items-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .menu-items-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .category-header h3 {
+    font-size: 2rem;
+  }
+  
+  .menu-header h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-item-card,
+  .menu-item-grid,
+  .menu-item-list {
+    padding: 1rem;
+  }
+  
+  .category-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .menu-content {
+    gap: 2rem;
+  }
+}
+
+/* Search functionality */
+.menu-search-container {
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(var(--menu-primary), 0.2);
+}
+
+/* Animation delays for staggered appearance */
+.menu-item-card:nth-child(1) { animation-delay: 0.1s; }
+.menu-item-card:nth-child(2) { animation-delay: 0.2s; }
+.menu-item-card:nth-child(3) { animation-delay: 0.3s; }
+.menu-item-card:nth-child(4) { animation-delay: 0.4s; }
+.menu-item-card:nth-child(5) { animation-delay: 0.5s; }
+.menu-item-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Accessibility */
+.menu-item-card:focus-within,
+.menu-item-grid:focus-within,
+.menu-item-list:focus-within {
+  outline: 3px solid var(--menu-accent);
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .menu-section-component {
+    color: black !important;
+  }
+  
+  .menu-search-container {
+    display: none;
+  }
+  
+  .menu-item-card,
+  .menu-item-grid,
+  .menu-item-list {
+    background: white !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+  }
+}
+</style>
+
+<script>
+// Menu search functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('menuSearch');
+  const menuItems = document.querySelectorAll('.menu-item-card, .menu-item-grid, .menu-item-list');
+  const menuCategories = document.querySelectorAll('.menu-category');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      
+      menuItems.forEach(item => {
+        const itemName = item.querySelector('h4')?.textContent?.toLowerCase() || '';
+        const itemDescription = item.querySelector('p')?.textContent?.toLowerCase() || '';
+        
+        if (itemName.includes(searchTerm) || itemDescription.includes(searchTerm)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Hide empty categories
+      menuCategories.forEach(category => {
+        const visibleItems = category.querySelectorAll('.menu-item-card:not([style*="display: none"]), .menu-item-grid:not([style*="display: none"]), .menu-item-list:not([style*="display: none"])');
+        if (visibleItems.length === 0 && searchTerm !== '') {
+          category.style.display = 'none';
+        } else {
+          category.style.display = 'block';
+        }
+      });
+    });
+  }
+
+  // Add scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fadeInUp');
+      }
+    });
+  }, observerOptions);
+  
+  document.querySelectorAll('.menu-category').forEach(section => {
+    observer.observe(section);
+  });
+});
+</script>

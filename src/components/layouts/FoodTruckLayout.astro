@@ -1,0 +1,525 @@
+---
+export interface Props {
+  config: any;
+}
+
+const { config } = Astro.props;
+
+// Transform menu data to food truck format with categories
+const menu = Object.entries(config.menu || {}).map(([key, items]) => ({
+  section: key.charAt(0).toUpperCase() + key.slice(1),
+  items: Array.isArray(items) ? items : []
+}));
+
+const specialOffer = config.specialOffer || {
+  name: "Special Offer",
+  price: "$9.99",
+  description: "Our signature dish made fresh daily"
+};
+
+const businessInfo = {
+  name: config.businessName,
+  tagline: config.businessType,
+  phone: config.phone,
+  location: `${config.address.street}, ${config.address.city} ${config.address.state}`,
+  nextTo: config.address.landmark || `Near ${config.address.city} Downtown`,
+  hours: {
+    open: config.hours ? config.hours.slice(0, 6).map(h => h.split(': ')[0]).join(' - ') + ' ' + config.hours[0].split(': ')[1] : "TUE - SAT 12 NOON - 9PM",
+    closed: config.hours ? config.hours.slice(6).map(h => h.split(': ')[0]).join(' - ') || "CLOSED SUN - MON" : "CLOSED SUN - MON"
+  }
+};
+
+// Theme colors
+const theme = config.theme || {};
+const primaryColor = theme.primaryColor || '#DC2626';
+const secondaryColor = theme.secondaryColor || '#F97316';
+const accentColor = theme.accentColor || '#FBBF24';
+---
+
+<div class="food-truck-layout">
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden w-full mx-auto">
+    
+    <!-- Hero Glow Effect -->
+    <div class="hero-glow absolute inset-0 w-full h-full"></div>
+    
+    <!-- Main Hero Content -->
+    <div class="slide-in max-w-6xl mx-auto relative z-10">
+      <h1 class="responsive-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black neon-glow mb-8 relative px-2 font-fredoka text-truck-primary professional-spacing whitespace-nowrap">
+        {config.components?.branding?.sparkles && (
+          <span class="sparkle">🔥</span>
+        )}
+        {businessInfo.name.toUpperCase()}
+        {config.components?.branding?.sparkles && (
+          <span class="sparkle">🔥</span>
+        )}
+      </h1>
+      
+      <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-12 opacity-95 px-4 professional-text refined-shadow">
+        <i class="fas fa-fire"></i> {config.heroSubtitle || "PREMIUM FAST FOOD THAT HITS DIFFERENT"} <i class="fas fa-fire"></i>
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 px-4 max-w-4xl mx-auto">
+        <a href={`tel:${businessInfo.phone}`} 
+           class="pulse-button bg-gradient-to-r from-truck-primary to-truck-secondary hover:from-truck-primary-light hover:to-truck-secondary-light text-white font-black px-6 sm:px-8 py-3 sm:py-4 rounded-full text-lg sm:text-xl md:text-2xl shadow-2xl transform transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center">
+          <i class="fas fa-phone"></i> ORDER NOW: {businessInfo.phone}
+        </a>
+        
+        <div class="glass-effect px-4 sm:px-6 py-2 sm:py-3 rounded-full text-white font-semibold text-sm sm:text-base text-center">
+          <i class="fas fa-map-marker-alt"></i> {businessInfo.location}
+        </div>
+      </div>
+      
+      <!-- Hours Display -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto mb-8 px-4">
+        <div class="glass-effect rounded-2xl p-4 sm:p-6 text-center">
+          <div class="text-truck-accent font-black text-lg sm:text-xl mb-2"><i class="fas fa-circle text-truck-accent"></i> OPEN</div>
+          <div class="text-white font-bold text-sm sm:text-lg">{businessInfo.hours.open}</div>
+        </div>
+        <div class="glass-effect rounded-2xl p-4 sm:p-6 text-center">
+          <div class="text-gray-400 font-black text-lg sm:text-xl mb-2"><i class="fas fa-circle text-gray-400"></i> CLOSED</div>
+          <div class="text-white font-bold text-sm sm:text-lg">{businessInfo.hours.closed}</div>
+        </div>
+      </div>
+      
+      <p class="text-white font-semibold text-sm sm:text-lg opacity-80 px-4 text-center">
+        {businessInfo.nextTo}
+      </p>
+      
+      <!-- Scroll Down Arrow -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group" id="scroll-arrow">
+        <div class="text-white text-2xl group-hover:text-truck-secondary transition-all duration-300 animate-bounce"><i class="fas fa-chevron-down"></i></div>
+        <p class="text-white font-medium mt-1 text-sm group-hover:text-truck-secondary transition-all duration-300">VIEW MENU</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section class="min-h-screen py-20 px-4 w-full mx-auto">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Menu Header -->
+      <div class="text-center mb-16 slide-in">
+        <h2 class="text-5xl md:text-6xl font-black text-white neon-glow mb-6 font-fredoka professional-spacing">
+          OUR MENU
+        </h2>
+        <p class="text-xl text-white/85 font-medium max-w-2xl mx-auto leading-relaxed professional-text">
+          Fresh ingredients, bold flavors, and unbeatable prices. Every item made to order!
+        </p>
+      </div>
+
+      <!-- Special Offer Banner -->
+      <div class="text-center mb-12 slide-in">
+        <div class="glass-effect rounded-3xl p-8 max-w-2xl mx-auto border-2 border-truck-primary/30">
+          <div class="text-truck-secondary text-2xl mb-2">🔥</div>
+          <h3 class="text-3xl font-black text-truck-primary mb-4 font-fredoka professional-spacing">
+            {specialOffer.name}
+          </h3>
+          <p class="text-white/90 mb-4 text-lg">{specialOffer.description}</p>
+          <div class="text-4xl font-black text-truck-secondary">{specialOffer.price}</div>
+        </div>
+      </div>
+
+      <!-- Modern Menu Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 justify-center max-w-7xl mx-auto">
+        {menu.map((section, index) => {
+          const iconClass = section.section === 'Burgers' ? 'fas fa-burger' : 
+                           section.section === 'Chicken' ? 'fas fa-drumstick-bite' :
+                           section.section === 'Bbq' ? 'fas fa-fire' :
+                           section.section === 'Fish' ? 'fas fa-fish' :
+                           section.section === 'HotDogs' ? 'fas fa-hotdog' :
+                           section.section === 'Sides' ? 'fas fa-utensils' : 'fas fa-utensils';
+          
+          return (
+            <div class="glass-effect rounded-3xl p-6 sm:p-8 border border-dark-border slide-in menu-card mx-auto w-full max-w-md" 
+                 style={`animation-delay: ${index * 0.1}s;`}>
+              
+              <!-- Icon Header -->
+              <div class="text-center mb-4 sm:mb-6">
+                <div class="bg-gradient-to-br from-truck-primary to-truck-secondary w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
+                  <i class={`${iconClass} text-xl sm:text-2xl text-white`}></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-white mb-3 font-fredoka menu-title">
+                  {section.section}
+                </h3>
+                <div class="w-12 sm:w-16 h-1 bg-gradient-to-r from-truck-primary to-truck-secondary mx-auto rounded-full"></div>
+              </div>
+              
+              <!-- Menu Items -->
+              <ul class="space-y-2 sm:space-y-3">
+                {section.items.map((item) => (
+                  <li class="bg-white/5 rounded-xl p-3 sm:p-4 menu-item-hover border border-dark-border group">
+                    <div class="flex justify-between items-start mb-1 sm:mb-2">
+                      <div class="font-bold text-white text-base sm:text-lg group-hover:text-truck-accent transition-colors pr-2 menu-title">{item.name}</div>
+                      <div class="font-black text-truck-secondary text-lg sm:text-xl group-hover:text-truck-accent transition-colors flex-shrink-0 menu-price">{item.price}</div>
+                    </div>
+                    <div class="text-white/70 text-xs sm:text-sm group-hover:text-white/85 transition-colors menu-description">{item.description}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        })}
+      </div>
+
+      <!-- Call to Action -->
+      <div class="text-center mt-16 slide-in">
+        <div class="glass-effect rounded-3xl p-8 max-w-4xl mx-auto">
+          <h3 class="text-3xl font-black text-white mb-4 font-fredoka">
+            {config.components?.branding?.sparkles && (
+              <span class="sparkle">✨</span>
+            )}
+            Ready to Order?
+            {config.components?.branding?.sparkles && (
+              <span class="sparkle">🚀</span>
+            )}
+          </h3>
+          <p class="text-white/80 text-lg mb-6">
+            Call us now and taste the difference quality makes!
+          </p>
+          <a href={`tel:${businessInfo.phone}`} 
+             class="pulse-button bg-gradient-to-r from-truck-primary to-truck-secondary hover:from-truck-primary-light hover:to-truck-secondary-light text-white font-black px-12 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 inline-block">
+            <i class="fas fa-phone mr-3"></i>CALL {businessInfo.phone}
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="text-center mt-20 pt-8 border-t border-dark-border">
+        <div class="text-white/60 font-medium mb-6">
+          Follow us for daily specials and food truck locations!
+        </div>
+        
+        <!-- Design Agency Credit -->
+        <div class="text-center text-white/30 text-xs mb-4">
+          Website by <a href="/info" class="text-white/50 font-medium hover:text-truck-secondary transition-colors duration-300">Cozyartz Media Group</a>
+          <span class="mx-2">•</span>
+          <a href="/info" class="text-white/40 hover:text-truck-secondary transition-colors duration-300 text-xs">Get Your Website</a>
+        </div>
+        
+        <div class="text-white/40 text-sm">
+          © {new Date().getFullYear()} {config.businessName}. All rights reserved.
+        </div>
+      </footer>
+    </div>
+  </section>
+</div>
+
+<style define:vars={{
+  truckPrimary: primaryColor,
+  truckSecondary: secondaryColor,
+  truckAccent: accentColor,
+  truckPrimaryLight: primaryColor + '20',
+  truckSecondaryLight: secondaryColor + '20',
+  truckAccentLight: accentColor + '20'
+}}>
+.food-truck-layout {
+  --truck-primary: var(--truckPrimary);
+  --truck-secondary: var(--truckSecondary);  
+  --truck-accent: var(--truckAccent);
+  --truck-primary-light: var(--truckPrimary)dd;
+  --truck-secondary-light: var(--truckSecondary)dd;
+  --truck-accent-light: var(--truckAccent)dd;
+  --dark-border: rgba(75, 85, 99, 0.3);
+  
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
+  color: white;
+  min-height: 100vh;
+}
+
+/* Typography */
+.font-fredoka { font-family: 'Fredoka One', 'Arial Black', sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+
+/* Colors */
+.text-truck-primary { color: var(--truck-primary); }
+.text-truck-secondary { color: var(--truck-secondary); }
+.text-truck-accent { color: var(--truck-accent); }
+.bg-truck-primary { background-color: var(--truck-primary); }
+.bg-truck-secondary { background-color: var(--truck-secondary); }
+.border-truck-primary { border-color: var(--truck-primary); }
+
+/* Gradient Background */
+.gradient-bg {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
+  position: relative;
+}
+
+.gradient-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Glass Effect */
+.glass-effect {
+  background: rgba(31, 41, 55, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Hero Effects */
+.hero-glow {
+  background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.2) 0%, rgba(249, 115, 22, 0.1) 50%, transparent 70%);
+  animation: pulse-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Neon Glow Text */
+.neon-glow {
+  text-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 15px currentColor,
+    0 0 20px var(--truck-primary),
+    0 0 35px var(--truck-primary),
+    0 0 40px var(--truck-primary);
+  animation: neon-flicker 2s ease-in-out infinite alternate;
+}
+
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Sparkle Animation */
+.sparkle {
+  display: inline-block;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  25% { transform: scale(1.2) rotate(90deg); opacity: 0.8; }
+  50% { transform: scale(0.8) rotate(180deg); opacity: 1; }
+  75% { transform: scale(1.1) rotate(270deg); opacity: 0.9; }
+}
+
+/* Button Effects */
+.pulse-button {
+  position: relative;
+  overflow: hidden;
+  animation: pulse 2s infinite;
+}
+
+.pulse-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.pulse-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+/* Slide In Animation */
+.slide-in {
+  animation: slideInUp 0.8s ease-out forwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Menu Card Effects */
+.menu-card {
+  transform: translateY(20px);
+  opacity: 0;
+  animation: menuCardSlideIn 0.6s ease-out forwards;
+}
+
+@keyframes menuCardSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-item-hover {
+  transition: all 0.3s ease;
+}
+
+.menu-item-hover:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+  border-color: var(--truck-accent);
+}
+
+/* Professional Spacing */
+.professional-spacing {
+  letter-spacing: 0.05em;
+}
+
+.professional-text {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.refined-shadow {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Responsive Design */
+.responsive-heading {
+  line-height: 1.1;
+  word-break: keep-all;
+}
+
+@media (max-width: 768px) {
+  .responsive-heading {
+    font-size: 2.5rem !important;
+    line-height: 1.2;
+    word-break: normal;
+  }
+  
+  .glass-effect {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  
+  .menu-card {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-heading {
+    font-size: 2rem !important;
+    padding: 0 0.5rem;
+  }
+  
+  .professional-spacing {
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Dark Theme Colors */
+.dark-border { border-color: var(--dark-border); }
+
+/* Menu Titles */
+.menu-title {
+  background: linear-gradient(135deg, var(--truck-primary), var(--truck-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.menu-price {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.menu-description {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* Scroll Arrow */
+#scroll-arrow {
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Focus States for Accessibility */
+.pulse-button:focus,
+.glass-effect:focus {
+  outline: 3px solid var(--truck-accent);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .food-truck-layout {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .neon-glow,
+  .sparkle {
+    animation: none;
+    text-shadow: none;
+  }
+  
+  .glass-effect {
+    background: white;
+    border: 1px solid #ddd;
+  }
+}
+</style>
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', function() {
+  const scrollArrow = document.getElementById('scroll-arrow');
+  const menuSection = document.querySelector('section:nth-child(2)');
+  
+  if (scrollArrow && menuSection) {
+    scrollArrow.addEventListener('click', function() {
+      menuSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+  
+  // Add stagger animation to menu cards
+  const menuCards = document.querySelectorAll('.menu-card');
+  menuCards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+  
+  // Enhanced sparkle effect
+  const sparkles = document.querySelectorAll('.sparkle');
+  sparkles.forEach(sparkle => {
+    const delay = Math.random() * 2;
+    sparkle.style.animationDelay = `${delay}s`;
+  });
+  
+  // Parallax effect for hero background
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const heroGlow = document.querySelector('.hero-glow');
+    if (heroGlow) {
+      heroGlow.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+  });
+});
+</script>

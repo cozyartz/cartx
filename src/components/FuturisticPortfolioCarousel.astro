@@ -64,19 +64,100 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
                 </div>
               </div>
               
-              <!-- Mock Website Preview -->
-              <div class="website-preview bg-gradient-to-br from-accent-slate/10 to-accent-teal/10 rounded-lg p-4 min-h-[120px] border border-accent-slate/10">
-                <div class="preview-content">
-                  <div class="preview-header mb-3">
-                    <div class="w-3/4 h-3 bg-accent-slate/30 rounded mb-2"></div>
-                    <div class="w-1/2 h-2 bg-accent-teal/30 rounded"></div>
+              <!-- Dynamic Website Preview based on layoutType -->
+              <div class="website-preview bg-gradient-to-br from-accent-slate/10 to-accent-teal/10 rounded-lg p-4 min-h-[160px] border border-accent-slate/10 relative overflow-hidden">
+                
+                {/* Food Truck Preview */}
+                {business.layoutType === 'foodtruck' && (
+                  <div class="preview-content">
+                    <!-- Food Truck Header -->
+                    <div class="preview-header mb-3 text-center">
+                      <div class="flex items-center justify-center gap-1 mb-2">
+                        <div class="w-1 h-1 bg-red-400 rounded-full"></div>
+                        <div class="w-20 h-2 bg-gradient-to-r from-red-400 to-orange-400 rounded text-[6px] text-white flex items-center justify-center font-bold">
+                          {business.businessName.split(' ')[0].toUpperCase()}
+                        </div>
+                        <div class="w-1 h-1 bg-orange-400 rounded-full"></div>
+                      </div>
+                    </div>
+                    <!-- Menu Preview -->
+                    <div class="preview-menu space-y-1">
+                      {business.menu && Object.entries(business.menu).slice(0, 3).map(([category, items]) => (
+                        <div class="flex justify-between items-center text-[8px] text-white/80">
+                          <span class="capitalize">{category}</span>
+                          <span class="text-orange-300">${((Math.random() * 10) + 5).toFixed(2)}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <!-- CTA Button -->
+                    <div class="mt-3 text-center">
+                      <div class="inline-block bg-gradient-to-r from-red-500 to-orange-500 rounded-full px-2 py-1 text-[6px] text-white font-bold">
+                        ORDER NOW
+                      </div>
+                    </div>
                   </div>
-                  <div class="preview-body space-y-2">
-                    <div class="w-full h-2 bg-white/10 rounded"></div>
-                    <div class="w-5/6 h-2 bg-white/10 rounded"></div>
-                    <div class="w-2/3 h-2 bg-white/10 rounded"></div>
+                )}
+
+                {/* Restaurant Preview */}
+                {business.layoutType === 'restaurant' && (
+                  <div class="preview-content">
+                    <!-- Restaurant Header with Character -->
+                    <div class="preview-header mb-3 flex items-center justify-between">
+                      <div class="flex-1">
+                        <div class="w-16 h-2 bg-gradient-to-r from-green-400 to-red-400 rounded mb-1"></div>
+                        <div class="w-12 h-1 bg-yellow-400 rounded"></div>
+                      </div>
+                      {business.components?.branding?.mascot && (
+                        <div class="w-6 h-6 bg-gradient-to-b from-red-500 to-red-700 rounded-full flex items-center justify-center">
+                          <div class="text-[6px]">🌶️</div>
+                        </div>
+                      )}
+                      {business.components?.branding?.emoji && (
+                        <div class="text-xs">{business.components.branding.emoji}</div>
+                      )}
+                    </div>
+                    <!-- Menu Categories -->
+                    <div class="preview-menu grid grid-cols-2 gap-1 mb-2">
+                      {business.menu && Object.keys(business.menu).slice(0, 4).map((category) => (
+                        <div class="bg-white/5 rounded px-1 py-1 text-center">
+                          <div class="text-[7px] text-green-300 font-semibold capitalize">
+                            {category.replace(/([A-Z])/g, ' $1').trim()}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <!-- Search Bar -->
+                    {business.components?.branding?.search && (
+                      <div class="bg-gray-700 rounded-full h-1.5 mb-2 flex items-center px-1">
+                        <div class="w-1 h-1 bg-gray-400 rounded-full mr-1"></div>
+                        <div class="flex-1 h-0.5 bg-gray-600 rounded"></div>
+                      </div>
+                    )}
                   </div>
-                </div>
+                )}
+
+                {/* Universal/Service Preview */}
+                {(business.layoutType === 'universal' || !business.layoutType) && (
+                  <div class="preview-content">
+                    <div class="preview-header mb-3">
+                      <div class="w-3/4 h-3 bg-accent-slate/30 rounded mb-2"></div>
+                      <div class="w-1/2 h-2 bg-accent-teal/30 rounded"></div>
+                    </div>
+                    <div class="preview-services grid grid-cols-3 gap-1 mb-2">
+                      {business.services.slice(0, 3).map((service) => (
+                        <div class="bg-white/5 rounded text-center p-1">
+                          <div class="w-2 h-2 bg-accent-teal/50 rounded mx-auto mb-1"></div>
+                          <div class="h-1 bg-white/20 rounded"></div>
+                        </div>
+                      ))}
+                    </div>
+                    <div class="preview-cta text-center">
+                      <div class="inline-block bg-gradient-to-r from-accent-slate to-accent-teal rounded-full px-2 py-1 text-[6px] text-white font-bold">
+                        GET QUOTE
+                      </div>
+                    </div>
+                  </div>
+                )}
                 
                 <!-- Hover Overlay -->
                 <div class="preview-overlay absolute inset-0 bg-gradient-to-br from-accent-slate/20 to-accent-teal/20 rounded-lg opacity-0 transition-opacity duration-300 flex items-center justify-center">
@@ -94,7 +175,35 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
                 {business.portfolioDescription}
               </p>
               
-              <!-- Key Services -->
+              <!-- Dynamic Content based on Business Type -->
+              {business.layoutType === 'foodtruck' && business.menu && (
+                <div class="menu-preview mb-4">
+                  <h5 class="text-accent-teal font-semibold mb-2 text-sm">Featured Menu Items:</h5>
+                  <div class="space-y-1">
+                    {Object.entries(business.menu).slice(0, 2).map(([category, items]) => (
+                      <div class="flex justify-between items-center text-xs text-white/70">
+                        <span class="capitalize">{category} ({items.length} items)</span>
+                        <span class="text-accent-teal">From ${items[0]?.price || '$5.99'}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {business.layoutType === 'restaurant' && business.menu && (
+                <div class="menu-preview mb-4">
+                  <h5 class="text-accent-teal font-semibold mb-2 text-sm">Menu Categories:</h5>
+                  <div class="grid grid-cols-2 gap-2">
+                    {Object.keys(business.menu).slice(0, 4).map((category) => (
+                      <div class="bg-white/5 rounded px-2 py-1 text-xs text-center text-white/80 border border-white/10">
+                        {category.replace(/([A-Z])/g, ' $1').trim()}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <!-- Key Services/Features -->
               <div class="services-preview flex flex-wrap gap-2 mb-4">
                 {business.services.slice(0, 3).map((service) => (
                   <span class="service-tag bg-accent-slate/10 text-accent-teal px-3 py-1 rounded-full text-sm border border-accent-slate/20">
@@ -105,6 +214,30 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
                   <span class="service-tag bg-accent-teal/10 text-accent-slate px-3 py-1 rounded-full text-sm border border-accent-teal/20">
                     +{business.services.length - 3} more
                   </span>
+                )}
+              </div>
+
+              <!-- Business Features -->
+              <div class="business-features grid grid-cols-2 gap-2 text-xs">
+                <div class="feature flex items-center text-white/60">
+                  <i class="fas fa-mobile-alt mr-2 text-accent-teal"></i>
+                  <span>{business.layoutType === 'foodtruck' ? 'Mobile Ordering' : business.layoutType === 'restaurant' ? 'Online Menu' : 'Responsive Design'}</span>
+                </div>
+                <div class="feature flex items-center text-white/60">
+                  <i class="fas fa-search mr-2 text-accent-teal"></i>
+                  <span>SEO Optimized</span>
+                </div>
+                {business.components?.branding?.search && (
+                  <div class="feature flex items-center text-white/60">
+                    <i class="fas fa-search-plus mr-2 text-accent-teal"></i>
+                    <span>Menu Search</span>
+                  </div>
+                )}
+                {business.components?.branding?.mascot && (
+                  <div class="feature flex items-center text-white/60">
+                    <i class="fas fa-mask mr-2 text-accent-teal"></i>
+                    <span>Custom Mascot</span>
+                  </div>
                 )}
               </div>
             </div>
