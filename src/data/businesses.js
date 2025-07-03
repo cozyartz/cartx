@@ -419,9 +419,13 @@ export function getBusinessUrl(slug, deploymentMode = null) {
     case DEPLOYMENT_MODES.SUBDOMAIN:
       return `https://${config.deployment.subdomain}`;
     case DEPLOYMENT_MODES.STANDALONE:
-      return config.deployment.customDomain 
-        ? `https://${config.deployment.customDomain}`
-        : `https://${slug}.pages.dev`; // Fallback to Cloudflare Pages URL
+      // For portfolio display, always use dynamic routing within the same site
+      // Only use custom domains if explicitly set for external linking
+      if (config.deployment?.customDomain && config.deployment?.isExternal) {
+        return `https://${config.deployment.customDomain}`;
+      }
+      // Default to current site's dynamic routing
+      return `/${slug}`;
     default:
       return `/${slug}`;
   }
