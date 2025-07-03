@@ -1,20 +1,21 @@
 # CartX - Multi-Tenant Business Landing Page System
 
-A powerful Astro-based multi-tenant website system for creating professional business landing pages that drive leads to Cozyartz Media Group. Built with Cloudflare Pages for lightning-fast global delivery.
+A powerful Astro-based multi-tenant website system with **flexible template architecture** for creating professional business landing pages that drive leads to Cozyartz Media Group. Built with Cloudflare Pages for lightning-fast global delivery.
 
 ## 🏢 Business Model Overview
 
-CartX is a **multi-tenant landing page business** designed to dominate local SEO in Michigan and beyond. Each subdomain serves as a high-quality demo landing page for local businesses, which then funnels traffic to Cozyartz Media Group for web development services.
+CartX is a **multi-tenant landing page business** designed to dominate local SEO in Michigan and beyond. Each business page uses our flexible template system to automatically select the perfect layout based on business type, creating highly-targeted demo pages that funnel traffic to Cozyartz Media Group for web development services.
 
 ### SEO Strategy Architecture
-- **Demo Landing Pages**: Professional sites showcasing local businesses across Michigan
+- **Demo Landing Pages**: Professional sites with business-specific layouts showcasing local businesses across Michigan
 - **Authority Building**: Each demo site includes strategic backlinks and schema markup pointing to Cozyartz Media Group  
 - **Geographic Expansion**: Target different Michigan cities through various business verticals
 - **Conversion Funnel**: Demo sites → Info page → Cozyartz Media Group services
 
-### Multi-Subdomain Structure
+### Multi-Tenant Dynamic Routing
 - **Production Domain**: cartfullofx.com (main hub)
-- **Demo Subdomains**: [business].cartfullofx.com (e.g., grillz.cartfullofx.com, salsas.cartfullofx.com)
+- **Dynamic Business Pages**: cartfullofx.com/[business] (e.g., cartfullofx.com/grillz, cartfullofx.com/salsas)
+- **Template Selection**: Automatic layout based on business type (restaurant, foodtruck, universal)
 - **Info Page**: /info (Cozyartz Media Group service sales page)
 - **SEO Network**: All sites contribute authority and traffic to main business
 
@@ -41,13 +42,21 @@ npm install -g wrangler
 wrangler login
 ```
 
-## ⚡ Business Page Generation System
+## ⚡ Flexible Template System
+
+### Template Architecture
+
+Our flexible template system automatically selects the perfect layout based on business configuration:
+
+- **RestaurantLayout**: For restaurants, cafes, and dining establishments with mascots, menu search, and category-based menus
+- **FoodTruckLayout**: For food trucks and mobile vendors with urban styling, neon effects, and pricing focus
+- **UniversalLayout**: For all other business types with professional service-focused design
 
 ### Quick Business Page Creation
 
 #### Method 1: Interactive Generator (Recommended)
 ```bash
-# Generate new business configuration
+# Generate new business configuration with automatic template selection
 npm run generate
 
 # Or directly run the script
@@ -55,13 +64,14 @@ node generate-business.js
 ```
 
 The interactive generator guides you through:
-1. Business type selection (Restaurant, Salon, Auto, Contractor, Retail)
-2. Business information (name, location, services)
-3. SEO keyword generation
-4. Automatic configuration output
+1. Business type selection (automatically determines template)
+2. Business information (name, location, services/menu)
+3. Component configuration (mascots, search, animations)
+4. SEO keyword generation
+5. Template-specific styling options
 
 #### Method 2: Manual Configuration
-Add businesses directly to `src/pages/[business].astro` in the `businessConfigs` object:
+Add businesses directly to `src/data/businesses.js` in the `businessConfigs` object:
 
 ```javascript
 yourbusiness: {
@@ -69,51 +79,61 @@ yourbusiness: {
   description: "SEO description for your business",
   businessName: "Your Business Name",
   phone: "(269) xxx-xxxx",
+  
+  // Template Configuration
+  layoutType: "restaurant", // "restaurant", "foodtruck", or "universal"
+  components: {
+    hero: "character", // Layout-specific hero style
+    menu: "categories", // Menu display type
+    branding: {
+      mascot: { type: "chili-pepper", accessories: ["sombrero"] },
+      search: true, // Enable menu search
+      sparkles: true, // Add sparkle animations
+      neonEffects: true // Food truck neon styling
+    }
+  },
+  
   address: {
     street: "123 Business St",
     city: "Battle Creek", 
     state: "Michigan",
     zip: "49015"
   },
-  businessType: "Restaurant", // or "BeautySalon", "AutomotiveBusiness", etc.
+  businessType: "Restaurant",
   services: ["Service 1", "Service 2", "Service 3"],
   keywords: ["keyword1", "keyword2", "keyword3"]
 }
 ```
 
-### Business Types & Templates
+### Template Types & Features
 
-The system includes pre-built templates for common Michigan businesses:
+The system includes three specialized layout templates:
 
-#### 🍽️ Restaurant Template
-- **Business Type**: "Restaurant"
-- **Default Services**: Dine-In, Takeout, Catering, Private Events
-- **SEO Focus**: Local dining, cuisine-specific keywords
-- **Hours**: Restaurant-appropriate schedule
+#### 🍽️ Restaurant Layout (`layoutType: "restaurant"`)
+- **Perfect For**: Restaurants, cafes, diners, Mexican restaurants
+- **Features**: Character mascots, menu search functionality, category-based menus
+- **Components**: Mascot animations, menu search, cultural theming
+- **Styling**: Professional restaurant branding with warm colors
+- **Menu Display**: Organized by categories with descriptions and ratings
 
-#### 💇 Hair Salon Template  
-- **Business Type**: "BeautySalon"
-- **Default Services**: Hair Cuts, Coloring, Styling, Bridal Services
-- **SEO Focus**: Beauty services, hair styling keywords
-- **Hours**: Salon-appropriate schedule
+#### 🚚 Food Truck Layout (`layoutType: "foodtruck"`)
+- **Perfect For**: Food trucks, mobile vendors, street food
+- **Features**: Urban styling, neon effects, pricing-focused display
+- **Components**: Sparkle animations, neon text effects, mobile ordering emphasis
+- **Styling**: Bold urban design with high-contrast colors
+- **Menu Display**: Price-focused with quick ordering call-to-actions
 
-#### 🔧 Auto Repair Template
-- **Business Type**: "AutomotiveBusiness" 
-- **Default Services**: Oil Changes, Brake Repair, Diagnostics
-- **SEO Focus**: Auto repair, car service keywords
-- **Hours**: Garage-appropriate schedule
+#### 🏢 Universal Layout (`layoutType: "universal"`)
+- **Perfect For**: All other business types (salons, auto repair, contractors, retail)
+- **Features**: Professional service-focused design, flexible theming
+- **Components**: Custom color schemes, service highlighting
+- **Styling**: Clean, professional layout adaptable to any business
+- **Content Display**: Service-oriented with clear contact information
 
-#### 🏠 Contractor Template
-- **Business Type**: "LocalBusiness"
-- **Default Services**: Construction, Renovations, Remodeling
-- **SEO Focus**: Home improvement, contractor keywords
-- **Hours**: Contractor-appropriate schedule
-
-#### 🛍️ Retail Template
-- **Business Type**: "Store"
-- **Default Services**: Product Sales, Custom Orders, Consultation
-- **SEO Focus**: Retail, shopping, product keywords
-- **Hours**: Retail-appropriate schedule
+### Template Selection Guide
+- **Use Restaurant Layout**: For any dining establishment with a menu
+- **Use Food Truck Layout**: For mobile food vendors emphasizing quick orders
+- **Use Universal Layout**: For service businesses, retail, professional services
 
 ## 📦 Development Workflow
 
@@ -231,11 +251,17 @@ Target industries across Michigan:
 ├── src/
 │   ├── pages/
 │   │   ├── index.astro           # Main Cozyartz site
-│   │   ├── [business].astro      # Dynamic business pages
-│   │   ├── info.astro           # Service sales page
-│   │   └── grillz.astro         # Legacy grillz page
+│   │   ├── [business].astro      # Dynamic business routing with template selection
+│   │   └── info.astro           # Service sales page
 │   ├── components/
-│   │   └── SEO.astro            # Modular SEO component
+│   │   ├── SEO.astro            # Modular SEO component
+│   │   ├── MenuSection.astro     # Flexible menu display component
+│   │   ├── FuturisticPortfolioCarousel.astro # Dynamic portfolio with business previews
+│   │   └── layouts/
+│   │       ├── RestaurantLayout.astro    # Restaurant template
+│   │       └── FoodTruckLayout.astro     # Food truck template
+│   ├── data/
+│   │   └── businesses.js         # Business configurations and template logic
 │   └── styles/
 │       └── global.css           # Tailwind styles
 ├── public/                      # Static assets
@@ -332,9 +358,10 @@ wrangler login
 ```
 
 **Business Page Not Loading:**
-1. Verify business is added to `businessConfigs` in `[business].astro`
+1. Verify business is added to `businessConfigs` in `src/data/businesses.js`
 2. Check slug matches URL (lowercase, no spaces)
-3. Rebuild and redeploy: `npm run quick-deploy`
+3. Verify `layoutType` is set correctly ("restaurant", "foodtruck", or "universal")
+4. Rebuild and redeploy: `npm run quick-deploy`
 
 **Generator Script Issues:**
 ```bash

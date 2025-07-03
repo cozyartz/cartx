@@ -9,7 +9,6 @@
     "astro": "astro",
     "deploy": "wrangler pages deploy dist --project-name cartx",
     "deploy:cartx": "wrangler pages deploy dist --project-name cartx",
-    "deploy:salsas": "wrangler pages deploy dist --project-name salsas-cartfullofx",
     "deploy:staging": "wrangler pages deploy dist --project-name cartx-staging",
     "wrangler:dev": "wrangler pages dev dist --compatibility-date=2024-01-01",
     "generate": "node generate-business.js",

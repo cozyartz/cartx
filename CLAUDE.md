@@ -54,7 +54,7 @@ This is a **multi-tenant landing page business** designed to dominate local SEO 
 
 ## Architecture Overview
 
-This is an Astro-based multi-tenant website system deployed on Cloudflare Pages with the following key characteristics:
+This is an Astro-based multi-tenant website system with **flexible template architecture** deployed on Cloudflare Pages with the following key characteristics:
 
 ### Tech Stack
 - **Framework**: Astro 5.x with SSR mode (`output: 'server'`)
@@ -64,8 +64,12 @@ This is an Astro-based multi-tenant website system deployed on Cloudflare Pages 
 - **Deployment**: Cloudflare Pages with Wrangler CLI
 
 ### Project Structure
-- `src/pages/` - File-based routing (index.astro, info.astro)
+- `src/pages/[business].astro` - **Dynamic routing with automatic template selection**
+- `src/data/businesses.js` - **Central business configuration with template logic**
+- `src/components/layouts/` - **Specialized layout templates (Restaurant, Food Truck, Universal)**
 - `src/components/SEO.astro` - **Reusable SEO component for sharing across projects**
+- `src/components/MenuSection.astro` - **Flexible menu display component**
+- `src/components/FuturisticPortfolioCarousel.astro` - **Dynamic portfolio with business-specific previews**
 - `src/styles/global.css` - Global styles and Tailwind customizations
 - `public/` - Static assets including favicons and manifest
 - `dist/` - Build output directory (generated)
@@ -133,26 +137,50 @@ The project uses custom design tokens:
 
 ## Template Development Workflow
 
-### Creating New Business Landing Pages
-1. **Research**: Local business analysis and keyword research
-2. **Content**: Business-specific menu/services, contact info, hours
-3. **SEO**: Local schema markup, geo-targeted meta tags
-4. **Branding**: Consistent Cozyartz attribution and backlinks
-5. **Testing**: Mobile responsiveness, page speed, conversion tracking
+### Flexible Template System
 
-### Business Verticals to Target
-- **Restaurants**: Food trucks, cafes, diners, specialty cuisine
-- **Service Businesses**: Contractors, repair services, consultants
-- **Retail**: Local shops, boutiques, specialty stores
-- **Healthcare**: Clinics, dentists, chiropractors, wellness
-- **Professional Services**: Legal, accounting, real estate
+#### Template Architecture
+1. **RestaurantLayout** (`layoutType: "restaurant"`)
+   - Mascot characters with animations
+   - Menu search functionality
+   - Category-based menu display
+   - Cultural theming (Mexican, Italian, etc.)
+   
+2. **FoodTruckLayout** (`layoutType: "foodtruck"`)
+   - Urban styling with neon effects
+   - Pricing-focused menu display
+   - Sparkle animations and mobile ordering emphasis
+   - High-contrast colors and bold typography
+   
+3. **UniversalLayout** (`layoutType: "universal"`)
+   - Professional service-focused design
+   - Flexible color theming
+   - Service-oriented content display
+   - Clean, adaptable styling
 
-### Development Workflow
+#### Creating New Business Landing Pages
+1. **Research**: Local business analysis and template selection
+2. **Configuration**: Add to `src/data/businesses.js` with appropriate `layoutType`
+3. **Components**: Configure mascots, search, animations based on business type
+4. **Content**: Business-specific menu/services, contact info, hours
+5. **SEO**: Local schema markup, geo-targeted meta tags
+6. **Testing**: Template-specific features, mobile responsiveness, animations
+
+#### Business Verticals & Template Mapping
+- **Restaurants** → RestaurantLayout: Cafes, diners, specialty cuisine, Mexican restaurants
+- **Food Trucks** → FoodTruckLayout: Mobile vendors, street food, quick service
+- **Service Businesses** → UniversalLayout: Contractors, repair services, consultants
+- **Retail** → UniversalLayout: Local shops, boutiques, specialty stores
+- **Healthcare** → UniversalLayout: Clinics, dentists, chiropractors, wellness
+- **Professional Services** → UniversalLayout: Legal, accounting, real estate
+
+#### Development Workflow
 1. Run `npm run dev` for local development
-2. Use `npm run wrangler:dev` to test Cloudflare Workers functionality locally
-3. Build with `npm run build` before deployment
-4. Deploy to staging first: `npm run build && npm run deploy:staging`
-5. Deploy to production: `npm run build && npm run deploy`
+2. Test template selection with `http://localhost:4321/[business]`
+3. Use `npm run wrangler:dev` to test Cloudflare Workers functionality locally
+4. Build with `npm run build` before deployment
+5. Deploy to staging first: `npm run build && npm run deploy:staging`
+6. Deploy to production: `npm run build && npm run deploy`
 
 ## Quality Assurance
 
@@ -234,38 +262,59 @@ node generate-business.js
 Interactive script that auto-generates business configurations with Michigan city data, SEO keywords, and business type templates.
 
 #### Method 2: Manual Configuration  
-Add businesses directly to `src/pages/[business].astro` businessConfigs object.
+Add businesses directly to `src/data/businesses.js` businessConfigs object with template configuration.
 
 ### 📋 Business Type Templates
 
-#### Restaurant Template
+#### Restaurant Template (`layoutType: "restaurant"`)
 ```javascript
 businessname: {
   title: "Business Name - Authentic [Cuisine] Cuisine",
   description: "Authentic [cuisine] restaurant in [City], Michigan. [Unique selling point].",
   businessType: "Restaurant",
+  layoutType: "restaurant",
+  components: {
+    hero: "character",
+    menu: "categories",
+    branding: {
+      mascot: { type: "chili-pepper", accessories: ["sombrero"] },
+      search: true,
+      culturalTheme: "mexican"
+    }
+  },
   services: ["Dine-In Service", "Takeout & Delivery", "Catering", "Private Events"],
   keywords: ["restaurant [city]", "authentic [cuisine] Michigan", "[specialty dish]"]
 }
 ```
 
-#### Hair Salon Template
+#### Food Truck Template (`layoutType: "foodtruck"`)
 ```javascript
 businessname: {
-  title: "Business Name - Hair Salon & Beauty Services", 
-  businessType: "BeautySalon",
-  services: ["Hair Cuts & Styling", "Hair Coloring", "Highlights", "Bridal Hair"],
-  keywords: ["hair salon [city]", "hair stylist Michigan", "bridal hair"]
+  title: "Business Name - Premium Street Food",
+  businessType: "Restaurant",
+  layoutType: "foodtruck",
+  components: {
+    hero: "food-truck",
+    menu: "pricing",
+    branding: {
+      sparkles: true,
+      neonEffects: true,
+      animations: ["pulse", "glow"]
+    }
+  },
+  services: ["Mobile Orders", "Event Catering", "Daily Specials"],
+  keywords: ["food truck [city]", "street food Michigan", "mobile catering"]
 }
 ```
 
-#### Auto Repair Template
+#### Service Business Template (`layoutType: "universal"`)
 ```javascript
 businessname: {
-  title: "Business Name - Auto Repair & Service",
-  businessType: "AutomotiveBusiness", 
-  services: ["Oil Changes", "Brake Repair", "Engine Diagnostics", "Tire Service"],
-  keywords: ["auto repair [city]", "car service Michigan", "brake repair"]
+  title: "Business Name - Professional Services",
+  businessType: "LocalBusiness", 
+  layoutType: "universal",
+  services: ["Service 1", "Service 2", "Service 3", "Consultations"],
+  keywords: ["service [city]", "professional [service] Michigan", "[business type]"]
 }
 ```
 
@@ -274,9 +323,9 @@ businessname: {
 #### Demo Generation Steps
 1. Research target business (website, Google listing, competitors)
 2. Run `node generate-business.js` to create configuration
-3. Add config to [business].astro file
+3. Add config to src/data/businesses.js with appropriate layoutType
 4. Deploy demo: `npm run build && npm run deploy`
-5. Present live demo at [business].cartfullofx.com
+5. Present live demo at cartfullofx.com/[business]
 
 #### Sales Presentation Script
 "I've created a professional website demo for [Business Name] at [business].cartfullofx.com. This showcases mobile-optimized design, local SEO for [City] searches, and professional contact integration. Same quality for $XXX setup + $XX/month hosting."
