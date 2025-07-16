@@ -21,6 +21,35 @@ if (!config) {
 
 // Determine which layout to use based on layoutType
 const layoutType = config.layoutType || 'universal';
+
+// Helper function for service icons in universal layout
+function getServiceIcon(service) {
+  const serviceKeywords = service.toLowerCase();
+  
+  if (serviceKeywords.includes('plumb')) return 'fas fa-wrench';
+  if (serviceKeywords.includes('electric')) return 'fas fa-bolt';
+  if (serviceKeywords.includes('hvac') || serviceKeywords.includes('heating') || serviceKeywords.includes('cooling')) return 'fas fa-thermometer-half';
+  if (serviceKeywords.includes('roof')) return 'fas fa-home';
+  if (serviceKeywords.includes('clean')) return 'fas fa-broom';
+  if (serviceKeywords.includes('lawn') || serviceKeywords.includes('landscape')) return 'fas fa-seedling';
+  if (serviceKeywords.includes('paint')) return 'fas fa-paint-brush';
+  if (serviceKeywords.includes('floor')) return 'fas fa-th-large';
+  if (serviceKeywords.includes('window')) return 'fas fa-window-maximize';
+  if (serviceKeywords.includes('security')) return 'fas fa-shield-alt';
+  if (serviceKeywords.includes('pest')) return 'fas fa-bug';
+  if (serviceKeywords.includes('tree')) return 'fas fa-tree';
+  if (serviceKeywords.includes('concrete') || serviceKeywords.includes('driveway')) return 'fas fa-road';
+  if (serviceKeywords.includes('fence')) return 'fas fa-border-style';
+  if (serviceKeywords.includes('gutter')) return 'fas fa-tint';
+  if (serviceKeywords.includes('kitchen') || serviceKeywords.includes('cabinet')) return 'fas fa-utensils';
+  if (serviceKeywords.includes('bathroom')) return 'fas fa-bath';
+  if (serviceKeywords.includes('deck') || serviceKeywords.includes('patio')) return 'fas fa-layer-group';
+  if (serviceKeywords.includes('garage')) return 'fas fa-car';
+  if (serviceKeywords.includes('basement')) return 'fas fa-stairs';
+  
+  // Default icons for common business types
+  return 'fas fa-cogs';
+}
 ---
 
 <!DOCTYPE html>
@@ -58,9 +87,9 @@ const layoutType = config.layoutType || 'universal';
   {layoutType === 'restaurant' && <RestaurantLayout config={config} />}
   {layoutType === 'foodtruck' && <FoodTruckLayout config={config} />}
   
-  <!-- Fallback Universal Layout (keep existing universal layout for other business types) -->
+  <!-- Enhanced Universal Layout for Professional Service Businesses -->
   {layoutType === 'universal' && (
-    <div class="universal-layout min-h-screen" style="background: var(--business-bg); color: var(--business-text);">
+    <div class="universal-layout min-h-screen">
       <!-- Load dynamic CSS variables for universal layout -->
       <style define:vars={{
         businessPrimary: config.theme?.primaryColor || '#DC2626',
@@ -72,7 +101,7 @@ const layoutType = config.layoutType || 'universal';
         gradientFrom: config.theme?.gradientFrom || '#DC2626',
         gradientTo: config.theme?.gradientTo || '#F97316'
       }}>
-        :root {
+        .universal-layout {
           --business-primary: var(--businessPrimary);
           --business-secondary: var(--businessSecondary);
           --business-accent: var(--businessAccent);
@@ -81,14 +110,36 @@ const layoutType = config.layoutType || 'universal';
           --business-font: var(--businessFont);
           --gradient-from: var(--gradientFrom);
           --gradient-to: var(--gradientTo);
-        }
-        
-        body {
-          font-family: var(--business-font);
-          background: var(--business-bg);
+          --primary-rgb: 220, 38, 38;
+          --secondary-rgb: 249, 115, 22;
+          --accent-rgb: 251, 191, 36;
+          
+          font-family: var(--business-font), -apple-system, BlinkMacSystemFont, sans-serif;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #334155 70%, #1e293b 100%);
           color: var(--business-text);
+          min-height: 100vh;
+          position: relative;
         }
         
+        /* Background Effects */
+        .universal-layout::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: 
+            radial-gradient(circle at 20% 50%, rgba(var(--primary-rgb), 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(var(--secondary-rgb), 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(var(--accent-rgb), 0.06) 0%, transparent 50%);
+          pointer-events: none;
+          z-index: 1;
+        }
+        
+        .universal-layout > * {
+          position: relative;
+          z-index: 2;
+        }
+        
+        /* Professional Color System */
         .business-primary { color: var(--business-primary); }
         .business-secondary { color: var(--business-secondary); }
         .business-accent { color: var(--business-accent); }
@@ -98,13 +149,172 @@ const layoutType = config.layoutType || 'universal';
           background: linear-gradient(135deg, var(--gradient-from), var(--gradient-to)); 
         }
         .border-business-primary { border-color: var(--business-primary); }
-        .hover\:bg-business-primary:hover { background-color: var(--business-primary); }
-        .focus\:ring-business-primary:focus { 
-          --tw-ring-color: var(--business-primary); 
-          --tw-ring-opacity: 0.5;
+        
+        /* Premium Glass Effects */
+        .glass-morphism {
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
-        /* Business-specific mood styling */
+        /* Enhanced Typography */
+        .text-gradient {
+          background: linear-gradient(135deg, var(--business-primary), var(--business-secondary));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        
+        /* Professional Card Styling */
+        .professional-card {
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 1rem;
+          padding: 2rem;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .professional-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--business-accent), transparent);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        
+        .professional-card:hover {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(var(--accent-rgb), 0.3);
+          transform: translateY(-8px);
+          box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(var(--primary-rgb), 0.2);
+        }
+        
+        .professional-card:hover::before {
+          opacity: 1;
+        }
+        
+        /* Enhanced Button Styling */
+        .premium-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 1rem 2rem;
+          background: linear-gradient(135deg, var(--business-primary), var(--business-secondary));
+          color: white;
+          border: none;
+          border-radius: 0.75rem;
+          font-weight: 700;
+          font-size: 1.125rem;
+          text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.4);
+        }
+        
+        .premium-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          transition: left 0.5s ease;
+        }
+        
+        .premium-button:hover {
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.6);
+        }
+        
+        .premium-button:hover::before {
+          left: 100%;
+        }
+        
+        .secondary-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 1rem 2rem;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(20px);
+          color: white;
+          border: 2px solid rgba(255, 255, 255, 0.2);
+          border-radius: 0.75rem;
+          font-weight: 600;
+          font-size: 1.125rem;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+        
+        .secondary-button:hover {
+          background: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.4);
+          transform: translateY(-2px);
+        }
+        
+        /* Animated Elements */
+        .fade-in-up {
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .stagger-children > * {
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Icon Styling */
+        .service-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 4rem;
+          height: 4rem;
+          background: linear-gradient(135deg, var(--business-primary), var(--business-secondary));
+          border-radius: 1rem;
+          color: white;
+          font-size: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.3);
+          transition: all 0.3s ease;
+        }
+        
+        .professional-card:hover .service-icon {
+          transform: scale(1.1) rotate(5deg);
+          box-shadow: 0 12px 35px rgba(var(--primary-rgb), 0.5);
+        }
+        
+        /* Business Mood Styling */
         .bold-urban {
           font-weight: 800;
           text-transform: uppercase;
@@ -117,314 +327,612 @@ const layoutType = config.layoutType || 'universal';
           line-height: 1.6;
         }
         
-        /* Custom gradient overlays */
-        .hero-overlay {
-          background: linear-gradient(135deg, 
-            rgba(var(--gradient-from), 0.9), 
-            rgba(var(--gradient-to), 0.8)
-          );
+        /* Enhanced Grid Systems */
+        .services-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+          margin-top: 3rem;
         }
         
-        /* Dynamic hover effects */
-        .business-card:hover {
-          box-shadow: 0 20px 40px rgba(var(--business-primary), 0.3);
-          transform: translateY(-5px);
-          transition: all 0.3s ease;
+        .contact-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          margin-top: 2rem;
         }
         
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        /* Floating Action Elements */
+        .floating-elements {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 1;
         }
         
-        .business-card {
-          opacity: 0;
+        .floating-circle {
+          position: absolute;
+          border-radius: 50%;
+          background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--secondary-rgb), 0.1));
+          animation: float 8s ease-in-out infinite;
         }
         
-        /* Enhanced responsive design */
+        .floating-circle:nth-child(1) {
+          width: 300px;
+          height: 300px;
+          top: 10%;
+          left: 5%;
+          animation-delay: 0s;
+        }
+        
+        .floating-circle:nth-child(2) {
+          width: 200px;
+          height: 200px;
+          top: 60%;
+          right: 10%;
+          animation-delay: -3s;
+        }
+        
+        .floating-circle:nth-child(3) {
+          width: 150px;
+          height: 150px;
+          bottom: 20%;
+          left: 15%;
+          animation-delay: -6s;
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          33% { transform: translateY(-20px) rotate(2deg); }
+          66% { transform: translateY(10px) rotate(-1deg); }
+        }
+        
+        /* Status Indicators */
+        .status-indicator {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          background: rgba(var(--accent-rgb), 0.2);
+          border: 1px solid rgba(var(--accent-rgb), 0.3);
+          border-radius: 50px;
+          color: var(--business-accent);
+          font-size: 0.875rem;
+          font-weight: 600;
+        }
+        
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          background: var(--business-accent);
+          border-radius: 50%;
+          animation: pulse-dot 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        /* Enhanced Responsive Design */
         @media (max-width: 768px) {
-          .hero-section h2 {
-            font-size: 2.5rem !important;
-            line-height: 1.1;
-          }
-          
-          .hero-section p {
-            font-size: 1.1rem !important;
-          }
-          
-          .service-grid {
+          .services-grid {
             grid-template-columns: 1fr;
             gap: 1.5rem;
           }
           
-          .contact-buttons {
-            flex-direction: column;
-            gap: 1rem;
+          .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
           }
           
-          .contact-buttons a {
+          .professional-card {
+            padding: 1.5rem;
+          }
+          
+          .premium-button,
+          .secondary-button {
             width: 100%;
-            text-align: center;
+            justify-content: center;
+          }
+          
+          .floating-circle {
+            display: none;
           }
         }
         
         @media (max-width: 480px) {
-          .hero-section {
-            padding: 2rem 1rem;
+          .professional-card {
+            padding: 1rem;
           }
           
-          .hero-section h2 {
-            font-size: 2rem !important;
-          }
-          
-          .section-padding {
-            padding: 3rem 1rem;
+          .service-icon {
+            width: 3rem;
+            height: 3rem;
+            font-size: 1.25rem;
           }
         }
         
-        /* Focus indicators for accessibility */
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+          .fade-in-up,
+          .stagger-children > *,
+          .floating-circle {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        }
+        
         .focus-visible:focus {
           outline: 3px solid var(--business-accent);
           outline-offset: 2px;
         }
       </style>
       
-      <!-- Universal Layout Content (existing layout) -->
+      <!-- Enhanced Universal Layout Content -->
       <div class="min-h-screen">
-        <!-- Header -->
-        <header class="bg-black/20 backdrop-blur-md shadow-sm border-b border-white/10">
+        <!-- Floating Background Elements -->
+        <div class="floating-elements">
+          <div class="floating-circle"></div>
+          <div class="floating-circle"></div>
+          <div class="floating-circle"></div>
+        </div>
+        
+        <!-- Premium Header -->
+        <header class="glass-morphism border-b border-white/10 sticky top-0 z-50">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-6">
-              <div class="flex items-center">
-                <h1 class={`text-2xl font-bold business-primary ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>{config.businessName}</h1>
+            <div class="flex justify-between items-center py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-business-gradient rounded-lg flex items-center justify-center">
+                  <i class="fas fa-building text-white font-bold" aria-hidden="true"></i>
+                </div>
+                <h1 class={`text-2xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                  {config.businessName}
+                </h1>
               </div>
-              <div class="hidden md:flex items-center space-x-6">
-                <a href="#services" class="text-white/80 hover:text-white transition-colors font-medium">Services</a>
-                <a href="#about" class="text-white/80 hover:text-white transition-colors font-medium">About</a>
-                <a href="#contact" class="text-white/80 hover:text-white transition-colors font-medium">Contact</a>
-                <a href={`tel:${config.phone}`} 
-                   class="bg-business-gradient text-white px-6 py-3 rounded-full hover:scale-105 transition-all duration-300 font-bold shadow-lg focus:outline-none focus:ring-4 focus:ring-business-primary"
+              
+              <div class="hidden md:flex items-center space-x-8">
+                <a href="#services" class="text-white/80 hover:text-white transition-colors font-semibold relative group">
+                  Services
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-business-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#about" class="text-white/80 hover:text-white transition-colors font-semibold relative group">
+                  About
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-business-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="text-white/80 hover:text-white transition-colors font-semibold relative group">
+                  Contact
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-business-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href={`tel:${config.phone}`} class="premium-button focus-visible"
                    aria-label={`Call ${config.businessName} at ${config.phone}`}>
-                  <i class="fas fa-phone mr-2" aria-hidden="true"></i>Call Now
+                  <i class="fas fa-phone" aria-hidden="true"></i>
+                  Call Now
                 </a>
               </div>
               
-              <!-- Mobile menu button -->
+              <!-- Enhanced Mobile menu button -->
               <div class="md:hidden">
-                <button class="text-white p-2" aria-label="Open menu">
-                  <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+                <button class="glass-morphism p-3 rounded-lg text-white" aria-label="Open menu">
+                  <i class="fas fa-bars text-lg" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
           </div>
         </header>
 
-        <!-- Hero Section -->
+        <!-- Enhanced Hero Section -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-          <!-- Dynamic background based on business theme -->
-          <div class="absolute inset-0 bg-business-gradient opacity-90"></div>
-          <div class="absolute inset-0 bg-black/30"></div>
+          <!-- Premium gradient background -->
+          <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-business-gradient opacity-90"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/40"></div>
+          </div>
           
           <!-- Hero content -->
           <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            <h2 class={`text-5xl md:text-7xl font-bold mb-6 ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+            <!-- Status indicator -->
+            <div class="status-indicator mb-8 fade-in-up">
+              <div class="status-dot"></div>
+              Available Now
+            </div>
+            
+            <h2 class={`text-5xl md:text-7xl lg:text-8xl font-bold mb-8 fade-in-up text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}
+                style="animation-delay: 0.2s;">
               {config.heroTitle}
             </h2>
-            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
+            
+            <p class="text-xl md:text-2xl lg:text-3xl mb-12 opacity-90 max-w-4xl mx-auto leading-relaxed fade-in-up"
+               style="animation-delay: 0.4s;">
               {config.heroSubtitle}
             </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-              <a href={`tel:${config.ctaPhone || config.phone}`} 
-                 class="bg-white text-black px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-white/50"
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center fade-in-up" style="animation-delay: 0.6s;">
+              <a href={`tel:${config.ctaPhone || config.phone}`} class="premium-button focus-visible"
                  aria-label={`${config.ctaText || 'Call Now'} - Call ${config.ctaPhone || config.phone}`}>
-                <i class="fas fa-phone mr-3" aria-hidden="true"></i>{config.ctaText || 'Call Now'}
+                <i class="fas fa-phone" aria-hidden="true"></i>
+                {config.ctaText || 'Call Now'}
               </a>
-              <a href="#contact" 
-                 class="border-3 border-white text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50">
-                <i class="fas fa-quote-left mr-3" aria-hidden="true"></i>Get Quote
+              <a href="#contact" class="secondary-button focus-visible">
+                <i class="fas fa-quote-left" aria-hidden="true"></i>
+                Get Quote
               </a>
             </div>
-          </div>
-          
-          <!-- Floating elements for visual interest -->
-          <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full animate-pulse"></div>
-            <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-white/5 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
-            <div class="absolute bottom-1/4 left-1/3 w-20 h-20 bg-white/5 rounded-full animate-pulse" style="animation-delay: 4s;"></div>
+            
+            <!-- Trust indicators -->
+            <div class="flex flex-wrap justify-center gap-6 mt-12 fade-in-up" style="animation-delay: 0.8s;">
+              <div class="glass-morphism px-4 py-2 rounded-full">
+                <span class="text-business-accent font-semibold">Licensed & Insured</span>
+              </div>
+              <div class="glass-morphism px-4 py-2 rounded-full">
+                <span class="text-business-accent font-semibold">5★ Reviews</span>
+              </div>
+              <div class="glass-morphism px-4 py-2 rounded-full">
+                <span class="text-business-accent font-semibold">Local Experts</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        <!-- Services Section -->
+        <!-- Enhanced Services Section -->
         <section id="services" class="py-20 relative">
-          <div class="absolute inset-0 bg-black/40"></div>
+          <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent"></div>
+          </div>
+          
           <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-              <h3 class={`text-4xl md:text-5xl font-bold mb-6 text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
-                Our Services
+              <div class="status-indicator mb-6">
+                <i class="fas fa-tools text-business-accent"></i>
+                Our Expertise
+              </div>
+              <h3 class={`text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                Professional Services
               </h3>
-              <p class="text-xl text-white/80 max-w-2xl mx-auto">Professional quality you can trust</p>
+              <p class="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+                Quality workmanship and exceptional service you can trust
+              </p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="services-grid stagger-children">
               {config.services.map((service, index) => (
-                <div class="business-card bg-black/60 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/10 hover:border-white/30 transition-all duration-300"
-                     style={`animation-delay: ${index * 0.1}s; animation: fadeInUp 0.8s ease-out forwards;`}>
-                  <div class="business-primary mb-4">
-                    <i class="fas fa-star text-2xl" aria-hidden="true"></i>
+                <div class="professional-card">
+                  <div class="service-icon">
+                    <i class={getServiceIcon(service)} aria-hidden="true"></i>
                   </div>
-                  <h4 class={`text-xl font-bold mb-4 text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban text-sm' : 'warm-traditional'}`}>
+                  <h4 class={`text-xl font-bold mb-4 text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
                     {service}
                   </h4>
-                  <p class="text-white/70 leading-relaxed">
-                    Professional service with attention to detail and customer satisfaction.
+                  <p class="text-white/70 leading-relaxed mb-6">
+                    Professional {service.toLowerCase()} with attention to detail and customer satisfaction. 
+                    We deliver quality results on time and within budget.
                   </p>
+                  <div class="flex items-center justify-between">
+                    <div class="text-business-accent font-semibold">
+                      <i class="fas fa-check mr-2"></i>
+                      Quality Guaranteed
+                    </div>
+                    <button class="text-business-accent hover:text-white transition-colors">
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-20 bg-black/20">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-              <div class="space-y-6">
-                <h3 class={`text-4xl md:text-5xl font-bold text-white mb-8 ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
-                  About {config.businessName}
+        <!-- Enhanced About Section -->
+        <section id="about" class="py-20 relative">
+          <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30"></div>
+          </div>
+          
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+              <div class="space-y-8 fade-in-up">
+                <div class="status-indicator">
+                  <i class="fas fa-award text-business-accent"></i>
+                  About Us
+                </div>
+                
+                <h3 class={`text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-8 ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                  Excellence in {config.address.city}
                 </h3>
-                <p class="text-lg text-white/80 mb-8 leading-relaxed">
+                
+                <p class="text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
                   We're a locally-owned business serving the {config.address.city} community with pride and dedication. 
-                  Our commitment to quality and customer service sets us apart.
+                  Our commitment to quality and customer service sets us apart from the competition.
                 </p>
-                <div class="space-y-4">
-                  <div class="flex items-center bg-black/40 p-4 rounded-lg backdrop-blur-sm">
-                    <i class="fas fa-map-marker-alt business-primary mr-4 text-xl" aria-hidden="true"></i>
-                    <span class="text-white">{config.address.street}, {config.address.city}, {config.address.state} {config.address.zip}</span>
-                  </div>
-                  <div class="flex items-center bg-black/40 p-4 rounded-lg backdrop-blur-sm">
-                    <i class="fas fa-phone business-primary mr-4 text-xl" aria-hidden="true"></i>
-                    <a href={`tel:${config.phone}`} class="text-white hover:text-white/80 transition-colors font-medium"
-                       aria-label={`Call ${config.businessName} at ${config.phone}`}>{config.phone}</a>
-                  </div>
-                </div>
-              </div>
-              <div class="bg-black/60 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/10">
-                <h4 class={`text-2xl font-bold mb-8 text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
-                  <i class="fas fa-clock business-primary mr-3" aria-hidden="true"></i>Hours of Operation
-                </h4>
-                <div class="space-y-3">
-                  {config.hours?.map((hour) => (
-                    <div class="flex justify-between items-center border-b border-white/20 pb-3 last:border-b-0">
-                      <span class="font-bold text-white">{hour.split(':')[0]}:</span>
-                      <span class="text-white/80 font-medium">{hour.split(':').slice(1).join(':')}</span>
+                
+                <div class="grid gap-4">
+                  <div class="professional-card p-4">
+                    <div class="flex items-center gap-4">
+                      <div class="w-12 h-12 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-map-marker-alt text-white" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="font-semibold text-white mb-1">Our Location</div>
+                        <div class="text-white/70">{config.address.street}, {config.address.city}, {config.address.state} {config.address.zip}</div>
+                      </div>
                     </div>
-                  ))}
+                  </div>
+                  
+                  <div class="professional-card p-4">
+                    <div class="flex items-center gap-4">
+                      <div class="w-12 h-12 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-phone text-white" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="font-semibold text-white mb-1">Contact Us</div>
+                        <a href={`tel:${config.phone}`} 
+                           class="text-business-accent hover:text-white transition-colors font-medium"
+                           aria-label={`Call ${config.businessName} at ${config.phone}`}>
+                          {config.phone}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Company highlights -->
+                <div class="grid grid-cols-3 gap-4 mt-8">
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-business-accent mb-1">5+</div>
+                    <div class="text-sm text-white/70">Years Experience</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-business-accent mb-1">100%</div>
+                    <div class="text-sm text-white/70">Satisfaction</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-business-accent mb-1">24/7</div>
+                    <div class="text-sm text-white/70">Support</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="fade-in-up" style="animation-delay: 0.3s;">
+                <div class="professional-card">
+                  <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-business-gradient rounded-lg flex items-center justify-center">
+                      <i class="fas fa-clock text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <h4 class={`text-2xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                      Business Hours
+                    </h4>
+                  </div>
+                  
+                  <div class="space-y-4">
+                    {config.hours?.map((hour) => (
+                      <div class="flex justify-between items-center p-3 bg-white/5 rounded-lg border border-white/10">
+                        <span class="font-bold text-white">{hour.split(':')[0]}</span>
+                        <span class="text-business-accent font-medium">{hour.split(':').slice(1).join(':')} </span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div class="mt-6 p-4 bg-business-gradient/20 border border-business-accent/30 rounded-lg">
+                    <div class="flex items-center gap-2 text-business-accent font-semibold">
+                      <i class="fas fa-info-circle"></i>
+                      <span>Emergency services available 24/7</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Enhanced Contact Section -->
         <section id="contact" class="py-20 relative overflow-hidden">
-          <div class="absolute inset-0 bg-business-gradient opacity-80"></div>
-          <div class="absolute inset-0 bg-black/40"></div>
-          <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h3 class={`text-4xl md:text-5xl font-bold mb-8 text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
-              Ready to Get Started?
-            </h3>
-            <p class="text-xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Contact us today for a free consultation and quote
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-              <a href={`tel:${config.phone}`} 
-                 class="bg-white text-black px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-2xl focus:outline-none focus:ring-4 focus:ring-white/50"
-                 aria-label={`Call ${config.businessName} at ${config.phone}`}>
-                <i class="fas fa-phone mr-3" aria-hidden="true"></i>
-                Call {config.phone}
-              </a>
-              <a href="/info" 
-                 class="bg-black/60 backdrop-blur-md text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-black/80 transition-all duration-300 transform hover:scale-105 border border-white/30 focus:outline-none focus:ring-4 focus:ring-white/50">
-                <i class="fas fa-globe mr-3" aria-hidden="true"></i>
-                Learn About Our Web Services
-              </a>
+          <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-business-gradient opacity-80"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/20"></div>
+          </div>
+          
+          <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-up">
+              <div class="status-indicator mb-6">
+                <i class="fas fa-handshake text-white"></i>
+                Get Started Today
+              </div>
+              
+              <h3 class={`text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                Ready to Work Together?
+              </h3>
+              
+              <p class="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
+                Contact us today for a free consultation and personalized quote
+              </p>
+            </div>
+            
+            <div class="contact-grid stagger-children">
+              <!-- Primary Contact Card -->
+              <div class="professional-card text-center">
+                <div class="service-icon mx-auto">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-4">Call Us Now</h4>
+                <p class="text-white/70 mb-6">Speak directly with our experts</p>
+                <a href={`tel:${config.phone}`} class="premium-button w-full justify-center"
+                   aria-label={`Call ${config.businessName} at ${config.phone}`}>
+                  <i class="fas fa-phone" aria-hidden="true"></i>
+                  {config.phone}
+                </a>
+              </div>
+              
+              <!-- Secondary Contact Card -->
+              <div class="professional-card text-center">
+                <div class="service-icon mx-auto">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-4">Email Quote</h4>
+                <p class="text-white/70 mb-6">Get detailed project estimates</p>
+                <a href={`mailto:info@${config.businessName.toLowerCase().replace(/\s+/g, '')}.com`} 
+                   class="secondary-button w-full justify-center">
+                  <i class="fas fa-envelope" aria-hidden="true"></i>
+                  Send Email
+                </a>
+              </div>
+              
+              <!-- Web Services Card -->
+              <div class="professional-card text-center lg:col-span-2">
+                <div class="service-icon mx-auto">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-4">Need a Professional Website?</h4>
+                <p class="text-white/70 mb-6">Learn about our web design and digital marketing services</p>
+                <a href="/info" class="secondary-button w-full justify-center">
+                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  Explore Web Services
+                </a>
+              </div>
+            </div>
+            
+            <!-- Trust indicators -->
+            <div class="flex flex-wrap justify-center gap-6 mt-16 fade-in-up" style="animation-delay: 0.8s;">
+              <div class="glass-morphism px-6 py-3 rounded-full">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-shield-alt text-business-accent"></i>
+                  <span class="text-white font-semibold">Fully Licensed</span>
+                </div>
+              </div>
+              <div class="glass-morphism px-6 py-3 rounded-full">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-award text-business-accent"></i>
+                  <span class="text-white font-semibold">Insured & Bonded</span>
+                </div>
+              </div>
+              <div class="glass-morphism px-6 py-3 rounded-full">
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-star text-business-accent"></i>
+                  <span class="text-white font-semibold">5-Star Rated</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="bg-black text-white py-16">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Enhanced Footer -->
+        <footer class="relative py-16">
+          <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent"></div>
+          </div>
+          
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid md:grid-cols-3 gap-12">
+              <!-- Company Info -->
               <div class="space-y-6">
-                <h4 class={`text-2xl font-bold business-primary ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
-                  {config.businessName}
-                </h4>
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="w-10 h-10 bg-business-gradient rounded-lg flex items-center justify-center">
+                    <i class="fas fa-building text-white font-bold" aria-hidden="true"></i>
+                  </div>
+                  <h4 class={`text-2xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                    {config.businessName}
+                  </h4>
+                </div>
+                
                 <p class="text-gray-300 leading-relaxed">
-                  Serving {config.address.city}, Michigan with quality and excellence.
+                  Your trusted partner in {config.address.city}, Michigan. Delivering quality and excellence 
+                  with every project since day one.
                 </p>
+                
                 <div class="flex space-x-4">
-                  <a href="#" class="text-gray-400 hover:text-white transition-colors p-3 bg-white/10 rounded-full hover:bg-white/20"
+                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
                      aria-label="Follow us on Facebook">
                     <i class="fab fa-facebook-f" aria-hidden="true"></i>
                   </a>
-                  <a href="#" class="text-gray-400 hover:text-white transition-colors p-3 bg-white/10 rounded-full hover:bg-white/20"
+                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
                      aria-label="Follow us on Instagram">
                     <i class="fab fa-instagram" aria-hidden="true"></i>
                   </a>
-                  <a href="#" class="text-gray-400 hover:text-white transition-colors p-3 bg-white/10 rounded-full hover:bg-white/20"
+                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
                      aria-label="Find us on Google">
                     <i class="fab fa-google" aria-hidden="true"></i>
                   </a>
+                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
+                     aria-label="Find us on Yelp">
+                    <i class="fab fa-yelp" aria-hidden="true"></i>
+                  </a>
                 </div>
               </div>
+              
+              <!-- Contact Info -->
               <div class="space-y-6">
-                <h4 class={`text-xl font-bold text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
-                  Contact Info
+                <h4 class={`text-xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                  Contact Information
                 </h4>
-                <div class="space-y-3">
-                  <div class="flex items-center text-gray-300">
-                    <i class="fas fa-map-marker-alt business-primary mr-3" aria-hidden="true"></i>
-                    <div>
-                      <div>{config.address.street}</div>
-                      <div>{config.address.city}, {config.address.state} {config.address.zip}</div>
+                
+                <div class="space-y-4">
+                  <div class="glass-morphism p-4 rounded-lg">
+                    <div class="flex items-start gap-3">
+                      <div class="w-8 h-8 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <i class="fas fa-map-marker-alt text-white text-sm" aria-hidden="true"></i>
+                      </div>
+                      <div class="text-gray-300">
+                        <div class="font-semibold text-white mb-1">Our Location</div>
+                        <div>{config.address.street}</div>
+                        <div>{config.address.city}, {config.address.state} {config.address.zip}</div>
+                      </div>
                     </div>
                   </div>
-                  <div class="flex items-center">
-                    <i class="fas fa-phone business-primary mr-3" aria-hidden="true"></i>
-                    <a href={`tel:${config.phone}`} class="text-gray-300 hover:text-white transition-colors font-medium"
-                       aria-label={`Call ${config.businessName} at ${config.phone}`}>
-                      {config.phone}
-                    </a>
+                  
+                  <div class="glass-morphism p-4 rounded-lg">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-phone text-white text-sm" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="font-semibold text-white mb-1">Call Us</div>
+                        <a href={`tel:${config.phone}`} 
+                           class="text-business-accent hover:text-white transition-colors font-medium"
+                           aria-label={`Call ${config.businessName} at ${config.phone}`}>
+                          {config.phone}
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              
+              <!-- Services -->
               <div class="space-y-6">
-                <h4 class={`text-xl font-bold text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
+                <h4 class={`text-xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
                   Our Services
                 </h4>
-                <ul class="space-y-2">
-                  {config.services?.slice(0, 4).map((service) => (
-                    <li class="text-gray-300 flex items-center">
-                      <i class="fas fa-check business-primary mr-3 text-sm" aria-hidden="true"></i>
-                      {service}
-                    </li>
+                
+                <div class="space-y-2">
+                  {config.services?.slice(0, 5).map((service) => (
+                    <div class="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                      <div class="w-2 h-2 bg-business-accent rounded-full flex-shrink-0"></div>
+                      <span>{service}</span>
+                    </div>
                   ))}
-                </ul>
+                  {config.services?.length > 5 && (
+                    <div class="flex items-center gap-3 text-business-accent hover:text-white transition-colors cursor-pointer">
+                      <div class="w-2 h-2 bg-business-accent rounded-full flex-shrink-0"></div>
+                      <span>and {config.services.length - 5} more services...</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
-              <p class="text-gray-400">
-                &copy; {new Date().getFullYear()} {config.businessName}. Website by 
-                <a href="/info" class="business-primary hover:opacity-80 transition-colors font-semibold">
-                  Cozyartz Media Group
-                </a>.
-              </p>
+            
+            <!-- Footer Bottom -->
+            <div class="border-t border-white/10 mt-12 pt-8">
+              <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-center md:text-left">
+                  &copy; {new Date().getFullYear()} {config.businessName}. All rights reserved.
+                </p>
+                <p class="text-gray-400 text-center md:text-right">
+                  Professional website by 
+                  <a href="/info" class="text-business-accent hover:text-white transition-colors font-semibold">
+                    Cozyartz Media Group
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </footer>

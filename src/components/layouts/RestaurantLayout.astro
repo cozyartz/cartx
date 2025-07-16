@@ -12,7 +12,7 @@ const menu = Object.entries(config.menu || {}).map(([key, items]) => ({
   items: Array.isArray(items) ? items : []
 }));
 
-function getMenuDescription(category: string) {
+function getMenuDescription(category) {
   const descriptions = {
     appetizers: 'Start your meal with our delicious appetizers',
     tacos: 'Authentic tacos made with fresh ingredients',
@@ -55,23 +55,22 @@ const accentColor = theme.accentColor || '#FBBF24';
 
 <div class="restaurant-layout">
   <!-- Hero Section with Character/Mascot -->
-  <header class="relative bg-gradient-to-br from-dark-300 via-dark-200 to-dark-100 text-white py-8 lg:py-12 overflow-hidden">
+  <header class="relative bg-gradient-to-br from-green-900 via-green-800 to-red-900 text-white py-12 lg:py-20 overflow-hidden">
     <!-- Background pattern -->
     <div class="absolute inset-0 opacity-20">
-      <div class="absolute inset-0 bg-gradient-to-r from-salsa-red/20 via-salsa-orange/20 to-salsa-red/20"></div>
-      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-green-600/20 via-red-600/20 to-green-600/20"></div>
     </div>
     
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center">
         <!-- Logo Section with Character -->
-        <div class="flex justify-center items-center mb-6 relative">
+        <div class="flex justify-center items-center mb-8 relative">
           <!-- Main Business Name with Gradient Effect -->
           <div class="relative">
-            <h1 class="business-logo-text text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold font-display tracking-wider bg-gradient-to-r from-restaurant-primary via-restaurant-secondary to-restaurant-accent bg-clip-text text-transparent">
+            <h1 class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold font-display tracking-wider bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 bg-clip-text text-transparent mb-4">
               {config.businessName.split(' ')[0].toUpperCase()}
             </h1>
-            <p class="text-lg sm:text-xl md:text-2xl font-semibold tracking-widest opacity-90 mt-2">
+            <p class="text-lg sm:text-xl md:text-2xl font-semibold tracking-widest opacity-90">
               {config.businessType.toUpperCase()}
             </p>
           </div>
@@ -79,16 +78,16 @@ const accentColor = theme.accentColor || '#FBBF24';
           <!-- Mascot Character (if enabled) -->
           {config.components?.branding?.mascot && (
             <div class="hidden lg:block absolute -right-20 xl:-right-32 top-1/2 transform -translate-y-1/2">
-              <div class="relative">
+              <div class="relative animate-bounce">
                 {config.components.branding.mascot.type === 'chili-pepper' && (
                   <div>
                     <!-- Sombrero -->
-                    <div class="sombrero w-16 h-16 xl:w-20 xl:h-20 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-full relative mb-1">
+                    <div class="w-16 h-16 xl:w-20 xl:h-20 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-full relative mb-2">
                       <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 w-12 h-6 xl:w-16 xl:h-8 bg-gradient-to-r from-red-500 via-green-500 to-red-500 rounded-t-full"></div>
                     </div>
                     
                     <!-- Chili Body -->
-                    <div class="chili-body w-12 h-20 xl:w-16 xl:h-24 bg-gradient-to-b from-red-500 to-red-700 rounded-full relative mx-auto">
+                    <div class="w-12 h-20 xl:w-16 xl:h-24 bg-gradient-to-b from-red-500 to-red-700 rounded-full relative mx-auto">
                       <!-- Eyes -->
                       <div class="absolute top-3 left-2 w-2 h-2 bg-white rounded-full"></div>
                       <div class="absolute top-3 right-2 w-2 h-2 bg-white rounded-full"></div>
@@ -103,7 +102,7 @@ const accentColor = theme.accentColor || '#FBBF24';
                 )}
                 
                 {config.components?.branding?.emoji && (
-                  <div class="text-6xl xl:text-8xl animate-bounce">
+                  <div class="text-6xl xl:text-8xl">
                     {config.components.branding.emoji}
                   </div>
                 )}
@@ -112,22 +111,22 @@ const accentColor = theme.accentColor || '#FBBF24';
           )}
         </div>
         
-        <p class="text-xl sm:text-2xl mb-6 opacity-85 flex items-center justify-center gap-2">
-          <svg class="w-6 h-6 text-restaurant-accent" fill="currentColor" viewBox="0 0 20 20">
+        <p class="text-xl sm:text-2xl mb-8 opacity-85 flex items-center justify-center gap-2">
+          <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
           </svg>
           {restaurantInfo.location}
         </p>
         
-        <div class="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-6">
-          <div class="flex items-center gap-3 text-lg bg-restaurant-primary/30 backdrop-blur-sm rounded-full px-6 py-3 border border-restaurant-primary/20">
-            <svg class="w-5 h-5 text-restaurant-accent" fill="currentColor" viewBox="0 0 20 20">
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
+          <div class="flex items-center gap-3 text-lg bg-green-600/30 backdrop-blur-sm rounded-full px-6 py-3 border border-green-600/20">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
             </svg>
             <span class="font-semibold">{restaurantInfo.phone}</span>
           </div>
-          <div class="flex items-center gap-3 text-lg bg-restaurant-secondary/30 backdrop-blur-sm rounded-full px-6 py-3 border border-restaurant-secondary/20">
-            <svg class="w-5 h-5 text-restaurant-accent" fill="currentColor" viewBox="0 0 20 20">
+          <div class="flex items-center gap-3 text-lg bg-red-600/30 backdrop-blur-sm rounded-full px-6 py-3 border border-red-600/20">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
             </svg>
             <span class="font-semibold">4.8★ Reviews</span>
@@ -138,11 +137,11 @@ const accentColor = theme.accentColor || '#FBBF24';
   </header>
 
   <!-- Quick Info Bar -->
-  <div class="bg-gradient-to-r from-restaurant-primary/90 to-restaurant-primary text-white py-4">
+  <div class="bg-gradient-to-r from-green-600 to-green-700 text-white py-4">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-wrap justify-center items-center gap-6 text-center">
         <div class="flex items-center gap-2">
-          <svg class="w-5 h-5 text-restaurant-accent" fill="currentColor" viewBox="0 0 20 20">
+          <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
           </svg>
           <div>
@@ -150,9 +149,9 @@ const accentColor = theme.accentColor || '#FBBF24';
             <div class="text-sm opacity-90">{Object.values(restaurantInfo.hours)[0]}</div>
           </div>
         </div>
-        <div class="bg-restaurant-accent text-restaurant-primary px-6 py-2 rounded-full font-bold text-lg flex items-center gap-2">
-          <span class="emoji text-xl">{config.components?.branding?.emoji || '🍽️'}</span>
-          <span>Order Online Available</span>
+        <div class="bg-yellow-400 text-green-800 px-6 py-2 rounded-full font-bold text-lg flex items-center gap-2">
+          <span class="text-xl">{config.components?.branding?.emoji || '🍽️'}</span>
+          <span>Auténtico Mexicano</span>
         </div>
         <div class="text-center">
           <div class="font-semibold">Fresh Daily</div>
@@ -162,44 +161,18 @@ const accentColor = theme.accentColor || '#FBBF24';
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="bg-dark-200/95 backdrop-blur-sm shadow-lg sticky top-0 z-40 border-b border-gray-700">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-      <div class="flex justify-between items-center">
-        <a href="/" class="flex items-center gap-2">
-          <svg class="w-6 h-6 text-restaurant-primary" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
-          </svg>
-          <span class="text-xl font-display font-bold text-restaurant-primary">{config.businessName.split(' ')[0]}</span>
-        </a>
-        <div class="hidden md:flex gap-6">
-          <a href="/" class="text-restaurant-primary font-semibold">Menu</a>
-          <a href="/about" class="text-gray-300 hover:text-restaurant-primary transition-colors font-semibold">About</a>
-          <a href="#contact" class="text-gray-300 hover:text-restaurant-primary transition-colors font-semibold">Contact</a>
-        </div>
-        <div class="md:hidden">
-          <button class="text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
   <!-- Menu Search (if enabled) -->
   {config.components?.branding?.search && (
-    <div class="bg-dark-200/90 backdrop-blur-sm shadow-lg border-b border-gray-700">
+    <div class="bg-gray-800/90 backdrop-blur-sm shadow-lg border-b border-gray-700">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div class="flex items-center justify-center gap-4">
-          <svg class="w-5 h-5 text-restaurant-primary" fill="currentColor" viewBox="0 0 20 20">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
           </svg>
           <input 
             type="text" 
-            placeholder="Search our menu..." 
-            class="flex-1 max-w-md px-4 py-2 bg-dark-100 border-2 border-restaurant-secondary/50 rounded-full focus:outline-none focus:border-restaurant-primary transition-colors text-white placeholder-gray-400"
+            placeholder="Buscar en nuestro menú..." 
+            class="flex-1 max-w-md px-4 py-2 bg-gray-700 border-2 border-red-500/50 rounded-full focus:outline-none focus:border-green-400 transition-colors text-white placeholder-gray-400"
             id="menuSearch"
           />
         </div>
@@ -208,9 +181,9 @@ const accentColor = theme.accentColor || '#FBBF24';
   )}
 
   <!-- Menu Section -->
-  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-gray-900">
     <div class="text-center mb-12">
-      <h2 class="text-4xl md:text-5xl font-display font-bold text-restaurant-primary mb-4">Our Menu</h2>
+      <h2 class="text-4xl md:text-5xl font-bold text-green-400 mb-4">Nuestro Menú</h2>
       <p class="text-xl text-gray-300 max-w-2xl mx-auto">
         {config.description}
       </p>
@@ -220,7 +193,7 @@ const accentColor = theme.accentColor || '#FBBF24';
       {menu.map((section) => (
         <section class="menu-section">
           <div class="text-center mb-8">
-            <h3 class="text-3xl md:text-4xl font-display font-bold text-restaurant-primary mb-2 border-b-4 border-restaurant-secondary inline-block pb-2">
+            <h3 class="text-3xl md:text-4xl font-bold text-green-400 mb-2 border-b-4 border-red-500 inline-block pb-2">
               {section.category}
             </h3>
             <p class="text-gray-300 mt-4 text-lg">{section.description}</p>
@@ -228,14 +201,14 @@ const accentColor = theme.accentColor || '#FBBF24';
           
           <div class="grid gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {section.items.map((item) => (
-              <div class="menu-item bg-dark-100/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl card-hover border-l-4 border-restaurant-secondary hover:border-restaurant-primary group relative overflow-hidden transition-all duration-300">
-                <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-restaurant-accent/20 to-restaurant-secondary/20 rounded-bl-full transform translate-x-6 -translate-y-6 group-hover:scale-110 transition-transform duration-300"></div>
+              <div class="menu-item bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border-l-4 border-red-500 hover:border-green-400 group relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-yellow-400/20 to-red-500/20 rounded-bl-full transform translate-x-6 -translate-y-6 group-hover:scale-110 transition-transform duration-300"></div>
                 <div class="relative z-10">
                   <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
-                    <h4 class="font-bold text-lg text-white group-hover:text-restaurant-primary transition-colors flex-1 pr-2 leading-tight">
+                    <h4 class="font-bold text-lg text-white group-hover:text-green-400 transition-colors flex-1 pr-2 leading-tight">
                       {config.components?.branding?.numberedItems && item.number ? `${item.number}. ${item.name}` : item.name}
                     </h4>
-                    <span class="text-xl font-bold text-white bg-gradient-to-r from-restaurant-primary to-restaurant-secondary px-4 py-2 rounded-full shadow-md group-hover:scale-105 transition-transform duration-300">
+                    <span class="text-xl font-bold text-white bg-gradient-to-r from-green-600 to-red-600 px-4 py-2 rounded-full shadow-md group-hover:scale-105 transition-transform duration-300">
                       {item.price}
                     </span>
                   </div>
@@ -247,13 +220,13 @@ const accentColor = theme.accentColor || '#FBBF24';
                   <div class="mt-4 flex justify-between items-center">
                     <div class="flex gap-1">
                       {[...Array(5)].map((_, i) => (
-                        <svg class="w-4 h-4 text-restaurant-accent" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                       ))}
                     </div>
-                    <button class="text-restaurant-primary font-semibold text-sm hover:text-restaurant-secondary transition-colors hidden sm:block">
-                      Add to Order →
+                    <button class="text-green-400 font-semibold text-sm hover:text-red-400 transition-colors hidden sm:block">
+                      Agregar al Pedido →
                     </button>
                   </div>
                 </div>
@@ -266,27 +239,27 @@ const accentColor = theme.accentColor || '#FBBF24';
   </main>
 
   <!-- Call to Action Section -->
-  <section class="bg-gradient-to-r from-restaurant-primary to-restaurant-secondary text-white py-16 mt-16">
+  <section class="bg-gradient-to-r from-green-600 to-red-600 text-white py-16 mt-16">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Ready to Order?</h2>
-      <p class="text-xl mb-8 opacity-90">Experience the authentic taste today!</p>
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">¿Listo para Ordenar?</h2>
+      <p class="text-xl mb-8 opacity-90">¡Experimenta el sabor auténtico hoy!</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button class="bg-restaurant-accent text-restaurant-primary px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors">
-          Order Online
+        <button class="bg-yellow-400 text-green-800 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors">
+          Ordenar en Línea
         </button>
-        <button class="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-restaurant-primary transition-colors">
-          Call {restaurantInfo.phone}
+        <button class="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-green-600 transition-colors">
+          Llamar {restaurantInfo.phone}
         </button>
       </div>
     </div>
   </section>
 
   <!-- Hours & Location -->
-  <section class="bg-dark-200/50 py-16">
+  <section class="bg-gray-800/50 py-16">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-2 gap-12">
         <div class="text-center">
-          <h3 class="text-2xl font-display font-bold text-restaurant-primary mb-4">Hours of Operation</h3>
+          <h3 class="text-2xl font-bold text-green-400 mb-4">Horarios</h3>
           <div class="space-y-2">
             {Object.entries(restaurantInfo.hours).map(([days, hours]) => (
               <div class="flex justify-center items-center gap-3">
@@ -298,23 +271,23 @@ const accentColor = theme.accentColor || '#FBBF24';
         </div>
         
         <div class="text-center">
-          <h3 class="text-2xl font-display font-bold text-restaurant-primary mb-4">Visit Us</h3>
+          <h3 class="text-2xl font-bold text-green-400 mb-4">Visítanos</h3>
           <div class="space-y-3">
             <div class="flex items-center justify-center gap-2">
-              <svg class="w-5 h-5 text-restaurant-primary" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
               </svg>
               <span class="text-white text-center">{restaurantInfo.address}</span>
             </div>
             <div class="flex items-center justify-center gap-2">
-              <svg class="w-5 h-5 text-restaurant-primary" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
               </svg>
               <span class="text-white">{restaurantInfo.phone}</span>
             </div>
             <div class="mt-4">
-              <button class="bg-restaurant-primary text-white px-6 py-3 rounded-full font-bold hover:bg-opacity-80 transition-colors">
-                Get Directions
+              <button class="bg-green-600 text-white px-6 py-3 rounded-full font-bold hover:bg-green-700 transition-colors">
+                Cómo Llegar
               </button>
             </div>
           </div>
@@ -324,15 +297,15 @@ const accentColor = theme.accentColor || '#FBBF24';
   </section>
 
   <!-- Footer -->
-  <footer class="bg-dark-300 text-white py-12 border-t border-gray-700">
+  <footer class="bg-gray-900 text-white py-12 border-t border-gray-700">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-3 gap-8">
         <div class="text-center md:text-left">
           <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
-            <svg class="w-8 h-8 text-restaurant-accent" fill="currentColor" viewBox="0 0 20 20">
+            <svg class="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
             </svg>
-            <h4 class="text-2xl font-display font-bold">{config.businessName.split(' ')[0]}</h4>
+            <h4 class="text-2xl font-bold">{config.businessName.split(' ')[0]}</h4>
           </div>
           <p class="text-gray-300">
             {config.description}
@@ -340,18 +313,18 @@ const accentColor = theme.accentColor || '#FBBF24';
         </div>
         
         <div class="text-center">
-          <h4 class="text-xl font-bold mb-4">Quick Links</h4>
+          <h4 class="text-xl font-bold mb-4">Enlaces Rápidos</h4>
           <div class="space-y-2">
-            <a href="#menu" class="block text-gray-300 hover:text-white transition-colors">Menu</a>
-            <a href="#hours" class="block text-gray-300 hover:text-white transition-colors">Hours</a>
-            <a href="#location" class="block text-gray-300 hover:text-white transition-colors">Location</a>
-            <a href="#contact" class="block text-gray-300 hover:text-white transition-colors">Contact</a>
+            <a href="#menu" class="block text-gray-300 hover:text-white transition-colors">Menú</a>
+            <a href="#hours" class="block text-gray-300 hover:text-white transition-colors">Horarios</a>
+            <a href="#location" class="block text-gray-300 hover:text-white transition-colors">Ubicación</a>
+            <a href="#contact" class="block text-gray-300 hover:text-white transition-colors">Contacto</a>
           </div>
         </div>
         
         <div class="text-center md:text-right">
-          <h4 class="text-xl font-bold mb-4">Connect With Us</h4>
-          <p class="text-gray-300 mb-4">Follow us for specials & updates</p>
+          <h4 class="text-xl font-bold mb-4">Síguenos</h4>
+          <p class="text-gray-300 mb-4">Para ofertas especiales y actualizaciones</p>
           <div class="flex justify-center md:justify-end gap-4">
             <button class="text-gray-300 hover:text-white transition-colors">Facebook</button>
             <button class="text-gray-300 hover:text-white transition-colors">Instagram</button>
@@ -363,10 +336,10 @@ const accentColor = theme.accentColor || '#FBBF24';
       <div class="border-t border-gray-600 mt-8 pt-8 text-center">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
           <p class="text-gray-300">
-            © {new Date().getFullYear()} {config.businessName}. All rights reserved.
+            © {new Date().getFullYear()} {config.businessName}. Todos los derechos reservados.
           </p>
           <p class="text-sm text-gray-400">
-            Website by <a href="/info" class="text-cyan-400 hover:text-cyan-300 transition-colors font-semibold">Cozyartz Media Group</a>
+            Sitio web por <a href="/info" class="text-cyan-400 hover:text-cyan-300 transition-colors font-semibold">Cozyartz Media Group</a>
           </p>
         </div>
       </div>
@@ -389,82 +362,31 @@ const accentColor = theme.accentColor || '#FBBF24';
   min-height: 100vh;
 }
 
-.salsa-red { color: var(--restaurant-primary); }
-.salsa-orange { color: var(--restaurant-secondary); }
-.salsa-yellow { color: var(--restaurant-accent); }
-.salsa-green { color: var(--restaurant-primary); }
-
-.dark-300 { background-color: #1f2937; }
-.dark-200 { background-color: #374151; }
-.dark-100 { background-color: #4b5563; }
-
-.font-display { font-family: 'Fredoka', sans-serif; }
-.font-body { font-family: 'Inter', sans-serif; }
-
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+.font-display { 
+  font-family: 'Fredoka', sans-serif; 
 }
 
 .menu-item {
   transition: all 0.3s ease;
 }
 
-.business-logo-text {
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-}
-
-/* Animations for mascot */
-.chili-body {
-  animation: gentle-sway 3s ease-in-out infinite alternate;
-}
-
-@keyframes gentle-sway {
-  0% { transform: rotate(-2deg); }
-  100% { transform: rotate(2deg); }
-}
-
-/* Bounce animation for comfort food */
-.animate-bounce {
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 53%, 80%, 100% {
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    transform: translate3d(0,0,0);
-  }
-  40%, 43% {
-    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    transform: translate3d(0, -15px, 0);
-  }
-  70% {
-    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-    transform: translate3d(0, -7px, 0);
-  }
-  90% {
-    transform: translate3d(0,-2px,0);
-  }
+.menu-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* Search functionality */
 #menuSearch {
   background: rgba(31, 41, 55, 0.8);
-  border: 2px solid rgba(var(--restaurant-secondary), 0.5);
 }
 
 #menuSearch:focus {
-  border-color: var(--restaurant-primary);
   outline: none;
   box-shadow: 0 0 0 3px rgba(var(--restaurant-primary), 0.2);
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .business-logo-text {
-    font-size: 3rem !important;
-  }
-  
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
