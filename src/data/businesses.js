@@ -3,8 +3,8 @@
 
 // Deployment modes
 export const DEPLOYMENT_MODES = {
-  DEVELOPMENT: 'development',      // cartfullofx.com/grillz
-  SUBDOMAIN: 'subdomain',         // grillz.cartfullofx.com  
+  DEVELOPMENT: 'development',      // wantthissite.com/grillz
+  SUBDOMAIN: 'subdomain',         // grillz.wantthissite.com  
   STANDALONE: 'standalone'        // grillz.com
 };
 
