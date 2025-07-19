@@ -1,4 +1,6 @@
 ---
+import { Search, Utensils, Drumstick, Flame, Fish, Leaf, Carrot, IceCream, Seedling, Beef, GlassWater, Cookie } from 'lucide-astro';
+
 export interface Props {
   menu: any[];
   config: any;
@@ -61,27 +63,33 @@ const getMenuConfig = (type: string) => {
 const menuConfig = getMenuConfig(displayType);
 
 // Icon mapping for different menu sections
+const lucideIconMap = {
+  'burgers': Beef,
+  'chicken': Drumstick,
+  'bbq': Flame,
+  'fish': Fish,
+  'hotdogs': Beef,
+  'sides': Utensils,
+  'appetizers': Leaf,
+  'tacos': Carrot,
+  'burritos': Utensils,
+  'fajitas': Flame,
+  'fajitasplatters': Flame,
+  'desserts': IceCream,
+  'signaturespuds': Seedling,
+  'loadataco': Carrot,
+  'loadasalad': Leaf,
+  'beverages': GlassWater,
+  'snacks': Cookie
+};
+
+const getIconComponent = (sectionName: string) => {
+  const key = sectionName.toLowerCase().replace(/\s+/g, '');
+  return lucideIconMap[key] || Utensils;
+};
+
 const getIconClass = (sectionName: string) => {
-  const iconMap = {
-    'burgers': 'fas fa-burger',
-    'chicken': 'fas fa-drumstick-bite', 
-    'bbq': 'fas fa-fire',
-    'fish': 'fas fa-fish',
-    'hotdogs': 'fas fa-hotdog',
-    'sides': 'fas fa-utensils',
-    'appetizers': 'fas fa-leaf',
-    'tacos': 'fas fa-pepper-hot',
-    'burritos': 'fas fa-burrito',
-    'fajitas': 'fas fa-fire',
-    'fajitasplatters': 'fas fa-fire',
-    'desserts': 'fas fa-ice-cream',
-    'signaturespuds': 'fas fa-seedling',
-    'loadataco': 'fas fa-pepper-hot',
-    'loadasalad': 'fas fa-leaf',
-    'beverages': 'fas fa-glass-water',
-    'snacks': 'fas fa-cookie-bite'
-  };
-  return iconMap[sectionName.toLowerCase().replace(/\s+/g, '')] || 'fas fa-utensils';
+  return 'lucide-icon'; // Legacy function for compatibility
 };
 
 // Format section name for display

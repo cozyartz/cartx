@@ -4,46 +4,70 @@ import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FuturisticPortfolioCarousel from '../components/FuturisticPortfolioCarousel.astro';
+import { Globe, Search, TrendingUp, Server, Settings, Rocket, Plane, Phone, Info, MapPin, CheckCircle, ArrowLeft, Lightbulb, X } from 'lucide-astro';
+
+// Icon mapping object to convert string names to Lucide components
+const iconMap = {
+  globe: Globe,
+  search: Search,
+  'trending-up': TrendingUp,
+  server: Server,
+  settings: Settings,
+  rocket: Rocket,
+  plane: Plane,
+  phone: Phone,
+  info: Info,
+  'map-pin': MapPin,
+  'check-circle': CheckCircle,
+  'arrow-left': ArrowLeft,
+  lightbulb: Lightbulb,
+  x: X
+};
+
+// Helper function to get icon component
+function getIconComponent(iconName) {
+  return iconMap[iconName] || Globe; // fallback to Globe if icon not found
+}
 
 const services = [
   {
-    icon: "fas fa-globe",
+    icon: "globe",
     title: "Professional Web Development",
     description: "Custom-designed websites that look amazing and convert visitors into customers",
     details: ["Responsive design", "Mobile optimization", "Fast loading speeds", "Modern aesthetics"]
   },
   {
-    icon: "fas fa-search",
+    icon: "search",
     title: "SEO & Google Maps Listing",
     description: "Get found by customers searching for your business online",
     details: ["Google My Business setup", "Local SEO optimization", "Search engine visibility", "Google Maps integration"]
   },
   {
-    icon: "fas fa-chart-line",
+    icon: "trending-up",
     title: "Digital Marketing",
     description: "Comprehensive marketing strategies to grow your business",
     details: ["Social media management", "Content marketing", "Online advertising", "Brand development"]
   },
   {
-    icon: "fas fa-server",
+    icon: "server",
     title: "Domain & Hosting",
     description: "Professional domain name and reliable hosting included",
     details: ["Custom domain name", "SSL certificate", "99.9% uptime guarantee", "Daily backups"]
   },
   {
-    icon: "fas fa-tools",
+    icon: "settings",
     title: "Monthly Maintenance",
     description: "Ongoing support and updates to keep your site running perfectly",
     details: ["Security updates", "Content updates", "Performance monitoring", "Technical support"]
   },
   {
-    icon: "fas fa-rocket",
+    icon: "rocket",
     title: "Fast Setup & Launch",
     description: "Get your business online quickly with our streamlined process",
     details: ["Quick turnaround", "Professional design", "Content creation", "Launch support"]
   },
   {
-    icon: "fas fa-helicopter",
+    icon: "plane",
     title: "Part 107 Drone Services",
     description: "FAA certified drone pilot for aerial photography, videography, and commercial drone operations",
     details: ["Aerial photography & video", "Real estate marketing", "Construction site surveys", "Event coverage"]
@@ -118,8 +142,7 @@ const michiganCities = [
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <!-- Font Awesome CSS removed - using Lucide icons instead -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -148,11 +171,11 @@ const michiganCities = [
       <div class="slide-in max-w-6xl mx-auto relative z-10">
         <div class="glass-effect rounded-3xl p-8 md:p-12 mb-8 border border-dark-border">
           <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black neon-glow mb-6 font-fredoka text-accent-slate professional-spacing">
-            <span class="sparkle" aria-hidden="true">✨</span> COZYARTZ MEDIA GROUP <span class="sparkle" aria-hidden="true">🚀</span>
+            <span class="sparkle" aria-hidden="true">✨</span> GET YOUR BUSINESS ONLINE <span class="sparkle" aria-hidden="true">🚀</span>
           </h1>
           
           <p class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-8 opacity-95 professional-text">
-            Michigan's Premier Web Design & Digital Marketing Agency • WOSB Certified
+            Professional Websites That Actually Get You Customers • Built for Michigan Businesses • WOSB Certified
           </p>
           
           <!-- Special Offer Banner -->
@@ -174,8 +197,8 @@ const michiganCities = [
               </div>
             </div>
             <p class="text-white/90 text-lg leading-relaxed">
-              <strong>Why this special price?</strong> We're establishing ourselves as Michigan's #1 web design agency! 
-              Get professional web development, SEO, and digital marketing at an unbeatable price.
+              <strong>Here's what makes us different:</strong> We build a demo of your actual website first - then you decide if you want it! 
+              No mockups, no surprises. See your business online before you pay anything.
             </p>
           </div>
           
@@ -183,18 +206,18 @@ const michiganCities = [
             <a href="tel:(269)261-0069" 
                class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-8 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center focus:outline-none focus:ring-4 focus:ring-accent-teal/50"
                aria-label="Call Cozyartz Media Group at (269) 261-0069">
-              <i class="fas fa-phone" aria-hidden="true"></i> CALL NOW: {businessInfo.phone}
+              <Phone class="w-5 h-5 inline mr-2" aria-hidden="true" /> CALL NOW: {businessInfo.phone}
             </a>
             
             <button id="show-toast" class="glass-effect px-6 py-3 rounded-full text-white font-semibold text-lg hover:bg-white/10 transition-all duration-300 w-full sm:w-auto focus:outline-none focus:ring-4 focus:ring-white/30" aria-label="Show more information about our services">
-              <i class="fas fa-info-circle" aria-hidden="true"></i> Learn More
+              <Info class="w-5 h-5 inline mr-2" aria-hidden="true" /> Learn More
             </button>
           </div>
           
           <!-- Michigan Cities We Serve -->
           <div class="glass-effect rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
             <h3 class="text-xl font-bold text-white mb-4 text-center">
-              <i class="fas fa-map-marker-alt text-accent-slate" aria-hidden="true"></i> Proudly Serving All of Michigan
+              <MapPin class="w-5 h-5 inline mr-2 text-accent-slate" aria-hidden="true" /> Proudly Serving All of Michigan
             </h3>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 text-sm text-white/70">
               {michiganCities.slice(0, 18).map((city) => (
@@ -218,16 +241,70 @@ const michiganCities = [
         <!-- Section Header -->
         <div class="text-center mb-16 slide-in">
           <h2 class="text-4xl md:text-5xl font-black text-white neon-glow mb-6 font-fredoka professional-spacing">
-            EVERYTHING YOUR BUSINESS NEEDS TO DOMINATE ONLINE
+            SEE YOUR WEBSITE LIVE BEFORE YOU BUY
           </h2>
           <p class="text-xl text-white/85 font-medium max-w-3xl mx-auto leading-relaxed">
-            From professional website design to Google Maps listing, we handle it all so you can focus on what you do best - running your business!
+            These are real websites we've built for Michigan businesses. Click any demo to see what your site could look like!
           </p>
         </div>
 
         <!-- Portfolio Carousel -->
         <div class="mb-16 slide-in">
           <FuturisticPortfolioCarousel />
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="glass-effect rounded-3xl p-8 md:p-12 mb-16 border border-dark-border slide-in">
+          <div class="text-center mb-12">
+            <h3 class="text-3xl md:text-4xl font-black text-white mb-4 font-fredoka">
+              <span class="sparkle" aria-hidden="true">⚡</span> How This Works <span class="sparkle" aria-hidden="true">🎯</span>
+            </h3>
+            <p class="text-xl text-white/80 max-w-3xl mx-auto">
+              We make getting online simple and risk-free
+            </p>
+          </div>
+          
+          <div class="grid md:grid-cols-3 gap-8 text-center">
+            <div class="space-y-4">
+              <div class="w-16 h-16 bg-gradient-to-br from-accent-slate to-accent-teal rounded-full flex items-center justify-center mx-auto">
+                <span class="text-2xl font-black text-white">1</span>
+              </div>
+              <h4 class="text-xl font-bold text-white">We Build Your Demo</h4>
+              <p class="text-white/70 leading-relaxed">
+                Tell us about your business and we'll create a live demo website. 
+                See your actual business online - not just a mockup!
+              </p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="w-16 h-16 bg-gradient-to-br from-accent-slate to-accent-teal rounded-full flex items-center justify-center mx-auto">
+                <span class="text-2xl font-black text-white">2</span>
+              </div>
+              <h4 class="text-xl font-bold text-white">You Decide</h4>
+              <p class="text-white/70 leading-relaxed">
+                Love what you see? Great! Want changes? We'll adjust it. 
+                Only pay when you're 100% happy with your website.
+              </p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="w-16 h-16 bg-gradient-to-br from-accent-slate to-accent-teal rounded-full flex items-center justify-center mx-auto">
+                <span class="text-2xl font-black text-white">3</span>
+              </div>
+              <h4 class="text-xl font-bold text-white">Go Live!</h4>
+              <p class="text-white/70 leading-relaxed">
+                We move your site to your own domain and handle all the technical stuff. 
+                You're online and ready for customers!
+              </p>
+            </div>
+          </div>
+          
+          <div class="text-center mt-12">
+            <a href="/info" class="glass-effect px-8 py-4 rounded-full text-accent-teal border border-accent-teal/30 hover:bg-accent-teal/10 font-bold text-lg transition-all duration-300">
+              <Info class="w-5 h-5 inline mr-2" />
+              Learn More About Our Process
+            </a>
+          </div>
         </div>
 
         <!-- Services Grid -->
@@ -239,7 +316,10 @@ const michiganCities = [
               <!-- Service Icon -->
               <div class="text-center mb-6">
                 <div class="bg-gradient-to-br from-accent-slate to-accent-teal w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg service-icon" role="img" aria-label={`${service.title} service icon`}>
-                  <i class={`${service.icon} text-2xl text-white`} aria-hidden="true"></i>
+                  {(() => {
+                    const IconComponent = getIconComponent(service.icon);
+                    return <IconComponent class="w-8 h-8 text-white" aria-hidden="true" />;
+                  })()}
                 </div>
                 <h3 class="text-xl font-black text-white mb-3 font-fredoka">
                   {service.title}
@@ -256,7 +336,7 @@ const michiganCities = [
               <ul class="space-y-2">
                 {service.details.map((detail) => (
                   <li class="text-white/70 text-sm flex items-center">
-                    <i class="fas fa-check text-accent-slate mr-3 flex-shrink-0" aria-hidden="true"></i>
+                    <CheckCircle class="w-4 h-4 text-accent-slate mr-3 flex-shrink-0" aria-hidden="true" />
                     {detail}
                   </li>
                 ))}
@@ -303,7 +383,7 @@ const michiganCities = [
             <a href="tel:(269)261-0069" 
                class="pulse-button bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-black px-12 py-4 rounded-full text-xl shadow-2xl transform transition-all duration-300 hover:scale-105 inline-block focus:outline-none focus:ring-4 focus:ring-accent-teal/50"
                aria-label="Call to get started with Cozyartz Media Group today">
-              <i class="fas fa-rocket mr-3" aria-hidden="true"></i>GET STARTED TODAY
+              <Rocket class="w-6 h-6 inline mr-3" aria-hidden="true" />GET STARTED TODAY
             </a>
           </div>
         </div>
@@ -317,14 +397,14 @@ const michiganCities = [
     <div id="toast" class="toast-notification">
       <div class="toast-content">
         <div class="toast-icon">
-          <i class="fas fa-lightbulb"></i>
+          <Lightbulb class="w-6 h-6" />
         </div>
         <div class="toast-text">
           <h4>💡 Pro Tip</h4>
           <p>87% of consumers read online reviews before visiting a business. Let's get you found!</p>
         </div>
         <button id="close-toast" class="toast-close" aria-label="Close notification">
-          <i class="fas fa-times" aria-hidden="true"></i>
+          <X class="w-5 h-5" aria-hidden="true" />
         </button>
       </div>
     </div>

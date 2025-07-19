@@ -3,6 +3,7 @@ import SEO from '../components/SEO.astro';
 import RestaurantLayout from '../components/layouts/RestaurantLayout.astro';
 import FoodTruckLayout from '../components/layouts/FoodTruckLayout.astro';
 import { businessConfigs, getBusinessSlugs, getBusinessConfig } from '../data/businesses.js';
+import { Wrench, Zap, Thermometer, Home, Brush, Sprout, PaintBucket, Grid3X3, Monitor, Shield, Bug, TreePine, Construction, Fence, Droplets, Utensils, Bath, Layers, Car, ArrowDown, Settings, Building, Phone, Menu, Quote, CheckCircle, ArrowRight, Award, MapPin, Clock, Info, Handshake, Mail, Globe, ShieldCheck, Star, Facebook, Instagram, Truck } from 'lucide-astro';
 
 export async function getStaticPaths() {
   // Generate paths for all configured businesses
@@ -22,33 +23,81 @@ if (!config) {
 // Determine which layout to use based on layoutType
 const layoutType = config.layoutType || 'universal';
 
+// Icon mapping for Lucide components
+const iconMap = {
+  wrench: Wrench,
+  zap: Zap,
+  thermometer: Thermometer,
+  home: Home,
+  broom: Brush,
+  seedling: Sprout,
+  paintbrush: PaintBucket,
+  grid3x3: Grid3X3,
+  monitor: Monitor,
+  shield: Shield,
+  bug: Bug,
+  tree: TreePine,
+  road: Construction,
+  fence: Fence,
+  droplets: Droplets,
+  utensils: Utensils,
+  bath: Bath,
+  layers: Layers,
+  car: Car,
+  stairs: ArrowDown,
+  settings: Settings,
+  building: Building,
+  phone: Phone,
+  menu: Menu,
+  quote: Quote,
+  check: CheckCircle,
+  'arrow-right': ArrowRight,
+  award: Award,
+  'map-pin': MapPin,
+  clock: Clock,
+  info: Info,
+  handshake: Handshake,
+  mail: Mail,
+  globe: Globe,
+  'shield-check': ShieldCheck,
+  star: Star,
+  facebook: Facebook,
+  instagram: Instagram,
+  truck: Truck
+};
+
 // Helper function for service icons in universal layout
 function getServiceIcon(service) {
   const serviceKeywords = service.toLowerCase();
   
-  if (serviceKeywords.includes('plumb')) return 'fas fa-wrench';
-  if (serviceKeywords.includes('electric')) return 'fas fa-bolt';
-  if (serviceKeywords.includes('hvac') || serviceKeywords.includes('heating') || serviceKeywords.includes('cooling')) return 'fas fa-thermometer-half';
-  if (serviceKeywords.includes('roof')) return 'fas fa-home';
-  if (serviceKeywords.includes('clean')) return 'fas fa-broom';
-  if (serviceKeywords.includes('lawn') || serviceKeywords.includes('landscape')) return 'fas fa-seedling';
-  if (serviceKeywords.includes('paint')) return 'fas fa-paint-brush';
-  if (serviceKeywords.includes('floor')) return 'fas fa-th-large';
-  if (serviceKeywords.includes('window')) return 'fas fa-window-maximize';
-  if (serviceKeywords.includes('security')) return 'fas fa-shield-alt';
-  if (serviceKeywords.includes('pest')) return 'fas fa-bug';
-  if (serviceKeywords.includes('tree')) return 'fas fa-tree';
-  if (serviceKeywords.includes('concrete') || serviceKeywords.includes('driveway')) return 'fas fa-road';
-  if (serviceKeywords.includes('fence')) return 'fas fa-border-style';
-  if (serviceKeywords.includes('gutter')) return 'fas fa-tint';
-  if (serviceKeywords.includes('kitchen') || serviceKeywords.includes('cabinet')) return 'fas fa-utensils';
-  if (serviceKeywords.includes('bathroom')) return 'fas fa-bath';
-  if (serviceKeywords.includes('deck') || serviceKeywords.includes('patio')) return 'fas fa-layer-group';
-  if (serviceKeywords.includes('garage')) return 'fas fa-car';
-  if (serviceKeywords.includes('basement')) return 'fas fa-stairs';
+  if (serviceKeywords.includes('plumb')) return 'wrench';
+  if (serviceKeywords.includes('electric')) return 'zap';
+  if (serviceKeywords.includes('hvac') || serviceKeywords.includes('heating') || serviceKeywords.includes('cooling')) return 'thermometer';
+  if (serviceKeywords.includes('roof')) return 'home';
+  if (serviceKeywords.includes('clean')) return 'broom';
+  if (serviceKeywords.includes('lawn') || serviceKeywords.includes('landscape')) return 'seedling';
+  if (serviceKeywords.includes('paint')) return 'paintbrush';
+  if (serviceKeywords.includes('floor')) return 'grid3x3';
+  if (serviceKeywords.includes('window')) return 'monitor';
+  if (serviceKeywords.includes('security')) return 'shield';
+  if (serviceKeywords.includes('pest')) return 'bug';
+  if (serviceKeywords.includes('tree')) return 'tree';
+  if (serviceKeywords.includes('concrete') || serviceKeywords.includes('driveway')) return 'road';
+  if (serviceKeywords.includes('fence')) return 'fence';
+  if (serviceKeywords.includes('gutter')) return 'droplets';
+  if (serviceKeywords.includes('kitchen') || serviceKeywords.includes('cabinet')) return 'utensils';
+  if (serviceKeywords.includes('bathroom')) return 'bath';
+  if (serviceKeywords.includes('deck') || serviceKeywords.includes('patio')) return 'layers';
+  if (serviceKeywords.includes('garage')) return 'car';
+  if (serviceKeywords.includes('basement')) return 'stairs';
   
   // Default icons for common business types
-  return 'fas fa-cogs';
+  return 'settings';
+}
+
+// Helper function to get Lucide icon component
+function getLucideIcon(iconName) {
+  return iconMap[iconName] || Settings;
 }
 ---
 
@@ -78,8 +127,6 @@ function getServiceIcon(service) {
   <!-- Universal font loading for all layouts -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Fredoka:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue:wght@400&family=Merriweather:wght@300;400;700;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
@@ -485,7 +532,7 @@ function getServiceIcon(service) {
             <div class="flex justify-between items-center py-4">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-business-gradient rounded-lg flex items-center justify-center">
-                  <i class="fas fa-building text-white font-bold" aria-hidden="true"></i>
+                  <Building class="text-white font-bold" size={20} />
                 </div>
                 <h1 class={`text-2xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
                   {config.businessName}
@@ -507,7 +554,7 @@ function getServiceIcon(service) {
                 </a>
                 <a href={`tel:${config.phone}`} class="premium-button focus-visible"
                    aria-label={`Call ${config.businessName} at ${config.phone}`}>
-                  <i class="fas fa-phone" aria-hidden="true"></i>
+                  <Phone size={16} />
                   Call Now
                 </a>
               </div>
@@ -515,7 +562,7 @@ function getServiceIcon(service) {
               <!-- Enhanced Mobile menu button -->
               <div class="md:hidden">
                 <button class="glass-morphism p-3 rounded-lg text-white" aria-label="Open menu">
-                  <i class="fas fa-bars text-lg" aria-hidden="true"></i>
+                  <Menu size={18} />
                 </button>
               </div>
             </div>
@@ -551,11 +598,11 @@ function getServiceIcon(service) {
             <div class="flex flex-col sm:flex-row gap-6 justify-center fade-in-up" style="animation-delay: 0.6s;">
               <a href={`tel:${config.ctaPhone || config.phone}`} class="premium-button focus-visible"
                  aria-label={`${config.ctaText || 'Call Now'} - Call ${config.ctaPhone || config.phone}`}>
-                <i class="fas fa-phone" aria-hidden="true"></i>
+                <Phone size={16} />
                 {config.ctaText || 'Call Now'}
               </a>
               <a href="#contact" class="secondary-button focus-visible">
-                <i class="fas fa-quote-left" aria-hidden="true"></i>
+                <Quote size={16} />
                 Get Quote
               </a>
             </div>
@@ -584,7 +631,7 @@ function getServiceIcon(service) {
           <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
               <div class="status-indicator mb-6">
-                <i class="fas fa-tools text-business-accent"></i>
+                <Settings size={16} class="text-business-accent" />
                 Our Expertise
               </div>
               <h3 class={`text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
@@ -599,7 +646,10 @@ function getServiceIcon(service) {
               {config.services.map((service, index) => (
                 <div class="professional-card">
                   <div class="service-icon">
-                    <i class={getServiceIcon(service)} aria-hidden="true"></i>
+                    {(() => {
+                      const IconComponent = getLucideIcon(getServiceIcon(service));
+                      return <IconComponent size={24} />;
+                    })()}
                   </div>
                   <h4 class={`text-xl font-bold mb-4 text-white ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
                     {service}
@@ -610,11 +660,11 @@ function getServiceIcon(service) {
                   </p>
                   <div class="flex items-center justify-between">
                     <div class="text-business-accent font-semibold">
-                      <i class="fas fa-check mr-2"></i>
+                      <CheckCircle size={16} class="mr-2" />
                       Quality Guaranteed
                     </div>
                     <button class="text-business-accent hover:text-white transition-colors">
-                      <i class="fas fa-arrow-right"></i>
+                      <ArrowRight size={16} />
                     </button>
                   </div>
                 </div>
@@ -633,7 +683,7 @@ function getServiceIcon(service) {
             <div class="grid lg:grid-cols-2 gap-16 items-center">
               <div class="space-y-8 fade-in-up">
                 <div class="status-indicator">
-                  <i class="fas fa-award text-business-accent"></i>
+                  <Award size={16} class="text-business-accent" />
                   About Us
                 </div>
                 
@@ -650,7 +700,7 @@ function getServiceIcon(service) {
                   <div class="professional-card p-4">
                     <div class="flex items-center gap-4">
                       <div class="w-12 h-12 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-map-marker-alt text-white" aria-hidden="true"></i>
+                        <MapPin size={16} class="text-white" />
                       </div>
                       <div>
                         <div class="font-semibold text-white mb-1">Our Location</div>
@@ -662,7 +712,7 @@ function getServiceIcon(service) {
                   <div class="professional-card p-4">
                     <div class="flex items-center gap-4">
                       <div class="w-12 h-12 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-phone text-white" aria-hidden="true"></i>
+                        <Phone size={16} class="text-white" />
                       </div>
                       <div>
                         <div class="font-semibold text-white mb-1">Contact Us</div>
@@ -697,7 +747,7 @@ function getServiceIcon(service) {
                 <div class="professional-card">
                   <div class="flex items-center gap-3 mb-6">
                     <div class="w-12 h-12 bg-business-gradient rounded-lg flex items-center justify-center">
-                      <i class="fas fa-clock text-white text-xl" aria-hidden="true"></i>
+                      <Clock size={20} class="text-white" />
                     </div>
                     <h4 class={`text-2xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
                       Business Hours
@@ -715,7 +765,7 @@ function getServiceIcon(service) {
                   
                   <div class="mt-6 p-4 bg-business-gradient/20 border border-business-accent/30 rounded-lg">
                     <div class="flex items-center gap-2 text-business-accent font-semibold">
-                      <i class="fas fa-info-circle"></i>
+                      <Info size={16} />
                       <span>Emergency services available 24/7</span>
                     </div>
                   </div>
@@ -735,7 +785,7 @@ function getServiceIcon(service) {
           <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 fade-in-up">
               <div class="status-indicator mb-6">
-                <i class="fas fa-handshake text-white"></i>
+                <Handshake size={16} class="text-white" />
                 Get Started Today
               </div>
               
@@ -752,13 +802,13 @@ function getServiceIcon(service) {
               <!-- Primary Contact Card -->
               <div class="professional-card text-center">
                 <div class="service-icon mx-auto">
-                  <i class="fas fa-phone"></i>
+                  <Phone size={24} />
                 </div>
                 <h4 class="text-xl font-bold text-white mb-4">Call Us Now</h4>
                 <p class="text-white/70 mb-6">Speak directly with our experts</p>
                 <a href={`tel:${config.phone}`} class="premium-button w-full justify-center"
                    aria-label={`Call ${config.businessName} at ${config.phone}`}>
-                  <i class="fas fa-phone" aria-hidden="true"></i>
+                  <Phone size={16} />
                   {config.phone}
                 </a>
               </div>
@@ -766,13 +816,13 @@ function getServiceIcon(service) {
               <!-- Secondary Contact Card -->
               <div class="professional-card text-center">
                 <div class="service-icon mx-auto">
-                  <i class="fas fa-envelope"></i>
+                  <Mail size={24} />
                 </div>
                 <h4 class="text-xl font-bold text-white mb-4">Email Quote</h4>
                 <p class="text-white/70 mb-6">Get detailed project estimates</p>
                 <a href={`mailto:info@${config.businessName.toLowerCase().replace(/\s+/g, '')}.com`} 
                    class="secondary-button w-full justify-center">
-                  <i class="fas fa-envelope" aria-hidden="true"></i>
+                  <Mail size={16} />
                   Send Email
                 </a>
               </div>
@@ -780,12 +830,12 @@ function getServiceIcon(service) {
               <!-- Web Services Card -->
               <div class="professional-card text-center lg:col-span-2">
                 <div class="service-icon mx-auto">
-                  <i class="fas fa-globe"></i>
+                  <Globe size={24} />
                 </div>
                 <h4 class="text-xl font-bold text-white mb-4">Need a Professional Website?</h4>
                 <p class="text-white/70 mb-6">Learn about our web design and digital marketing services</p>
                 <a href="/info" class="secondary-button w-full justify-center">
-                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  <ArrowRight size={16} />
                   Explore Web Services
                 </a>
               </div>
@@ -795,19 +845,19 @@ function getServiceIcon(service) {
             <div class="flex flex-wrap justify-center gap-6 mt-16 fade-in-up" style="animation-delay: 0.8s;">
               <div class="glass-morphism px-6 py-3 rounded-full">
                 <div class="flex items-center gap-2">
-                  <i class="fas fa-shield-alt text-business-accent"></i>
+                  <ShieldCheck size={16} class="text-business-accent" />
                   <span class="text-white font-semibold">Fully Licensed</span>
                 </div>
               </div>
               <div class="glass-morphism px-6 py-3 rounded-full">
                 <div class="flex items-center gap-2">
-                  <i class="fas fa-award text-business-accent"></i>
+                  <Award size={16} class="text-business-accent" />
                   <span class="text-white font-semibold">Insured & Bonded</span>
                 </div>
               </div>
               <div class="glass-morphism px-6 py-3 rounded-full">
                 <div class="flex items-center gap-2">
-                  <i class="fas fa-star text-business-accent"></i>
+                  <Star size={16} class="text-business-accent" />
                   <span class="text-white font-semibold">5-Star Rated</span>
                 </div>
               </div>
@@ -827,7 +877,7 @@ function getServiceIcon(service) {
               <div class="space-y-6">
                 <div class="flex items-center gap-3 mb-6">
                   <div class="w-10 h-10 bg-business-gradient rounded-lg flex items-center justify-center">
-                    <i class="fas fa-building text-white font-bold" aria-hidden="true"></i>
+                    <Building size={16} class="text-white font-bold" />
                   </div>
                   <h4 class={`text-2xl font-bold text-gradient ${config.theme?.mood === 'bold-urban' ? 'bold-urban' : 'warm-traditional'}`}>
                     {config.businessName}
@@ -840,22 +890,34 @@ function getServiceIcon(service) {
                 </p>
                 
                 <div class="flex space-x-4">
-                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
-                     aria-label="Follow us on Facebook">
-                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                  </a>
-                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
-                     aria-label="Follow us on Instagram">
-                    <i class="fab fa-instagram" aria-hidden="true"></i>
-                  </a>
-                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
-                     aria-label="Find us on Google">
-                    <i class="fab fa-google" aria-hidden="true"></i>
-                  </a>
-                  <a href="#" class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
-                     aria-label="Find us on Yelp">
-                    <i class="fab fa-yelp" aria-hidden="true"></i>
-                  </a>
+                  {config.socialMedia?.facebook && (
+                    <a href={config.socialMedia.facebook} target="_blank" rel="noopener noreferrer"
+                       class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
+                       aria-label="Follow us on Facebook">
+                      <Facebook size={16} />
+                    </a>
+                  )}
+                  {config.socialMedia?.instagram && (
+                    <a href={config.socialMedia.instagram} target="_blank" rel="noopener noreferrer"
+                       class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
+                       aria-label="Follow us on Instagram">
+                      <Instagram size={16} />
+                    </a>
+                  )}
+                  {config.socialMedia?.google && (
+                    <a href={config.socialMedia.google} target="_blank" rel="noopener noreferrer"
+                       class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
+                       aria-label="Find us on Google">
+                      <Globe size={16} />
+                    </a>
+                  )}
+                  {config.socialMedia?.yelp && (
+                    <a href={config.socialMedia.yelp} target="_blank" rel="noopener noreferrer"
+                       class="glass-morphism p-3 rounded-lg text-gray-400 hover:text-business-accent transition-colors"
+                       aria-label="Find us on Yelp">
+                      <Star size={16} />
+                    </a>
+                  )}
                 </div>
               </div>
               
@@ -869,7 +931,7 @@ function getServiceIcon(service) {
                   <div class="glass-morphism p-4 rounded-lg">
                     <div class="flex items-start gap-3">
                       <div class="w-8 h-8 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <i class="fas fa-map-marker-alt text-white text-sm" aria-hidden="true"></i>
+                        <MapPin size={14} class="text-white" />
                       </div>
                       <div class="text-gray-300">
                         <div class="font-semibold text-white mb-1">Our Location</div>
@@ -882,7 +944,7 @@ function getServiceIcon(service) {
                   <div class="glass-morphism p-4 rounded-lg">
                     <div class="flex items-center gap-3">
                       <div class="w-8 h-8 bg-business-gradient rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-phone text-white text-sm" aria-hidden="true"></i>
+                        <Phone size={14} class="text-white" />
                       </div>
                       <div>
                         <div class="font-semibold text-white mb-1">Call Us</div>

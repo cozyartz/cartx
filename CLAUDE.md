@@ -2,25 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Repository Name: cartx (formerly grillz)
+## Repository Name: wantthissite
 
-This is the main template repository for creating multi-tenant landing pages. The modular SEO component (`src/components/SEO.astro`) can be shared with other bots to build additional sites like cozyartz.com.
+This is the **AI-Powered Website Builder** for Cozyartz Media Group, transforming how we create professional business websites using Cloudflare Workers AI. The system generates complete business websites from minimal input, including menu image analysis for restaurants.
 
 ## Business Model Overview
 
-This is a **multi-tenant landing page business** designed to dominate local SEO in Michigan and beyond. Each subdomain (e.g., grillz.cartfullofx.com, salsas.cartfullofx.com) serves as a high-quality demo landing page for local businesses, which then funnels traffic to Cozyartz Media Group for web development services.
+This is an **AI-driven website generation platform** that creates professional business websites instantly using Cloudflare's cutting-edge AI models. Each generated site serves as a high-quality demonstration of our capabilities while establishing Cozyartz Media Group as the premier AI-powered web development agency in Michigan.
 
-### SEO Strategy Architecture
-- **Demo Landing Pages**: Professional sites showcasing local businesses across Michigan
-- **Authority Building**: Each demo site includes strategic backlinks and schema markup pointing to Cozyartz Media Group
-- **Geographic Expansion**: Target different Michigan cities through various business verticals
-- **Conversion Funnel**: Demo sites → Info page → Cozyartz Media Group services
+### AI-Powered SEO Strategy
+- **Instant Website Generation**: AI creates professional sites from business name + description
+- **Menu Image Analysis**: Upload restaurant menu images → AI extracts and formats complete menu data
+- **Content Optimization**: AI generates SEO-optimized copy tailored to local Michigan markets
+- **Performance Analytics**: Track AI-generated content performance and conversion rates
 
-### Multi-Subdomain Structure
-- **Production Domain**: cartfullofx.com (main hub)
-- **Demo Subdomains**: [business].cartfullofx.com (e.g., cartx.cartfullofx.com)
-- **Info Page**: /info (Cozyartz Media Group service sales page)
-- **SEO Network**: All sites contribute authority and traffic to main business
+### Platform Architecture
+- **Production Domain**: wantthissite.com (AI website builder platform)
+- **Demo Subdomains**: [business].wantthissite.com (e.g., grillz.wantthissite.com)
+- **AI Dashboard**: Real-time website generation and management interface
+- **Cloudflare Integration**: Edge-deployed AI models for sub-100ms response times
 
 ## Development Commands
 

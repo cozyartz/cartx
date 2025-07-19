@@ -1,7 +1,8 @@
 ---
-     // Footer component for Cozyartz Media Group
-     const currentYear = new Date().getFullYear();
-     ---
+// Footer component for Cozyartz Media Group
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Award } from 'lucide-astro';
+const currentYear = new Date().getFullYear();
+---
      <footer class="bg-dark-bg text-white border-t border-dark-border">
        <div class="container mx-auto px-6 py-16">
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -28,16 +29,16 @@
              </p>
              <div class="flex space-x-4">
                <a href="https://facebook.com/cozyartzmediagroup" target="_blank" rel="noopener noreferrer" class="bg-dark-surface p-3 rounded-full hover:bg-accent-teal transition-colors duration-300" aria-label="Follow us on Facebook">
-                 <i class="fab fa-facebook text-lg"></i>
+                 <Facebook class="text-lg" size={18} />
                </a>
                <a href="https://twitter.com/cozyartzmedia" target="_blank" rel="noopener noreferrer" class="bg-dark-surface p-3 rounded-full hover:bg-accent-teal transition-colors duration-300" aria-label="Follow us on Twitter">
-                 <i class="fab fa-twitter text-lg"></i>
+                 <Twitter class="text-lg" size={18} />
                </a>
                <a href="https://instagram.com/cozyartzmediagroup" target="_blank" rel="noopener noreferrer" class="bg-dark-surface p-3 rounded-full hover:bg-accent-teal transition-colors duration-300" aria-label="Follow us on Instagram">
-                 <i class="fab fa-instagram text-lg"></i>
+                 <Instagram class="text-lg" size={18} />
                </a>
                <a href="https://linkedin.com/company/cozyartz-media-group" target="_blank" rel="noopener noreferrer" class="bg-dark-surface p-3 rounded-full hover:bg-accent-teal transition-colors duration-300" aria-label="Connect with us on LinkedIn">
-                 <i class="fab fa-linkedin text-lg"></i>
+                 <Linkedin class="text-lg" size={18} />
                </a>
              </div>
            </div>
@@ -57,23 +58,23 @@
              <h4 class="text-lg font-semibold mb-6 text-accent-slate">Contact</h4>
              <div class="space-y-4">
                <div class="flex items-center space-x-3">
-                 <i class="fas fa-envelope text-accent-teal"></i>
+                 <Mail class="text-accent-teal" size={16} />
                  <a href="mailto:info@cartfullofx.com" class="text-gray-300 hover:text-accent-teal transition-colors duration-300">
                    info@cartfullofx.com
                  </a>
                </div>
                <div class="flex items-center space-x-3">
-                 <i class="fas fa-phone text-accent-teal"></i>
+                 <Phone class="text-accent-teal" size={16} />
                  <a href="tel:(269)261-0069" class="text-gray-300 hover:text-accent-teal transition-colors duration-300">
                    (269) 261-0069
                  </a>
                </div>
                <div class="flex items-center space-x-3">
-                 <i class="fas fa-map-marker-alt text-accent-teal"></i>
+                 <MapPin class="text-accent-teal" size={16} />
                  <span class="text-gray-300">Battle Creek, Michigan</span>
                </div>
                <div class="flex items-center space-x-3">
-                 <i class="fas fa-certificate text-accent-teal"></i>
+                 <Award class="text-accent-teal" size={16} />
                  <span class="text-gray-300">WOSB Certified Small Business</span>
                </div>
              </div>

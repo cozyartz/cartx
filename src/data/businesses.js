@@ -20,6 +20,67 @@ export const getCurrentDeploymentMode = () => {
   return DEPLOYMENT_MODES.STANDALONE;
 };
 
+// AI Content Schema for enhanced business configurations
+export const AI_CONTENT_SCHEMA = {
+  // AI Generation metadata
+  aiGenerated: false,
+  generatedAt: null,
+  aiProvider: null, // 'cloudflare-workers-ai', 'openai', etc.
+  model: null,      // specific model used
+  
+  // AI Content fields
+  aiContent: {
+    // Generated business descriptions and copy
+    generatedDescription: null,
+    generatedServices: [],
+    generatedKeywords: [],
+    generatedHours: [],
+    
+    // AI analysis results
+    competitorAnalysis: null,
+    marketInsights: null,
+    seoRecommendations: [],
+    
+    // Content variations for A/B testing
+    contentVariations: {
+      heroTitles: [],
+      descriptions: [],
+      ctaTexts: []
+    },
+    
+    // AI-generated images
+    generatedImages: {
+      hero: null,
+      gallery: [],
+      logo: null
+    },
+    
+    // Menu analysis (for restaurants)
+    menuAnalysis: {
+      extractedItems: 0,
+      categories: {},
+      pricing: null,
+      cuisine: null,
+      confidence: 0
+    }
+  },
+  
+  // Content quality scores
+  contentQuality: {
+    seoScore: 0,
+    readabilityScore: 0,
+    localRelevanceScore: 0,
+    conversionOptimization: 0
+  },
+  
+  // Performance tracking
+  performance: {
+    generationTime: 0,
+    lastUpdated: null,
+    version: '1.0'
+  }
+};
+
 export const businessConfigs = {
   grillz: {
     title: "Grillz Food Truck - Gourmet Street Food in Battle Creek",
@@ -129,9 +190,16 @@ export const businessConfigs = {
     portfolioImage: "/images/grillz-preview.jpg", // Placeholder for future use
     portfolioDescription: "Premium fast food truck with mobile ordering system",
     status: "live",
+    // Social media links
+    socialMedia: {
+      facebook: "https://facebook.com/grillzfoodtruck",
+      instagram: "https://instagram.com/grillzfoodtruck",
+      google: "https://g.page/grillzfoodtruck",
+      yelp: "https://yelp.com/biz/grillz-food-truck"
+    },
     // Deployment configuration
     deployment: {
-      subdomain: "grillz.cartfullofx.com",
+      subdomain: "grillz.wantthissite.com",
       customDomain: null, // Set when client purchases domain (e.g., "grillz.com")
       cloudflareProjectId: null, // Set when promoted to standalone project
       migrationReady: true
@@ -254,9 +322,16 @@ export const businessConfigs = {
     portfolioImage: "/images/salsas-preview.jpg", // Placeholder for future use
     portfolioDescription: "Authentic Mexican cuisine with online ordering",
     status: "live",
+    // Social media links
+    socialMedia: {
+      facebook: "https://facebook.com/salsasmexicanrestaurant",
+      instagram: "https://instagram.com/salsasbc",
+      google: "https://g.page/salsas-mexican-restaurant",
+      yelp: "https://yelp.com/biz/salsas-mexican-restaurant"
+    },
     // Deployment configuration
     deployment: {
-      subdomain: "salsas.cartfullofx.com",
+      subdomain: "salsas.wantthissite.com",
       customDomain: null, // Set when client purchases domain (e.g., "salsas.com")
       cloudflareProjectId: null, // Set when promoted to standalone project
       migrationReady: false // Not ready for migration yet
@@ -387,9 +462,16 @@ export const businessConfigs = {
     portfolioDescription: "Comfort food potato bar with signature loaded spuds",
     status: "live",
     
+    // Social media links
+    socialMedia: {
+      facebook: "https://facebook.com/loadaspudbc",
+      instagram: "https://instagram.com/loadaspud",
+      google: "https://g.page/load-a-spud",
+      yelp: "https://yelp.com/biz/load-a-spud"
+    },
     // Deployment configuration
     deployment: {
-      subdomain: "loadaspud.cartfullofx.com",
+      subdomain: "loadaspud.wantthissite.com",
       customDomain: null,
       cloudflareProjectId: null,
       migrationReady: true
@@ -402,6 +484,86 @@ export const businessConfigs = {
       name: "Load-a-Spud Battle Creek",
       type: "Family-owned Restaurant",
       established: "2018"
+    }
+  },
+  monicajohnson: {
+    title: "Monica Johnson Consulting - Professional Business Services",
+    description: "Professional business consulting services in Battle Creek, Michigan. Expert guidance for small businesses, strategic planning, and operational efficiency.",
+    businessName: "Monica Johnson Consulting",
+    phone: "(269) 555-0123",
+    // Template Configuration
+    layoutType: "universal",
+    components: {
+      hero: "professional",
+      menu: "services",
+      branding: {
+        clean: true,
+        professional: true
+      }
+    },
+    // Custom styling for Monica Johnson
+    theme: {
+      primaryColor: "#1E40AF", // blue-700
+      secondaryColor: "#7C3AED", // violet-600
+      accentColor: "#06B6D4", // cyan-500
+      backgroundColor: "#0F172A", // slate-900
+      textColor: "#F1F5F9", // slate-100
+      gradientFrom: "#1E40AF",
+      gradientTo: "#7C3AED",
+      fontFamily: "'Inter', 'Helvetica', sans-serif",
+      heroImage: "/images/monica-hero-bg.jpg",
+      mood: "clean-professional"
+    },
+    address: {
+      street: "123 Business Plaza",
+      city: "Battle Creek",
+      state: "Michigan",
+      zip: "49015"
+    },
+    geo: {
+      latitude: 42.3211,
+      longitude: -85.1797
+    },
+    hours: [
+      "Monday: 9:00 AM - 5:00 PM",
+      "Tuesday: 9:00 AM - 5:00 PM",
+      "Wednesday: 9:00 AM - 5:00 PM",
+      "Thursday: 9:00 AM - 5:00 PM",
+      "Friday: 9:00 AM - 4:00 PM",
+      "Saturday: By Appointment",
+      "Sunday: Closed"
+    ],
+    services: [
+      "Business Strategy Consulting",
+      "Operational Efficiency Analysis",
+      "Financial Planning & Budgeting",
+      "Process Improvement",
+      "Project Management",
+      "Executive Coaching"
+    ],
+    heroTitle: "Professional Business Solutions",
+    heroSubtitle: "Expert consulting to help your business grow and succeed",
+    ctaText: "Schedule Consultation",
+    ctaPhone: "(269) 555-0123",
+    businessType: "Professional Services",
+    keywords: ["business consulting Battle Creek", "professional services Michigan", "business strategy", "operational efficiency"],
+    // Portfolio display data
+    portfolioImage: "/images/monica-preview.jpg",
+    portfolioDescription: "Professional services template for consultants and advisors",
+    status: "live",
+    // Social media links
+    socialMedia: {
+      facebook: "https://facebook.com/monicajohnsonconsulting",
+      instagram: "https://instagram.com/monicajohnsonbiz",
+      google: "https://g.page/monica-johnson-consulting",
+      yelp: "https://yelp.com/biz/monica-johnson-consulting"
+    },
+    // Deployment configuration
+    deployment: {
+      subdomain: "monicajohnson.wantthissite.com",
+      customDomain: null,
+      cloudflareProjectId: null,
+      migrationReady: true
     }
   }
 };

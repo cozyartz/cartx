@@ -1,5 +1,6 @@
 ---
 import { getPortfolioBusinesses, getCurrentDeploymentMode, DEPLOYMENT_MODES } from '../data/businesses.js';
+import { ExternalLink, Smartphone, Search, SearchCheck, Theater, Info, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-astro';
 
 const portfolioBusinesses = getPortfolioBusinesses();
 const deploymentMode = getCurrentDeploymentMode();
@@ -10,10 +11,10 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
   <!-- Carousel Header -->
   <div class="text-center mb-8">
     <h3 class="text-3xl md:text-4xl font-black text-white mb-4 font-fredoka">
-      <span class="sparkle"></span> LIVE PORTFOLIO SHOWCASE <span class="sparkle"></span>
+      <span class="sparkle">🚀</span> LIVE DEMO WEBSITES <span class="sparkle">💻</span>
     </h3>
     <p class="text-white/80 text-lg max-w-2xl mx-auto">
-      Experience our latest creations - Professional websites delivering real results for Michigan businesses
+      These are actual websites we've built for Michigan businesses. Click "View Live Demo" to see what yours could look like!
     </p>
   </div>
 
@@ -161,8 +162,8 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
                 
                 <!-- Hover Overlay -->
                 <div class="preview-overlay absolute inset-0 bg-gradient-to-br from-accent-slate/20 to-accent-teal/20 rounded-lg opacity-0 transition-opacity duration-300 flex items-center justify-center">
-                  <div class="text-white font-bold text-lg">
-                    <i class="fas fa-external-link-alt mr-2"></i>
+                  <div class="text-white font-bold text-lg flex items-center">
+                    <ExternalLink class="w-4 h-4 mr-2" />
                     View Live Site
                   </div>
                 </div>
@@ -220,22 +221,22 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
               <!-- Business Features -->
               <div class="business-features grid grid-cols-2 gap-2 text-xs">
                 <div class="feature flex items-center text-white/60">
-                  <i class="fas fa-mobile-alt mr-2 text-accent-teal"></i>
+                  <Smartphone class="w-3 h-3 mr-2 text-accent-teal" />
                   <span>{business.layoutType === 'foodtruck' ? 'Mobile Ordering' : business.layoutType === 'restaurant' ? 'Online Menu' : 'Responsive Design'}</span>
                 </div>
                 <div class="feature flex items-center text-white/60">
-                  <i class="fas fa-search mr-2 text-accent-teal"></i>
+                  <Search class="w-3 h-3 mr-2 text-accent-teal" />
                   <span>SEO Optimized</span>
                 </div>
                 {business.components?.branding?.search && (
                   <div class="feature flex items-center text-white/60">
-                    <i class="fas fa-search-plus mr-2 text-accent-teal"></i>
+                    <SearchCheck class="w-3 h-3 mr-2 text-accent-teal" />
                     <span>Menu Search</span>
                   </div>
                 )}
                 {business.components?.branding?.mascot && (
                   <div class="feature flex items-center text-white/60">
-                    <i class="fas fa-mask mr-2 text-accent-teal"></i>
+                    <Theater class="w-3 h-3 mr-2 text-accent-teal" />
                     <span>Custom Mascot</span>
                   </div>
                 )}
@@ -245,12 +246,12 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
             <!-- Action Buttons -->
             <div class="card-actions flex flex-col sm:flex-row gap-3">
               <a href={business.url} 
-                 class="view-site-btn bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 text-center shadow-lg">
-                <i class="fas fa-external-link-alt mr-2"></i>
+                 class="view-site-btn bg-gradient-to-r from-accent-slate to-accent-teal hover:from-accent-slate-light hover:to-accent-teal-light text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 text-center shadow-lg flex items-center justify-center">
+                <ExternalLink class="w-4 h-4 mr-2" />
                 View Live Demo
               </a>
-              <button class="info-btn glass-effect text-accent-teal border border-accent-teal/30 hover:bg-accent-teal/10 font-semibold px-6 py-3 rounded-full transition-all duration-300">
-                <i class="fas fa-info-circle mr-2"></i>
+              <button class="info-btn glass-effect text-accent-teal border border-accent-teal/30 hover:bg-accent-teal/10 font-semibold px-6 py-3 rounded-full transition-all duration-300 flex items-center justify-center">
+                <Info class="w-4 h-4 mr-2" />
                 Project Details
               </button>
             </div>
@@ -268,7 +269,7 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
     <!-- Navigation Controls -->
     <div class="carousel-controls flex justify-center items-center mt-8 space-x-4">
       <button id="prevBtn" class="nav-btn glass-effect w-12 h-12 rounded-full flex items-center justify-center text-white hover:text-accent-teal transition-all duration-300 border border-accent-slate/30">
-        <i class="fas fa-chevron-left"></i>
+        <ChevronLeft class="w-5 h-5" />
       </button>
       
       <!-- Dots Indicator -->
@@ -279,14 +280,15 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
       </div>
       
       <button id="nextBtn" class="nav-btn glass-effect w-12 h-12 rounded-full flex items-center justify-center text-white hover:text-accent-teal transition-all duration-300 border border-accent-slate/30">
-        <i class="fas fa-chevron-right"></i>
+        <ChevronRight class="w-5 h-5" />
       </button>
     </div>
 
     <!-- Auto-play Toggle -->
     <div class="carousel-status flex justify-center mt-4">
-      <button id="playPauseBtn" class="play-pause-btn glass-effect px-4 py-2 rounded-full text-white/70 hover:text-accent-teal transition-all duration-300 text-sm border border-accent-slate/20">
-        <i class="fas fa-pause mr-2"></i>
+      <button id="playPauseBtn" class="play-pause-btn glass-effect px-4 py-2 rounded-full text-white/70 hover:text-accent-teal transition-all duration-300 text-sm border border-accent-slate/20 flex items-center">
+        <Pause class="w-4 h-4 mr-2" id="pauseIcon" />
+        <Play class="w-4 h-4 mr-2 hidden" id="playIcon" />
         <span id="playPauseText">Auto-playing</span>
       </button>
     </div>
@@ -602,14 +604,19 @@ class FuturisticPortfolioCarousel {
   toggleAutoPlay() {
     this.isPlaying = !this.isPlaying;
     
+    const pauseIcon = document.getElementById('pauseIcon');
+    const playIcon = document.getElementById('playIcon');
+    
     if (this.isPlaying) {
       this.startAutoPlay();
       this.playPauseText.textContent = 'Auto-playing';
-      this.playPauseBtn.querySelector('i').className = 'fas fa-pause mr-2';
+      pauseIcon.classList.remove('hidden');
+      playIcon.classList.add('hidden');
     } else {
       this.pauseAutoPlay();
       this.playPauseText.textContent = 'Paused';
-      this.playPauseBtn.querySelector('i').className = 'fas fa-play mr-2';
+      pauseIcon.classList.add('hidden');
+      playIcon.classList.remove('hidden');
     }
   }
 }

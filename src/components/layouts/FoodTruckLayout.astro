@@ -1,4 +1,22 @@
 ---
+import { 
+  Truck, 
+  Phone, 
+  MapPin, 
+  ChevronDown, 
+  UtensilsCrossed, 
+  Rocket, 
+  Circle, 
+  Star,
+  Facebook,
+  Instagram,
+  Twitter,
+  Beef,
+  Fish,
+  Flame,
+  Salad
+} from 'lucide-astro';
+
 export interface Props {
   config: any;
 }
@@ -59,7 +77,7 @@ const accentColor = theme.accentColor || '#FBBF24';
       <!-- Brand Badge -->
       <div class="brand-badge animate-pulse-slow mb-8">
         <div class="badge-inner">
-          <i class="fas fa-truck text-2xl truck-primary"></i>
+          <Truck className="text-2xl truck-primary" size={24} />
           <span class="badge-text">MOBILE KITCHEN</span>
         </div>
       </div>
@@ -84,7 +102,7 @@ const accentColor = theme.accentColor || '#FBBF24';
            class="cta-primary group relative overflow-hidden">
           <div class="button-bg"></div>
           <div class="button-content">
-            <i class="fas fa-phone-alt mr-3"></i>
+            <Phone className="mr-3" size={20} />
             <span class="button-text">ORDER NOW</span>
             <span class="phone-number">{businessInfo.phone}</span>
           </div>
@@ -92,7 +110,7 @@ const accentColor = theme.accentColor || '#FBBF24';
         </a>
         
         <div class="location-badge glass-effect">
-          <i class="fas fa-map-marker-alt truck-accent mr-3"></i>
+          <MapPin className="truck-accent mr-3" size={20} />
           <span class="location-text">{businessInfo.location}</span>
           <div class="pulse-dot"></div>
         </div>
@@ -102,7 +120,7 @@ const accentColor = theme.accentColor || '#FBBF24';
       <div class="hours-display grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-12">
         <div class="hours-card status-open">
           <div class="status-icon">
-            <i class="fas fa-circle"></i>
+            <Circle size={20} fill="currentColor" />
           </div>
           <div class="status-content">
             <div class="status-label">NOW OPEN</div>
@@ -113,7 +131,7 @@ const accentColor = theme.accentColor || '#FBBF24';
         
         <div class="hours-card status-closed">
           <div class="status-icon">
-            <i class="fas fa-circle"></i>
+            <Circle size={20} fill="currentColor" />
           </div>
           <div class="status-content">
             <div class="status-label">CLOSED</div>
@@ -128,7 +146,7 @@ const accentColor = theme.accentColor || '#FBBF24';
         <div class="scroll-line"></div>
         <div class="scroll-text">VIEW MENU</div>
         <div class="scroll-arrow">
-          <i class="fas fa-chevron-down"></i>
+          <ChevronDown size={20} />
         </div>
       </div>
     </div>
@@ -143,7 +161,7 @@ const accentColor = theme.accentColor || '#FBBF24';
       <!-- Menu Header -->
       <div class="menu-header text-center mb-20">
         <div class="section-badge">
-          <i class="fas fa-utensils"></i>
+          <UtensilsCrossed size={16} />
           <span>FRESH DAILY</span>
         </div>
         <h2 class="section-title font-black neon-text mb-8">
@@ -174,12 +192,24 @@ const accentColor = theme.accentColor || '#FBBF24';
       <!-- Modern Menu Grid -->
       <div class="menu-grid">
         {menu.map((section, index) => {
-          const iconClass = section.section === 'Burgers' ? 'fas fa-hamburger' : 
-                           section.section === 'Chicken' ? 'fas fa-drumstick-bite' :
-                           section.section === 'Bbq' ? 'fas fa-fire' :
-                           section.section === 'Fish' ? 'fas fa-fish' :
-                           section.section === 'HotDogs' ? 'fas fa-hotdog' :
-                           section.section === 'Sides' ? 'fas fa-utensils' : 'fas fa-utensils';
+          const getIconComponent = (sectionName) => {
+            switch (sectionName) {
+              case 'Burgers':
+                return <Beef size={24} />;
+              case 'Chicken':
+                return <Beef size={24} />; // Using Beef as closest alternative to drumstick
+              case 'Bbq':
+                return <Flame size={24} />;
+              case 'Fish':
+                return <Fish size={24} />;
+              case 'HotDogs':
+                return <Beef size={24} />; // Using Beef as closest alternative to hotdog
+              case 'Sides':
+                return <UtensilsCrossed size={24} />;
+              default:
+                return <UtensilsCrossed size={24} />;
+            }
+          };
           
           return (
             <div class="menu-category" data-category={section.section.toLowerCase()}>
@@ -187,7 +217,7 @@ const accentColor = theme.accentColor || '#FBBF24';
               <!-- Category Header -->
               <div class="category-header">
                 <div class="category-icon">
-                  <i class={iconClass}></i>
+                  {getIconComponent(section.section)}
                 </div>
                 <h3 class="category-title">{section.section}</h3>
                 <div class="category-line"></div>
@@ -210,11 +240,11 @@ const accentColor = theme.accentColor || '#FBBF24';
                       <div class="item-features">
                         <div class="feature-badge">FRESH</div>
                         <div class="feature-rating">
-                          <i class="fas fa-star"></i>
-                          <i class="fas fa-star"></i>
-                          <i class="fas fa-star"></i>
-                          <i class="fas fa-star"></i>
-                          <i class="fas fa-star"></i>
+                          <Star size={14} fill="currentColor" />
+                          <Star size={14} fill="currentColor" />
+                          <Star size={14} fill="currentColor" />
+                          <Star size={14} fill="currentColor" />
+                          <Star size={14} fill="currentColor" />
                         </div>
                       </div>
                     </div>
@@ -231,14 +261,14 @@ const accentColor = theme.accentColor || '#FBBF24';
       <div class="final-cta text-center mt-20">
         <div class="cta-card">
           <div class="cta-icon">
-            <i class="fas fa-rocket"></i>
+            <Rocket size={24} />
           </div>
           <h3 class="cta-title">Ready to Order?</h3>
           <p class="cta-description">
             Call us now and taste the difference quality makes!
           </p>
           <a href={`tel:${businessInfo.phone}`} class="cta-button">
-            <span class="button-icon"><i class="fas fa-phone-alt"></i></span>
+            <span class="button-icon"><Phone size={20} /></span>
             <span class="button-text">CALL {businessInfo.phone}</span>
             <div class="button-shine"></div>
           </a>
@@ -253,13 +283,13 @@ const accentColor = theme.accentColor || '#FBBF24';
             <p class="follow-subtitle">Get daily location updates and specials!</p>
             <div class="social-links">
               <a href="#" class="social-link" aria-label="Follow on Facebook">
-                <i class="fab fa-facebook-f"></i>
+                <Facebook size={20} />
               </a>
               <a href="#" class="social-link" aria-label="Follow on Instagram">
-                <i class="fab fa-instagram"></i>
+                <Instagram size={20} />
               </a>
               <a href="#" class="social-link" aria-label="Follow on Twitter">
-                <i class="fab fa-twitter"></i>
+                <Twitter size={20} />
               </a>
             </div>
           </div>

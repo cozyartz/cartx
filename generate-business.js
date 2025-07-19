@@ -1,128 +1,92 @@
 #!/usr/bin/env node
 
 /**
- * Quick Business Page Generator for CartX Multi-Tenant System
+ * AI-Powered Website Builder for Cozyartz Media Group
  * 
- * Usage: node generate-business.js
+ * Usage: 
+ *   node generate-business.js                    # Interactive mode
+ *   node generate-business.js --menu-image=path  # With menu image analysis
+ *   node generate-business.js --batch           # Batch processing mode
  * 
- * This script generates business configuration objects that can be
- * copy-pasted into the [business].astro file for instant deployment.
+ * This script uses AI to generate complete business websites with content,
+ * menu analysis, and professional configuration for instant deployment.
  */
 
 import readline from 'readline';
 import fs from 'fs';
+import path from 'path';
+import { generateBusinessConfig, analyzeMenuImage, getAIServiceStatus } from './src/lib/ai-services.js';
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-// Business type templates with pre-configured settings
+// Enhanced business type templates with AI integration
 const businessTypeTemplates = {
   restaurant: {
     businessType: "Restaurant",
-    defaultServices: [
-      "Dine-In Service",
-      "Takeout & Delivery", 
-      "Catering Services",
-      "Private Dining",
-      "Special Events",
-      "Online Ordering"
-    ],
-    defaultHours: [
-      "Monday: 11:00 AM - 9:00 PM",
-      "Tuesday: 11:00 AM - 9:00 PM",
-      "Wednesday: 11:00 AM - 9:00 PM", 
-      "Thursday: 11:00 AM - 9:00 PM",
-      "Friday: 11:00 AM - 10:00 PM",
-      "Saturday: 11:00 AM - 10:00 PM",
-      "Sunday: 12:00 PM - 8:00 PM"
-    ],
+    layoutType: "restaurant",
+    aiPromptHints: "authentic cuisine, dining experience, local ingredients, food quality",
+    imageStyle: "warm restaurant interior, professional food photography",
+    services: ["Dine-In Service", "Takeout & Delivery", "Catering Services", "Private Events"],
     keywordBase: "restaurant, dining, food"
+  },
+  foodtruck: {
+    businessType: "Restaurant", 
+    layoutType: "foodtruck",
+    aiPromptHints: "mobile food service, street food culture, urban dining, quick service",
+    imageStyle: "vibrant food truck, urban setting, street food aesthetic",
+    services: ["Mobile Orders", "Event Catering", "Daily Specials", "Quick Service"],
+    keywordBase: "food truck, street food, mobile catering"
   },
   salon: {
     businessType: "BeautySalon",
-    defaultServices: [
-      "Hair Cuts & Styling",
-      "Hair Coloring",
-      "Highlights & Lowlights",
-      "Perms & Relaxers", 
-      "Bridal Hair & Makeup",
-      "Deep Conditioning Treatments"
-    ],
-    defaultHours: [
-      "Monday: Closed",
-      "Tuesday: 9:00 AM - 6:00 PM",
-      "Wednesday: 9:00 AM - 6:00 PM",
-      "Thursday: 9:00 AM - 8:00 PM",
-      "Friday: 9:00 AM - 8:00 PM",
-      "Saturday: 8:00 AM - 5:00 PM",
-      "Sunday: 10:00 AM - 4:00 PM"
-    ],
+    layoutType: "universal",
+    aiPromptHints: "beauty expertise, styling services, client satisfaction, professional care",
+    imageStyle: "modern salon interior, professional styling station, elegant atmosphere",
+    services: ["Hair Styling", "Coloring", "Treatments", "Bridal Services", "Consultations"],
     keywordBase: "hair salon, beauty, styling"
   },
   automotive: {
-    businessType: "AutomotiveBusiness", 
-    defaultServices: [
-      "Oil Changes & Maintenance",
-      "Brake Repair & Service",
-      "Engine Diagnostics",
-      "Tire Installation & Rotation",
-      "Battery & Electrical Service",
-      "State Inspections"
-    ],
-    defaultHours: [
-      "Monday: 7:00 AM - 6:00 PM",
-      "Tuesday: 7:00 AM - 6:00 PM",
-      "Wednesday: 7:00 AM - 6:00 PM",
-      "Thursday: 7:00 AM - 6:00 PM", 
-      "Friday: 7:00 AM - 6:00 PM",
-      "Saturday: 8:00 AM - 4:00 PM",
-      "Sunday: Closed"
-    ],
+    businessType: "AutomotiveBusiness",
+    layoutType: "universal", 
+    aiPromptHints: "automotive expertise, reliable service, customer trust, quality repairs",
+    imageStyle: "professional auto shop, modern equipment, clean garage",
+    services: ["Diagnostics", "Repairs", "Maintenance", "Inspections", "Emergency Service"],
     keywordBase: "auto repair, car service, automotive"
   },
   contractor: {
     businessType: "LocalBusiness",
-    defaultServices: [
-      "Residential Construction",
-      "Home Renovations", 
-      "Kitchen & Bathroom Remodeling",
-      "Roofing & Siding",
-      "Flooring Installation",
-      "Free Estimates"
-    ],
-    defaultHours: [
-      "Monday: 7:00 AM - 5:00 PM",
-      "Tuesday: 7:00 AM - 5:00 PM",
-      "Wednesday: 7:00 AM - 5:00 PM",
-      "Thursday: 7:00 AM - 5:00 PM",
-      "Friday: 7:00 AM - 5:00 PM",
-      "Saturday: 8:00 AM - 2:00 PM",
-      "Sunday: Closed"
-    ],
+    layoutType: "universal",
+    aiPromptHints: "construction expertise, quality craftsmanship, project management, reliability",
+    imageStyle: "professional construction work, quality materials, skilled craftsmanship",
+    services: ["Construction", "Renovation", "Remodeling", "Estimates", "Project Management"],
     keywordBase: "contractor, construction, remodeling"
   },
   retail: {
     businessType: "Store",
-    defaultServices: [
-      "Product Sales",
-      "Custom Orders",
-      "Gift Cards Available",
-      "Layaway Programs",
-      "Product Consultation",
-      "Special Ordering"
-    ],
-    defaultHours: [
-      "Monday: 10:00 AM - 7:00 PM",
-      "Tuesday: 10:00 AM - 7:00 PM",
-      "Wednesday: 10:00 AM - 7:00 PM",
-      "Thursday: 10:00 AM - 7:00 PM",
-      "Friday: 10:00 AM - 8:00 PM",
-      "Saturday: 9:00 AM - 8:00 PM",
-      "Sunday: 11:00 AM - 6:00 PM"
-    ],
+    layoutType: "universal",
+    aiPromptHints: "product quality, customer experience, store atmosphere, personalized service",
+    imageStyle: "modern retail interior, attractive displays, welcoming environment",
+    services: ["Product Sales", "Custom Orders", "Consultation", "Gift Services"],
     keywordBase: "retail, shopping, store"
+  },
+  cafe: {
+    businessType: "Restaurant",
+    layoutType: "restaurant",
+    aiPromptHints: "coffee culture, cozy atmosphere, community gathering, artisan beverages",
+    imageStyle: "cozy cafe interior, coffee art, warm lighting",
+    services: ["Specialty Coffee", "Fresh Pastries", "Light Meals", "WiFi", "Catering"],
+    keywordBase: "cafe, coffee, specialty drinks"
+  },
+  healthcare: {
+    businessType: "MedicalOrganization",
+    layoutType: "universal",
+    aiPromptHints: "healthcare expertise, patient care, professional service, medical excellence",
+    imageStyle: "modern medical office, professional healthcare setting, clean environment",
+    services: ["Medical Consultations", "Treatments", "Preventive Care", "Emergency Services"],
+    keywordBase: "healthcare, medical, clinic"
   }
 };
 
@@ -137,6 +101,12 @@ const michiganCities = {
   "Flint": { lat: 43.0125, lng: -83.6875, zip: "48503" },
   "Traverse City": { lat: 44.7631, lng: -85.6206, zip: "49684" }
 };
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const menuImagePath = args.find(arg => arg.startsWith('--menu-image='))?.split('=')[1];
+const batchMode = args.includes('--batch');
+const aiMode = args.includes('--ai') || !args.includes('--manual');
 
 function question(prompt) {
   return new Promise((resolve) => {
@@ -156,9 +126,32 @@ function generateSlug(businessName) {
     .trim();
 }
 
-async function generateBusiness() {
-  console.log('\n🚀 CartX Business Page Generator');
-  console.log('===================================\n');
+async function displayAIServiceStatus() {
+  const status = getAIServiceStatus();
+  console.log('\n🤖 AI Service Status:');
+  console.log(`   Anthropic Claude: ${status.anthropic ? '✅ Available' : '❌ Not configured'}`);
+  console.log(`   OpenAI GPT-4: ${status.openai ? '✅ Available' : '❌ Not configured'}`);
+  
+  if (!status.initialized) {
+    console.log('\n⚠️  AI services not configured. Please set environment variables:');
+    console.log('   ANTHROPIC_API_KEY=your_key_here');
+    console.log('   OPENAI_API_KEY=your_key_here');
+    console.log('\n   Falling back to manual configuration mode.\n');
+    return false;
+  }
+  return true;
+}
+
+async function generateBusinessAI() {
+  console.log('\n🤖 AI-Powered Website Builder for Cozyartz Media Group');
+  console.log('====================================================\n');
+  
+  const aiAvailable = await displayAIServiceStatus();
+  
+  if (!aiAvailable) {
+    console.log('Running in manual mode...\n');
+    return generateBusinessManual();
+  }
 
   // Get business type
   console.log('Available business types:');

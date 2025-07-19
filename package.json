@@ -1,5 +1,5 @@
 {
-  "name": "cartx",
+  "name": "wantthissite",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,9 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "wrangler pages deploy dist --project-name cartx",
-    "deploy:cartx": "wrangler pages deploy dist --project-name cartx",
-    "deploy:staging": "wrangler pages deploy dist --project-name cartx-staging",
+    "deploy": "wrangler pages deploy dist --project-name wantthissite",
+    "deploy:production": "wrangler pages deploy dist --project-name wantthissite",
+    "deploy:staging": "wrangler pages deploy dist --project-name wantthissite-staging",
     "wrangler:dev": "wrangler pages dev dist --compatibility-date=2024-01-01",
     "generate": "node generate-business.js",
     "quick-deploy": "npm run build && npm run deploy",
@@ -22,12 +22,12 @@
     "test:config": "node scripts/test-configurations.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.56.0",
     "@astrojs/cloudflare": "^12.6.0",
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-brands-svg-icons": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.10.1",
+    "lucide-astro": "^0.525.0",
+    "openai": "^5.10.1",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

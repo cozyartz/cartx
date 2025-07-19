@@ -1,10 +1,66 @@
-# CartX - Multi-Tenant Business Landing Page System
+# 🤖 AI Website Builder - Cozyartz Media Group
 
-A powerful Astro-based multi-tenant website system with **flexible template architecture** for creating professional business landing pages that drive leads to Cozyartz Media Group. Built with Cloudflare Pages for lightning-fast global delivery.
+**Transform any business into a professional website in seconds using Cloudflare Workers AI**
 
-## 🏢 Business Model Overview
+![AI Website Builder](https://img.shields.io/badge/AI-Powered-blue?style=for-the-badge&logo=openai)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-Workers%20AI-orange?style=for-the-badge&logo=cloudflare)
+![Astro](https://img.shields.io/badge/Astro-5.0-purple?style=for-the-badge&logo=astro)
 
-CartX is a **multi-tenant landing page business** designed to dominate local SEO in Michigan and beyond. Each business page uses our flexible template system to automatically select the perfect layout based on business type, creating highly-targeted demo pages that funnel traffic to Cozyartz Media Group for web development services.
+## 🚀 **What This Does**
+
+This AI-powered platform instantly creates professional business websites using cutting-edge AI models. Simply provide a business name and description (or upload a restaurant menu image), and watch as AI generates:
+
+- **Complete SEO-optimized content**
+- **Professional business descriptions**  
+- **Menu extraction from images** (restaurants)
+- **Local Michigan market targeting**
+- **Mobile-responsive layouts**
+- **Ready-to-deploy configurations**
+
+## ⚡ **Powered by Cloudflare Workers AI**
+
+We use the latest and most capable AI models available:
+
+| Model | Purpose | Capabilities |
+|-------|---------|-------------|
+| **Meta Llama 3.1 70B** | Content Generation | Business copy, descriptions, SEO content |
+| **Meta Llama 4 Scout 17B** | Menu Analysis | Extract menu items from images |
+| **Mistral Small 3.1 24B** | Enhanced Content | Advanced content understanding |
+| **Stable Diffusion XL** | Image Generation | Professional business images |
+
+## 🎯 **Perfect For**
+
+- **Web Development Agencies** - 10x faster client website creation
+- **Local Business Owners** - Professional websites without technical knowledge
+- **Restaurant Owners** - Upload menu photo → Complete website
+- **Service Businesses** - Auto-generated content for any business type
+
+## 💎 **Key Features**
+
+### 🍽️ **Menu Image Analysis**
+Upload a restaurant menu image and AI automatically:
+- Extracts all menu items with prices
+- Organizes into logical categories  
+- Identifies cuisine type and specials
+- Formats for website display
+
+### 🎨 **Intelligent Layout Selection**
+AI automatically selects the best template:
+- **Restaurant Layout** - Character mascots, menu search, cultural themes
+- **Food Truck Layout** - Urban styling, pricing focus, neon effects
+- **Universal Layout** - Professional services, clean design
+
+### 🎯 **Local SEO Optimization**
+- Michigan-focused keyword targeting
+- Local business schema markup
+- City-specific content generation
+- Geographic coordinate integration
+
+### ⚡ **Edge Performance**
+- Global Cloudflare CDN deployment
+- Sub-100ms AI response times
+- Serverless scaling
+- Zero infrastructure management
 
 ### SEO Strategy Architecture
 - **Demo Landing Pages**: Professional sites with business-specific layouts showcasing local businesses across Michigan
