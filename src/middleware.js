@@ -3,9 +3,9 @@
  * Adds proper security headers to fix browser console warnings
  */
 
-export function onRequest(context, next) {
-  // Add security headers before processing the request
-  const response = next();
+export async function onRequest(context, next) {
+  // Process the request first
+  const response = await next();
   
   // Set security headers to fix console warnings
   response.headers.set('X-Content-Type-Options', 'nosniff');
