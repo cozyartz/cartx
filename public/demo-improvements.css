@@ -1,0 +1,120 @@
+/* Demo Site Visual Improvements */
+
+/* Fix overly large mascots and characters */
+.animate-bounce {
+  animation-duration: 3s !important;
+}
+
+/* Ensure proper icon sizing across all layouts */
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Restaurant layout improvements */
+.restaurant-layout .text-5xl,
+.restaurant-layout .text-6xl,
+.restaurant-layout .text-7xl,
+.restaurant-layout .text-8xl,
+.restaurant-layout .text-9xl {
+  font-size: clamp(2rem, 5vw, 4rem) !important;
+}
+
+/* Menu item improvements */
+.menu-item {
+  transition: all 0.3s ease !important;
+}
+
+.menu-item:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Mascot sizing improvements */
+.animate-bounce > div {
+  transform: scale(0.8) !important;
+}
+
+/* Better responsive text sizing */
+@media (max-width: 768px) {
+  .text-4xl,
+  .text-5xl,
+  .text-6xl,
+  .text-7xl,
+  .text-8xl,
+  .text-9xl {
+    font-size: clamp(1.5rem, 8vw, 3rem) !important;
+  }
+  
+  /* Mobile mascot sizing */
+  .animate-bounce > div {
+    transform: scale(0.6) !important;
+  }
+}
+
+/* Universal layout professional improvements */
+.universal-layout .service-icon {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+
+.universal-layout .main-title {
+  font-size: clamp(2.5rem, 6vw, 5rem) !important;
+}
+
+/* Food truck layout improvements */
+.food-truck-layout .main-title {
+  font-size: clamp(2.5rem, 6vw, 6rem) !important;
+}
+
+/* Better menu pricing display */
+.price-tag,
+.offer-price {
+  font-size: clamp(1rem, 2.5vw, 1.5rem) !important;
+}
+
+/* Improved hover states */
+.premium-button:hover,
+.cta-primary:hover,
+.cta-button:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+/* Professional card spacing */
+.professional-card,
+.menu-item,
+.portfolio-card {
+  margin-bottom: 1rem;
+}
+
+/* Ensure proper contrast */
+.neon-text,
+.text-gradient {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Better button sizing */
+.premium-button,
+.secondary-button,
+.cta-primary {
+  padding: 0.875rem 1.75rem !important;
+  font-size: 1rem !important;
+}
+
+/* Mobile improvements */
+@media (max-width: 480px) {
+  .glass-effect,
+  .professional-card {
+    padding: 1rem !important;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem !important;
+  }
+  
+  .premium-button,
+  .cta-primary {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}

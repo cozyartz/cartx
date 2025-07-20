@@ -69,7 +69,7 @@ const accentColor = theme.accentColor || '#FBBF24';
         <div class="flex justify-center items-center mb-8 relative">
           <!-- Main Business Name with Gradient Effect -->
           <div class="relative">
-            <h1 class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold font-display tracking-wider mb-4"
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-display tracking-wider mb-4"
                 style={`background: linear-gradient(90deg, ${theme.accentColor}, ${theme.secondaryColor}, ${theme.accentColor}); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`}>
               {config.businessName.split(' ')[0].toUpperCase()}
             </h1>
@@ -80,48 +80,48 @@ const accentColor = theme.accentColor || '#FBBF24';
           
           <!-- Mascot Character (if enabled) -->
           {config.components?.branding?.mascot && (
-            <div class="hidden lg:block absolute -right-20 xl:-right-32 top-1/2 transform -translate-y-1/2">
-              <div class="relative animate-bounce">
+            <div class="hidden lg:block absolute -right-16 xl:-right-20 top-1/2 transform -translate-y-1/2">
+              <div class="relative animate-bounce opacity-90">
                 {config.components.branding.mascot.type === 'chili-pepper' && (
-                  <div>
+                  <div class="scale-75 xl:scale-90">
                     <!-- Sombrero -->
-                    <div class="w-16 h-16 xl:w-20 xl:h-20 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-full relative mb-2">
-                      <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 w-12 h-6 xl:w-16 xl:h-8 bg-gradient-to-r from-red-500 via-green-500 to-red-500 rounded-t-full"></div>
+                    <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-full relative mb-1">
+                      <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 w-10 h-4 xl:w-12 xl:h-5 bg-gradient-to-r from-red-500 via-green-500 to-red-500 rounded-t-full"></div>
                     </div>
                     
                     <!-- Chili Body -->
-                    <div class="w-12 h-20 xl:w-16 xl:h-24 bg-gradient-to-b from-red-500 to-red-700 rounded-full relative mx-auto">
+                    <div class="w-8 h-16 xl:w-10 xl:h-18 bg-gradient-to-b from-red-500 to-red-700 rounded-full relative mx-auto">
                       <!-- Eyes -->
-                      <div class="absolute top-3 left-2 w-2 h-2 bg-white rounded-full"></div>
-                      <div class="absolute top-3 right-2 w-2 h-2 bg-white rounded-full"></div>
+                      <div class="absolute top-2 left-1.5 w-1.5 h-1.5 bg-white rounded-full"></div>
+                      <div class="absolute top-2 right-1.5 w-1.5 h-1.5 bg-white rounded-full"></div>
                       <!-- Mustache -->
-                      <div class="absolute top-6 left-1/2 transform -translate-x-1/2 w-6 h-1 bg-black rounded-full"></div>
+                      <div class="absolute top-4 left-1/2 transform -translate-x-1/2 w-4 h-0.5 bg-black rounded-full"></div>
                       <!-- Thumbs up hand -->
-                      <div class="absolute -left-4 top-8 w-4 h-6 bg-white rounded-full rotate-12">
-                        <div class="absolute top-0 left-1/2 w-2 h-3 bg-white rounded-full transform -translate-x-1/2 -translate-y-1"></div>
+                      <div class="absolute -left-3 top-6 w-3 h-4 bg-white rounded-full rotate-12">
+                        <div class="absolute top-0 left-1/2 w-1 h-2 bg-white rounded-full transform -translate-x-1/2 -translate-y-0.5"></div>
                       </div>
                     </div>
                   </div>
                 )}
                 
                 {config.components?.branding?.emoji && !config.components?.branding?.comfort && (
-                  <div class="text-6xl xl:text-8xl animate-bounce">
+                  <div class="text-4xl xl:text-5xl animate-bounce">
                     {config.components.branding.emoji}
                   </div>
                 )}
                 
                 {config.components?.branding?.comfort && (
-                  <div class="relative">
+                  <div class="relative scale-75 xl:scale-90">
                     <!-- Potato mascot for comfort food establishments -->
-                    <div class="w-16 h-20 xl:w-20 xl:h-24 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-full relative mx-auto animate-bounce">
+                    <div class="w-12 h-16 xl:w-14 xl:h-18 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-full relative mx-auto animate-bounce">
                       <!-- Eyes -->
-                      <div class="absolute top-4 left-3 w-2 h-2 bg-white rounded-full"></div>
-                      <div class="absolute top-4 right-3 w-2 h-2 bg-white rounded-full"></div>
+                      <div class="absolute top-3 left-2 w-1.5 h-1.5 bg-white rounded-full"></div>
+                      <div class="absolute top-3 right-2 w-1.5 h-1.5 bg-white rounded-full"></div>
                       <!-- Smile -->
-                      <div class="absolute top-7 left-1/2 transform -translate-x-1/2 w-6 h-3 border-b-2 border-white rounded-full"></div>
+                      <div class="absolute top-5 left-1/2 transform -translate-x-1/2 w-4 h-2 border-b-2 border-white rounded-full"></div>
                       <!-- Chef hat -->
-                      <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-12 h-6 bg-white rounded-t-full"></div>
-                      <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-8 h-4 bg-white rounded-full"></div>
+                      <div class="absolute -top-1 left-1/2 transform -translate-x-1/2 w-8 h-4 bg-white rounded-t-full"></div>
+                      <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-6 h-3 bg-white rounded-full"></div>
                     </div>
                   </div>
                 )}
@@ -207,7 +207,7 @@ const accentColor = theme.accentColor || '#FBBF24';
   <!-- Menu Section -->
   <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-gray-900">
     <div class="text-center mb-12">
-      <h2 class="text-4xl md:text-5xl font-bold mb-4" style={`color: ${theme.primaryColor};`}>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4" style={`color: ${theme.primaryColor};`}>
         {config.components?.branding?.culturalTheme === 'mexican' ? 'Nuestro Menú' : 'Our Menu'}
       </h2>
       <p class="text-xl text-gray-300 max-w-2xl mx-auto">
@@ -219,16 +219,16 @@ const accentColor = theme.accentColor || '#FBBF24';
       {menu.map((section) => (
         <section class="menu-section">
           <div class="text-center mb-8">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2 border-b-4 inline-block pb-2" 
+            <h3 class="text-2xl md:text-3xl font-bold mb-2 border-b-4 inline-block pb-2" 
                 style={`color: ${theme.primaryColor}; border-color: ${theme.secondaryColor};`}>
               {section.category}
             </h3>
             <p class="text-gray-300 mt-4 text-lg">{section.description}</p>
           </div>
           
-          <div class="grid gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="grid gap-4 lg:gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
             {section.items.map((item) => (
-              <div class="menu-item bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border-l-4 group relative overflow-hidden"
+              <div class="menu-item bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border-l-4 group relative overflow-hidden"
                    style={`border-color: ${theme.secondaryColor};`}
                    onmouseover={`this.style.borderColor='${theme.primaryColor}'`}
                    onmouseout={`this.style.borderColor='${theme.secondaryColor}'`}>
@@ -240,7 +240,7 @@ const accentColor = theme.accentColor || '#FBBF24';
                         style={`&:hover { color: ${theme.primaryColor}; }`}>
                       {config.components?.branding?.numberedItems && item.number ? `${item.number}. ${item.name}` : item.name}
                     </h4>
-                    <span class="text-xl font-bold text-white px-4 py-2 rounded-full shadow-md group-hover:scale-105 transition-transform duration-300"
+                    <span class="text-lg font-bold text-white px-3 py-1 rounded-lg shadow-md group-hover:scale-105 transition-transform duration-300"
                           style={`background: linear-gradient(90deg, ${theme.primaryColor}, ${theme.secondaryColor});`}>
                       {item.price}
                     </span>
@@ -278,7 +278,7 @@ const accentColor = theme.accentColor || '#FBBF24';
   <section class="text-white py-16 mt-16" 
            style={`background: linear-gradient(90deg, ${theme.primaryColor}, ${theme.secondaryColor});`}>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">
         {config.components?.branding?.culturalTheme === 'mexican' ? '¿Listo para Ordenar?' : 'Ready to Order?'}
       </h2>
       <p class="text-xl mb-8 opacity-90">
@@ -426,8 +426,8 @@ const accentColor = theme.accentColor || '#FBBF24';
 }
 
 .menu-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 
 /* Search functionality */
