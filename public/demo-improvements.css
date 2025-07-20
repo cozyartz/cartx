@@ -30,9 +30,29 @@ svg {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Mascot sizing improvements */
+/* Mascot sizing improvements - much smaller */
 .animate-bounce > div {
-  transform: scale(0.8) !important;
+  transform: scale(0.6) !important;
+}
+
+/* Category icons - much smaller */
+.category-icon {
+  width: 2rem !important;
+  height: 2rem !important;
+  font-size: 1rem !important;
+}
+
+/* Service icons - smaller */
+.service-icon {
+  width: 2rem !important;
+  height: 2rem !important;
+  font-size: 1rem !important;
+}
+
+/* Browser chrome icons */
+.browser-chrome .w-3 {
+  width: 0.5rem !important;
+  height: 0.5rem !important;
 }
 
 /* Better responsive text sizing */
@@ -48,7 +68,14 @@ svg {
   
   /* Mobile mascot sizing */
   .animate-bounce > div {
-    transform: scale(0.6) !important;
+    transform: scale(0.4) !important;
+  }
+  
+  /* Mobile icon sizing */
+  .category-icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    font-size: 0.875rem !important;
   }
 }
 
