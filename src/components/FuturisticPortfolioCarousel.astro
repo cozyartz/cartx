@@ -104,19 +104,20 @@ const isDevelopment = deploymentMode === DEPLOYMENT_MODES.DEVELOPMENT;
                   <div class="preview-content">
                     <!-- Restaurant Header with Character -->
                     <div class="preview-header mb-3 flex items-center justify-between">
-                      <div class="flex-1">
-                        <div class="w-16 h-2 bg-gradient-to-r from-green-400 to-red-400 rounded mb-1"></div>
-                        <div class="w-12 h-1 bg-yellow-400 rounded"></div>
-                      </div>
-                      {business.components?.branding?.mascot && (
-                        <div class="w-6 h-6 bg-gradient-to-b from-red-500 to-red-700 rounded-full flex items-center justify-center">
-                          <div class="text-[6px]">🌶️</div>
-                        </div>
-                      )}
-                      {business.components?.branding?.emoji && (
-                        <div class="text-xs">{business.components.branding.emoji}</div>
-                      )}
+                    <div class="flex-1">
+                    <div class="w-16 h-2 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 rounded mb-1 animate-pulse"></div>
+                    <div class="w-12 h-1 bg-yellow-400 rounded shadow-lg"></div>
                     </div>
+                    {business.components?.branding?.mascot && (
+                    <div class="w-4 h-4 bg-gradient-to-b from-red-500 to-red-700 rounded-full flex items-center justify-center relative">
+                    <div class="absolute -top-1 w-3 h-2 bg-yellow-600 rounded-t-full"></div>
+                      <div class="text-[4px] animate-bounce">🌶️</div>
+                      </div>
+                    )}
+                    {business.components?.branding?.emoji && (
+                      <div class="text-xs animate-bounce">{business.components.branding.emoji}</div>
+                      )}
+    </div>
                     <!-- Menu Categories -->
                     <div class="preview-menu grid grid-cols-2 gap-1 mb-2">
                       {business.menu && Object.keys(business.menu).slice(0, 4).map((category) => (

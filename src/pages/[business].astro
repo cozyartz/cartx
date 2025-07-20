@@ -1,6 +1,7 @@
 ---
 import SEO from '../components/SEO.astro';
 import RestaurantLayout from '../components/layouts/RestaurantLayout.astro';
+import ModernRestaurantLayout from '../components/layouts/ModernRestaurantLayout.astro';
 import FoodTruckLayout from '../components/layouts/FoodTruckLayout.astro';
 import { businessConfigs, getBusinessSlugs, getBusinessConfig } from '../data/businesses.js';
 import { Wrench, Zap, Thermometer, Home, Brush, Sprout, PaintBucket, Grid3X3, Monitor, Shield, Bug, TreePine, Construction, Fence, Droplets, Utensils, Bath, Layers, Car, ArrowDown, Settings, Building, Phone, Menu, Quote, CheckCircle, ArrowRight, Award, MapPin, Clock, Info, Handshake, Mail, Globe, ShieldCheck, Star, Facebook, Instagram, Truck } from 'lucide-astro';
@@ -138,6 +139,7 @@ function getLucideIcon(iconName) {
 <body>
   <!-- Template Selection Logic -->
   {layoutType === 'restaurant' && <RestaurantLayout config={config} />}
+  {layoutType === 'modern-restaurant' && <ModernRestaurantLayout config={config} />}
   {layoutType === 'foodtruck' && <FoodTruckLayout config={config} />}
   
   <!-- Enhanced Universal Layout for Professional Service Businesses -->

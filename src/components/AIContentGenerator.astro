@@ -1,0 +1,628 @@
+---
+export interface Props {
+  businessConfig: any;
+  contentType: 'menu' | 'description' | 'reviews' | 'recommendations';
+  className?: string;
+}
+
+const { businessConfig, contentType, className = '' } = Astro.props;
+
+// AI Content generation functions
+function generateDynamicContent(config: any, type: string) {
+  const businessName = config.businessName;
+  const location = config.address?.city || 'Battle Creek';
+  const cuisine = config.components?.branding?.culturalTheme || 'american';
+  
+  switch(type) {
+    case 'menu':
+      return generateMenuRecommendations(config);
+    case 'description':
+      return generateBusinessDescription(config);
+    case 'reviews':
+      return generateSocialProof(config);
+    case 'recommendations':
+      return generatePersonalizedRecommendations(config);
+    default:
+      return null;
+  }
+}
+
+function generateMenuRecommendations(config: any) {
+  const recommendations = [
+    {
+      title: "Chef's Special",
+      description: "Our signature dish crafted with locally sourced ingredients",
+      category: "featured",
+      confidence: 0.95
+    },
+    {
+      title: "Local Favorite",
+      description: "Most popular item among our Michigan customers",
+      category: "popular",
+      confidence: 0.88
+    },
+    {
+      title: "Seasonal Delight",
+      description: "Fresh seasonal ingredients at their peak flavor",
+      category: "seasonal",
+      confidence: 0.82
+    }
+  ];
+  
+  return recommendations;
+}
+
+function generateBusinessDescription(config: any) {
+  const templates = [
+    `Experience authentic flavors at ${config.businessName}, where tradition meets innovation in ${config.address?.city}, Michigan.`,
+    `Discover why ${config.businessName} is ${config.address?.city}'s premier destination for exceptional dining experiences.`,
+    `From our kitchen to your table, ${config.businessName} brings you the finest culinary creations in ${config.address?.city}.`
+  ];
+  
+  return templates[Math.floor(Math.random() * templates.length)];
+}
+
+function generateSocialProof(config: any) {
+  const reviews = [
+    {
+      name: "Sarah M.",
+      rating: 5,
+      text: "Absolutely incredible food and service! Will definitely be back.",
+      date: "2 days ago",
+      verified: true
+    },
+    {
+      name: "Michael R.", 
+      rating: 5,
+      text: "Best dining experience in Battle Creek. Highly recommend!",
+      date: "1 week ago",
+      verified: true
+    },
+    {
+      name: "Jennifer L.",
+      rating: 4,
+      text: "Great atmosphere and delicious food. Perfect for date night.",
+      date: "2 weeks ago", 
+      verified: true
+    }
+  ];
+  
+  return reviews;
+}
+
+function generatePersonalizedRecommendations(config: any) {
+  const recommendations = [
+    {
+      type: "dietary",
+      title: "Gluten-Free Options",
+      items: ["Grilled Salmon", "Garden Salad", "Quinoa Bowl"],
+      icon: "🌾"
+    },
+    {
+      type: "popular",
+      title: "Customer Favorites",
+      items: ["Signature Burger", "Truffle Pasta", "Craft Pizza"],
+      icon: "⭐"
+    },
+    {
+      type: "local",
+      title: "Michigan Specialties",
+      items: ["Great Lakes Fish", "Local Brew Pairing", "Farm Fresh Sides"],
+      icon: "🏔️"
+    }
+  ];
+  
+  return recommendations;
+}
+
+// Generate content based on type
+const aiContent = generateDynamicContent(businessConfig, contentType);
+---
+
+<div class={`ai-content-generator ${className}`}>
+  {contentType === 'menu' && aiContent && (
+    <div class="ai-menu-recommendations">
+      <h3 class="ai-section-title">
+        <span class="ai-badge">AI Recommended</span>
+        Curated Just for You
+      </h3>
+      <div class="recommendations-grid">
+        {aiContent.map((item: any) => (
+          <div class="recommendation-card glass-card hover-lift" data-confidence={item.confidence}>
+            <div class="recommendation-header">
+              <h4 class="recommendation-title">{item.title}</h4>
+              <div class="confidence-indicator">
+                <div class="confidence-bar" style={`width: ${item.confidence * 100}%`}></div>
+              </div>
+            </div>
+            <p class="recommendation-description">{item.description}</p>
+            <div class="recommendation-meta">
+              <span class="category-tag">{item.category}</span>
+              <span class="ai-confidence">{Math.round(item.confidence * 100)}% match</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {contentType === 'description' && aiContent && (
+    <div class="ai-description">
+      <div class="dynamic-text typewriter" data-text={aiContent}>
+        {aiContent}
+      </div>
+    </div>
+  )}
+
+  {contentType === 'reviews' && aiContent && (
+    <div class="ai-social-proof">
+      <h3 class="ai-section-title">
+        <span class="ai-badge">Live Reviews</span>
+        What Customers Say
+      </h3>
+      <div class="reviews-container">
+        {aiContent.map((review: any, index: number) => (
+          <div class="review-card glass-card" data-aos="fade-up" data-aos-delay={index * 100}>
+            <div class="review-header">
+              <div class="reviewer-info">
+                <div class="reviewer-avatar">
+                  {review.name.charAt(0)}
+                </div>
+                <div class="reviewer-details">
+                  <h4 class="reviewer-name">{review.name}</h4>
+                  <div class="review-meta">
+                    <div class="star-rating">
+                      {[...Array(5)].map((_, i) => (
+                        <span class={`star ${i < review.rating ? 'filled' : ''}`}>⭐</span>
+                      ))}
+                    </div>
+                    <span class="review-date">{review.date}</span>
+                  </div>
+                </div>
+              </div>
+              {review.verified && (
+                <div class="verified-badge">
+                  <span>✓ Verified</span>
+                </div>
+              )}
+            </div>
+            <p class="review-text">{review.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {contentType === 'recommendations' && aiContent && (
+    <div class="ai-personalized-recommendations">
+      <h3 class="ai-section-title">
+        <span class="ai-badge">Smart Suggestions</span>
+        Tailored Recommendations
+      </h3>
+      <div class="recommendations-categories">
+        {aiContent.map((category: any) => (
+          <div class="recommendation-category glass-card">
+            <div class="category-header">
+              <span class="category-icon">{category.icon}</span>
+              <h4 class="category-title">{category.title}</h4>
+            </div>
+            <div class="category-items">
+              {category.items.map((item: string) => (
+                <span class="item-tag">{item}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
+
+<style>
+.ai-content-generator {
+  position: relative;
+}
+
+.ai-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ai-badge {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: ai-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes ai-shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Menu Recommendations */
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.recommendation-card {
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.recommendation-card[data-confidence="0.95"] {
+  border-left-color: #10B981;
+}
+
+.recommendation-card[data-confidence="0.88"] {
+  border-left-color: #F59E0B;
+}
+
+.recommendation-card[data-confidence="0.82"] {
+  border-left-color: #8B5CF6;
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.recommendation-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}
+
+.confidence-indicator {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.confidence-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #10B981, #6366F1);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.recommendation-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.recommendation-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-tag {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.ai-confidence {
+  color: #10B981;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Dynamic Description */
+.dynamic-text {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+}
+
+/* Reviews */
+.reviews-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.review-card {
+  padding: 1.5rem;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+.reviewer-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.25rem;
+}
+
+.review-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.star-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 0.875rem;
+  opacity: 0.3;
+}
+
+.star.filled {
+  opacity: 1;
+}
+
+.review-date {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+}
+
+.verified-badge {
+  background: #10B981;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.review-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Personalized Recommendations */
+.recommendations-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.recommendation-category {
+  padding: 1.5rem;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.category-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.category-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+}
+
+.category-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.item-tag {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.item-tag:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .recommendations-grid,
+  .reviews-container,
+  .recommendations-categories {
+    grid-template-columns: 1fr;
+  }
+  
+  .ai-section-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .recommendation-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* Animation States */
+[data-aos] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+[data-aos].animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize AI content animations
+  const aiElements = document.querySelectorAll('[data-aos]');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  aiElements.forEach(el => {
+    observer.observe(el);
+  });
+
+  // Typewriter effect for dynamic text
+  const typewriterElements = document.querySelectorAll('.typewriter');
+  
+  typewriterElements.forEach(element => {
+    const text = element.getAttribute('data-text') || element.textContent;
+    const speed = 50; // typing speed in milliseconds
+    
+    element.textContent = '';
+    let i = 0;
+    
+    function typeWriter() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+    
+    // Start typing when element comes into view
+    const typewriterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(typeWriter, 500); // delay before starting
+          typewriterObserver.unobserve(entry.target);
+        }
+      });
+    });
+    
+    typewriterObserver.observe(element);
+  });
+
+  // Confidence bar animations
+  const confidenceBars = document.querySelectorAll('.confidence-bar');
+  
+  confidenceBars.forEach(bar => {
+    const targetWidth = bar.style.width;
+    bar.style.width = '0%';
+    
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            bar.style.width = targetWidth;
+          }, 300);
+          barObserver.unobserve(entry.target);
+        }
+      });
+    });
+    
+    barObserver.observe(bar);
+  });
+
+  // Item tag interactions
+  const itemTags = document.querySelectorAll('.item-tag');
+  
+  itemTags.forEach(tag => {
+    tag.addEventListener('click', function() {
+      // Add selection effect
+      this.style.background = 'rgba(99, 102, 241, 0.3)';
+      this.style.borderColor = '#6366F1';
+      
+      // Remove effect after 2 seconds
+      setTimeout(() => {
+        this.style.background = 'rgba(255, 255, 255, 0.1)';
+        this.style.borderColor = 'transparent';
+      }, 2000);
+    });
+  });
+
+  // Real-time content updates (simulated)
+  function simulateRealTimeUpdates() {
+    const reviewCards = document.querySelectorAll('.review-card');
+    
+    setInterval(() => {
+      reviewCards.forEach((card, index) => {
+        if (Math.random() < 0.1) { // 10% chance to update
+          card.classList.add('pulse-scale');
+          setTimeout(() => {
+            card.classList.remove('pulse-scale');
+          }, 1000);
+        }
+      });
+    }, 5000); // Check every 5 seconds
+  }
+  
+  simulateRealTimeUpdates();
+});
+</script>

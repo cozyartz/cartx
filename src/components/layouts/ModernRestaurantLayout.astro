@@ -1,0 +1,1189 @@
+---
+import AIContentGenerator from '../AIContentGenerator.astro';
+import ModernMenuSimple from '../ModernMenuSimple.astro';
+
+export interface Props {
+  config: any;
+}
+
+const { config } = Astro.props;
+
+// Transform menu data with enhanced categorization
+const menu = Object.entries(config.menu || {}).map(([key, items]) => ({
+  category: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim(),
+  description: getMenuDescription(key),
+  items: Array.isArray(items) ? items : [],
+  icon: getCategoryIcon(key)
+}));
+
+function getMenuDescription(category) {
+  const descriptions = {
+    appetizers: 'Start your culinary journey',
+    tacos: 'Handcrafted with authentic flavors',
+    burritos: 'Wrapped perfection in every bite',
+    fajitasPlatters: 'Sizzling sensations served fresh',
+    desserts: 'Sweet endings to remember',
+    signatureSpuds: 'Our legendary loaded creations',
+    loadATaco: 'Build your perfect taco',
+    loadASalad: 'Fresh, vibrant, unforgettable',
+    beverages: 'Refresh and revitalize',
+    snacks: 'Small bites, big flavors'
+  };
+  return descriptions[category] || 'Expertly crafted selections';
+}
+
+function getCategoryIcon(category) {
+  const icons = {
+    appetizers: '🌟',
+    tacos: '🌮',
+    burritos: '🌯',
+    fajitasPlatters: '🍳',
+    desserts: '🍰',
+    beverages: '🥤',
+    snacks: '🍿'
+  };
+  return icons[category] || '🍽️';
+}
+
+const restaurantInfo = {
+  name: config.businessName,
+  location: `${config.address.city}, ${config.address.state}`,
+  phone: config.phone,
+  email: config.restaurantInfo?.email || `hello@${config.businessName.toLowerCase().replace(/\s/g, '')}.com`,
+  address: config.restaurantInfo?.realAddress || `${config.address.street}, ${config.address.city}, ${config.address.state} ${config.address.zip}`,
+  hours: config.hours ? Object.fromEntries(
+    config.hours.map((hour, index) => {
+      const days = ['Mon-Thu', 'Fri-Sat', 'Sunday'];
+      return [days[Math.floor(index / 2)] || 'Daily', hour.split(': ')[1]];
+    })
+  ) : {
+    "Mon-Thu": "11:00 AM - 9:00 PM",
+    "Fri-Sat": "11:00 AM - 10:00 PM",
+    "Sunday": "12:00 PM - 8:00 PM"
+  }
+};
+
+// Modern theme with dynamic colors
+const theme = config.theme || {};
+const primaryColor = theme.primaryColor || '#6366F1';
+const secondaryColor = theme.secondaryColor || '#8B5CF6';
+const accentColor = theme.accentColor || '#F59E0B';
+---
+
+<div class="modern-restaurant-layout">
+  <!-- Import modern enhancements CSS -->
+  <link rel="stylesheet" href="/src/styles/modern-enhancements.css" />
+  
+  <!-- Animated Background -->
+  <div class="fixed inset-0 z-0">
+    <div class="gradient-mesh opacity-30"></div>
+    <div class="floating-orbs"></div>
+  </div>
+
+  <!-- Modern Navigation Bar -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-nav">
+    <div class="container-fluid flex items-center justify-between py-4">
+      <div class="flex items-center gap-4">
+        <div class="logo-wrapper">
+          <span class="text-2xl font-bold text-gradient">{config.businessName}</span>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#menu" class="nav-link">Menu</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#gallery" class="nav-link">Gallery</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <button class="cta-button glass-button">
+          <span>Order Now</span>
+          <div class="button-glow"></div>
+        </button>
+      </div>
+      <button class="md:hidden menu-toggle">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Parallax -->
+  <header class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Dynamic Background Elements -->
+    <div class="absolute inset-0">
+      <div class="hero-gradient"></div>
+      <div class="particle-field"></div>
+    </div>
+
+    <!-- 3D Floating Elements -->
+    <div class="floating-elements">
+      {config.components?.branding?.mascot && (
+        <div class="mascot-3d">
+          <div class="mascot-container">
+            {config.components.branding.mascot.type === 'chili-pepper' && (
+              <div class="chili-3d">
+                <div class="chili-body"></div>
+                <div class="chili-hat"></div>
+                <div class="chili-face"></div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+
+    <!-- Hero Content -->
+    <div class="container-fluid text-center relative z-10">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="text-holographic">{config.businessName.split(' ')[0]}</span>
+          <span class="text-gradient block text-3xl mt-4">{config.businessType}</span>
+        </h1>
+        
+        <p class="hero-description glass-card inline-block px-8 py-4 mt-8">
+          {config.description}
+        </p>
+
+        <div class="hero-actions mt-12 flex flex-col sm:flex-row gap-6 justify-center">
+          <button class="hero-cta primary-cta">
+            <span>Explore Menu</span>
+            <div class="cta-shimmer"></div>
+          </button>
+          <button class="hero-cta secondary-cta glass-button">
+            <span>Reserve Table</span>
+          </button>
+        </div>
+
+        <!-- Quick Info Cards -->
+        <div class="quick-info-grid mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="info-card glass-card hover-lift">
+            <div class="info-icon">📍</div>
+            <h3>Location</h3>
+            <p>{restaurantInfo.location}</p>
+          </div>
+          <div class="info-card glass-card hover-lift">
+            <div class="info-icon">⏰</div>
+            <h3>Open Now</h3>
+            <p>{Object.values(restaurantInfo.hours)[0]}</p>
+          </div>
+          <div class="info-card glass-card hover-lift">
+            <div class="info-icon">⭐</div>
+            <h3>Rating</h3>
+            <p>4.9/5 (500+ Reviews)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- AI-Powered Recommendations -->
+  <AIContentGenerator businessConfig={config} contentType="recommendations" className="py-16" />
+
+  <!-- Modern Menu Section with Advanced Features -->
+  <ModernMenuSimple menu={menu} config={config} className="py-24" />
+
+  <!-- AI-Generated Reviews -->
+  <AIContentGenerator businessConfig={config} contentType="reviews" className="py-16 bg-gray-900/50" />
+
+  <!-- Interactive Gallery Section -->
+  <section id="gallery" class="gallery-section py-24 relative overflow-hidden">
+    <div class="container-fluid">
+      <div class="section-header text-center mb-16">
+        <h2 class="section-title text-gradient">Visual Feast</h2>
+        <p class="section-subtitle mt-4">Experience our ambiance</p>
+      </div>
+
+      <div class="gallery-wrapper">
+        <div class="gallery-grid masonry-layout">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div class="gallery-item glass-card hover-lift">
+              <div class="gallery-image gradient-mesh"></div>
+              <div class="gallery-overlay">
+                <div class="overlay-content">
+                  <h4>Signature Dish {i}</h4>
+                  <p>Tap to explore</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modern Contact Section -->
+  <section id="contact" class="contact-section py-24">
+    <div class="container-fluid">
+      <div class="contact-wrapper glass-card p-12">
+        <div class="grid md:grid-cols-2 gap-12">
+          <div class="contact-info">
+            <h2 class="text-4xl font-bold mb-8 text-gradient">Visit Us</h2>
+            
+            <div class="info-list space-y-6">
+              <div class="info-item flex items-center gap-4">
+                <div class="info-icon-wrapper">
+                  <span class="text-2xl">📍</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Address</h4>
+                  <p class="text-gray-300">{restaurantInfo.address}</p>
+                </div>
+              </div>
+              
+              <div class="info-item flex items-center gap-4">
+                <div class="info-icon-wrapper">
+                  <span class="text-2xl">📞</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Phone</h4>
+                  <p class="text-gray-300">{restaurantInfo.phone}</p>
+                </div>
+              </div>
+              
+              <div class="info-item flex items-center gap-4">
+                <div class="info-icon-wrapper">
+                  <span class="text-2xl">⏰</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Hours</h4>
+                  {Object.entries(restaurantInfo.hours).map(([days, hours]) => (
+                    <p class="text-gray-300">{days}: {hours}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div class="social-links mt-8 flex gap-4">
+              <a href="#" class="social-link glass-button">
+                <span>Facebook</span>
+              </a>
+              <a href="#" class="social-link glass-button">
+                <span>Instagram</span>
+              </a>
+              <a href="#" class="social-link glass-button">
+                <span>TikTok</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h3 class="text-2xl font-bold mb-6">Reserve Your Table</h3>
+            <form class="space-y-6">
+              <div class="form-group">
+                <input type="text" placeholder="Your Name" class="modern-input w-full" />
+              </div>
+              <div class="form-group">
+                <input type="email" placeholder="Email Address" class="modern-input w-full" />
+              </div>
+              <div class="form-group">
+                <input type="tel" placeholder="Phone Number" class="modern-input w-full" />
+              </div>
+              <div class="form-row grid grid-cols-2 gap-4">
+                <input type="date" class="modern-input" />
+                <input type="time" class="modern-input" />
+              </div>
+              <div class="form-group">
+                <textarea placeholder="Special Requests" rows="4" class="modern-input w-full"></textarea>
+              </div>
+              <button type="submit" class="submit-button w-full">
+                <span>Book Now</span>
+                <div class="button-glow"></div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modern Footer -->
+  <footer class="modern-footer glass-card mt-24">
+    <div class="container-fluid py-12">
+      <div class="footer-content">
+        <div class="footer-brand text-center mb-8">
+          <h3 class="text-3xl font-bold text-gradient">{config.businessName}</h3>
+          <p class="text-gray-300 mt-2">{config.description}</p>
+        </div>
+        
+        <div class="footer-bottom mt-8 pt-8 border-t border-gray-700 text-center">
+          <p class="text-gray-400">
+            © {new Date().getFullYear()} {config.businessName}. All rights reserved.
+          </p>
+          <p class="text-sm mt-2">
+            Crafted with ❤️ by <a href="/info" class="text-gradient hover:underline">Cozyartz Media Group</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<style define:vars={{
+  primaryColor: primaryColor,
+  secondaryColor: secondaryColor,
+  accentColor: accentColor
+}}>
+/* Modern Restaurant Layout Styles */
+.modern-restaurant-layout {
+  --primary: var(--primaryColor);
+  --secondary: var(--secondaryColor);
+  --accent: var(--accentColor);
+  background: #0a0a0a;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Glass Navigation */
+.glass-nav {
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* CTA Buttons */
+.cta-button, .glass-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button:hover, .glass-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.button-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+}
+
+.cta-button:hover .button-glow {
+  width: 200px;
+  height: 200px;
+  opacity: 0.3;
+}
+
+/* Hero Section */
+.hero-section {
+  min-height: 100vh;
+  position: relative;
+}
+
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 30% 50%, var(--primary) 0%, transparent 50%),
+    radial-gradient(circle at 70% 50%, var(--secondary) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 1) 100%);
+  opacity: 0.4;
+}
+
+.particle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Floating Orbs Animation */
+.floating-orbs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.floating-orbs::before,
+.floating-orbs::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  opacity: 0.1;
+  animation: float-orb 20s ease-in-out infinite;
+}
+
+.floating-orbs::after {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+  animation-duration: 15s;
+  animation-direction: reverse;
+}
+
+@keyframes float-orb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(100px, -100px) scale(1.1); }
+  66% { transform: translate(-100px, 100px) scale(0.9); }
+}
+
+/* Hero Content */
+.hero-title {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-description {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Hero CTAs */
+.hero-cta {
+  padding: 16px 48px;
+  border-radius: 50px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.primary-cta {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+}
+
+.primary-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+}
+
+.cta-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.primary-cta:hover .cta-shimmer {
+  left: 100%;
+}
+
+.secondary-cta {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Quick Info Cards */
+.info-card {
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.info-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.mouse {
+  width: 30px;
+  height: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 25px;
+  position: relative;
+}
+
+.wheel {
+  width: 4px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scroll-wheel 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+@keyframes scroll-wheel {
+  0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(15px); }
+}
+
+/* Menu Section */
+.menu-section {
+  background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+/* Menu Controls */
+.menu-controls {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  opacity: 0.5;
+}
+
+.filter-tag {
+  padding: 8px 20px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.filter-tag:hover,
+.filter-tag.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* Menu Grid */
+.menu-grid {
+  display: grid;
+  gap: 4rem;
+}
+
+.category-header {
+  text-align: center;
+}
+
+.category-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.category-icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.menu-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+/* Menu Item Cards */
+.menu-item-card {
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.item-image-wrapper {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 4px 12px;
+  background: var(--accent);
+  color: black;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 20px;
+}
+
+.item-content {
+  padding: 1.5rem;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.item-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.item-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.item-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 0.875rem;
+  opacity: 0.3;
+}
+
+.star.filled {
+  opacity: 1;
+}
+
+.add-to-cart {
+  padding: 8px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-to-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.button-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease;
+}
+
+.add-to-cart:active .button-ripple {
+  width: 200px;
+  height: 200px;
+  opacity: 0;
+}
+
+/* Gallery Section */
+.gallery-section {
+  background: #0a0a0a;
+  position: relative;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover .gallery-image {
+  transform: scale(1.1);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+/* Contact Section */
+.contact-section {
+  background: linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
+}
+
+.contact-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-link {
+  padding: 10px 24px;
+  font-weight: 500;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+}
+
+/* Modern Footer */
+.modern-footer {
+  background: rgba(10, 10, 10, 0.9);
+  margin-top: 0;
+  border-radius: 0;
+}
+
+/* Mobile Menu */
+.hamburger {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.hamburger span:nth-child(3) { bottom: 0; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .menu-items-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+/* 3D Mascot Styles */
+.mascot-3d {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+.mascot-container {
+  transform-style: preserve-3d;
+  animation: mascot-float 6s ease-in-out infinite;
+}
+
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0) rotateY(0); }
+  25% { transform: translateY(-20px) rotateY(90deg); }
+  50% { transform: translateY(0) rotateY(180deg); }
+  75% { transform: translateY(-20px) rotateY(270deg); }
+}
+
+.chili-3d {
+  width: 150px;
+  height: 250px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.chili-body {
+  width: 100%;
+  height: 70%;
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  bottom: 0;
+  box-shadow: 
+    inset -20px -20px 40px rgba(0, 0, 0, 0.3),
+    inset 20px 20px 40px rgba(255, 255, 255, 0.3);
+  transform: rotateY(var(--rotation, 0deg));
+}
+
+.chili-hat {
+  width: 120%;
+  height: 40%;
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  border-radius: 50% 50% 0 0;
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  transform: rotateY(var(--rotation, 0deg));
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.chili-face {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 40%;
+}
+
+.chili-face::before,
+.chili-face::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: white;
+  border-radius: 50%;
+  top: 20%;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.chili-face::before { left: 20%; }
+.chili-face::after { right: 20%; }
+
+/* Loading States */
+.menu-item-card.loading {
+  pointer-events: none;
+}
+
+.menu-item-card.loading .item-image,
+.menu-item-card.loading .item-name,
+.menu-item-card.loading .item-description {
+  background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.5s infinite;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Menu Search Functionality
+  const searchInput = document.getElementById('menuSearchModern');
+  const menuGrid = document.getElementById('menuGrid');
+  const filterTags = document.querySelectorAll('.filter-tag');
+  const menuCategories = document.querySelectorAll('.menu-category');
+  const menuItems = document.querySelectorAll('.menu-item-card');
+
+  // Search functionality
+  searchInput?.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    
+    menuItems.forEach(item => {
+      const itemName = item.querySelector('.item-name')?.textContent?.toLowerCase() || '';
+      const itemDescription = item.querySelector('.item-description')?.textContent?.toLowerCase() || '';
+      
+      if (itemName.includes(searchTerm) || itemDescription.includes(searchTerm)) {
+        item.style.display = 'block';
+        item.classList.add('search-match');
+      } else {
+        item.style.display = 'none';
+        item.classList.remove('search-match');
+      }
+    });
+
+    // Hide empty categories
+    menuCategories.forEach(category => {
+      const visibleItems = category.querySelectorAll('.menu-item-card:not([style*="display: none"])');
+      category.style.display = visibleItems.length > 0 ? 'block' : 'none';
+    });
+  });
+
+  // Filter functionality
+  filterTags.forEach(tag => {
+    tag.addEventListener('click', function() {
+      const filter = this.getAttribute('data-filter');
+      
+      // Update active state
+      filterTags.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter categories
+      if (filter === 'all') {
+        menuCategories.forEach(cat => cat.style.display = 'block');
+      } else {
+        menuCategories.forEach(cat => {
+          const categoryName = cat.getAttribute('data-category');
+          cat.style.display = categoryName === filter ? 'block' : 'none';
+        });
+      }
+    });
+  });
+
+  // Smooth scroll for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Parallax scrolling effect
+  let ticking = false;
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.parallax-element');
+    
+    parallaxElements.forEach((element, index) => {
+      const speed = element.dataset.speed || 0.5;
+      const yPos = -(scrolled * speed);
+      element.style.transform = `translateY(${yPos}px)`;
+    });
+    
+    ticking = false;
+  }
+
+  function requestTick() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestTick);
+
+  // Mobile menu toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  
+  menuToggle?.addEventListener('click', function() {
+    this.classList.toggle('active');
+    mobileMenu?.classList.toggle('active');
+  });
+
+  // Add to cart animations
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function(e) {
+      const ripple = this.querySelector('.button-ripple');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      
+      // Trigger reflow
+      void ripple.offsetWidth;
+      
+      ripple.classList.add('animate');
+      
+      setTimeout(() => {
+        ripple.classList.remove('animate');
+        ripple.style.width = ripple.style.height = '0';
+      }, 600);
+    });
+  });
+
+  // Intersection Observer for animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('[data-aos]').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Navigation scroll effect
+  let lastScroll = 0;
+  const nav = document.querySelector('.glass-nav');
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll <= 0) {
+      nav.classList.remove('scroll-up');
+      return;
+    }
+    
+    if (currentScroll > lastScroll && !nav.classList.contains('scroll-down')) {
+      nav.classList.remove('scroll-up');
+      nav.classList.add('scroll-down');
+    } else if (currentScroll < lastScroll && nav.classList.contains('scroll-down')) {
+      nav.classList.remove('scroll-down');
+      nav.classList.add('scroll-up');
+    }
+    
+    lastScroll = currentScroll;
+  });
+});
+
+// Add CSS for scroll states
+const style = document.createElement('style');
+style.textContent = `
+  .glass-nav.scroll-down {
+    transform: translateY(-100%);
+  }
+  
+  .glass-nav.scroll-up {
+    transform: translateY(0);
+  }
+  
+  [data-aos] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+  
+  [data-aos].animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .button-ripple.animate {
+    transition: all 0.6s ease-out;
+    opacity: 0;
+  }
+`;
+document.head.appendChild(style);
+</script>

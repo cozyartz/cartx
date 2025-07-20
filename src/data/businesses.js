@@ -82,6 +82,108 @@ export const AI_CONTENT_SCHEMA = {
 };
 
 export const businessConfigs = {
+  // Modern Restaurant Demo using ModernRestaurantLayout
+  modernbistro: {
+    title: "Modern Bistro - Contemporary Dining Experience in Battle Creek",
+    description: "Experience culinary innovation at Modern Bistro, where contemporary flavors meet traditional techniques in an elegant atmosphere.",
+    businessName: "Modern Bistro",
+    phone: "(269) 261-0069",
+    // Template Configuration - NEW Modern Layout
+    layoutType: "modern-restaurant",
+    components: {
+      hero: "parallax-modern",
+      menu: "advanced-filtering",
+      branding: {
+        mascot: { type: "chef-hat", style: "3d" },
+        search: true,
+        modernTheme: "futuristic",
+        aiFeatures: true
+      }
+    },
+    theme: {
+      primaryColor: "#6366F1", // Indigo-500
+      secondaryColor: "#8B5CF6", // Violet-500  
+      accentColor: "#F59E0B", // Amber-500
+      backgroundColor: "#0a0a0a",
+      textColor: "#ffffff",
+      gradientFrom: "#6366F1",
+      gradientTo: "#8B5CF6",
+      fontFamily: "'Inter', 'SF Pro Display', sans-serif",
+      mood: "modern-luxury"
+    },
+    address: {
+      street: "123 Innovation Drive",
+      city: "Battle Creek",
+      state: "Michigan", 
+      zip: "49015"
+    },
+    geo: {
+      latitude: 42.3211,
+      longitude: -85.1797
+    },
+    hours: [
+      "Monday: 5:00 PM - 10:00 PM",
+      "Tuesday: 5:00 PM - 10:00 PM", 
+      "Wednesday: 5:00 PM - 10:00 PM",
+      "Thursday: 5:00 PM - 10:00 PM",
+      "Friday: 5:00 PM - 11:00 PM",
+      "Saturday: 4:00 PM - 11:00 PM",
+      "Sunday: 4:00 PM - 9:00 PM"
+    ],
+    services: [
+      "Fine Dining Experience",
+      "Chef's Tasting Menu", 
+      "Wine Pairing",
+      "Private Dining",
+      "Corporate Events",
+      "Culinary Classes"
+    ],
+    menu: {
+      appetizers: [
+        { name: "Truffle Arancini", description: "Crispy risotto balls with black truffle and parmesan", price: "$18", popular: true },
+        { name: "Seared Scallops", description: "Pan-seared diver scallops with cauliflower purée", price: "$22", isNew: true },
+        { name: "Duck Confit Sliders", description: "Slow-cooked duck with cherry compote", price: "$16" },
+        { name: "Burrata Caprese", description: "Fresh burrata with heirloom tomatoes and basil oil", price: "$19" }
+      ],
+      mainCourses: [
+        { name: "Wagyu Ribeye", description: "A5 Wagyu with roasted bone marrow and seasonal vegetables", price: "$85", isChefSpecial: true },
+        { name: "Pan-Seared Halibut", description: "Fresh Pacific halibut with lemon beurre blanc", price: "$32", popular: true },
+        { name: "Duck Breast", description: "Roasted duck breast with fig gastrique and wild rice", price: "$38" },
+        { name: "Vegetarian Tasting", description: "Chef's selection of seasonal vegetables and grains", price: "$28", isNew: true }
+      ],
+      desserts: [
+        { name: "Chocolate Soufflé", description: "Dark chocolate soufflé with vanilla bean ice cream", price: "$14" },
+        { name: "Lemon Tart", description: "Meyer lemon tart with raspberry coulis", price: "$12" },
+        { name: "Seasonal Fruit", description: "Chef's selection of seasonal fruits and sorbets", price: "$13" }
+      ],
+      beverages: [
+        { name: "Craft Cocktail", description: "House-crafted cocktails with premium spirits", price: "$15" },
+        { name: "Wine Pairing", description: "Sommelier-selected wines by the glass", price: "$12-25" },
+        { name: "Artisan Coffee", description: "Single-origin coffee roasted in-house", price: "$6" }
+      ]
+    },
+    heroTitle: "Culinary Innovation",
+    heroSubtitle: "Where modern techniques meet timeless flavors in an unforgettable dining experience",
+    ctaText: "Reserve Table",
+    ctaPhone: "(269) 261-0069",
+    businessType: "Restaurant",
+    keywords: ["fine dining Battle Creek", "modern restaurant Michigan", "chef's table", "wine pairing"],
+    portfolioImage: "/images/modern-bistro-preview.jpg",
+    portfolioDescription: "Contemporary fine dining with AI-powered menu recommendations",
+    status: "live",
+    socialMedia: {
+      facebook: "https://facebook.com/modernbistrobattlecreek",
+      instagram: "https://instagram.com/modernbistro",
+      google: "https://g.page/modernbistro"
+    },
+    deployment: {
+      subdomain: "modernbistro.wantthissite.com",
+      customDomain: null,
+      cloudflareProjectId: null,
+      migrationReady: true
+    }
+  },
+
   grillz: {
     title: "Grillz Food Truck - Gourmet Street Food in Battle Creek",
     description: "Premium gourmet street food from Battle Creek's favorite food truck. Fresh ingredients, bold flavors, and authentic recipes served daily across Michigan.",

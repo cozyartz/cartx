@@ -1,0 +1,400 @@
+---
+export interface Props {
+  menu: any[];
+  config: any;
+  className?: string;
+}
+
+const { menu, config, className = '' } = Astro.props;
+---
+
+<section class={`modern-menu-section ${className}`} id="advanced-menu">
+  <div class="container-fluid">
+    <div class="section-header text-center mb-16">
+      <h2 class="section-title">
+        <span class="text-gradient">Culinary</span>
+        <span class="text-holographic">Masterpieces</span>
+      </h2>
+      <p class="section-subtitle mt-4">Discover flavors that tell a story</p>
+    </div>
+
+    <!-- Simple Menu Display -->
+    <div class="menu-grid">
+      {menu.map((section) => (
+        <div class="menu-category-section" data-category={section.category.toLowerCase()}>
+          <div class="category-header-modern">
+            <div class="category-title-wrapper">
+              <span class="category-icon-large">{section.icon || '🍽️'}</span>
+              <div class="category-info">
+                <h3 class="category-title-modern">{section.category}</h3>
+                <p class="category-description-modern">{section.description}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-items-container">
+            {section.items.map((item: any, index: number) => (
+              <div class="modern-menu-item glass-card hover-lift">
+                <div class="item-image-container">
+                  <div class="item-image gradient-mesh"></div>
+                  
+                  <div class="item-badges">
+                    {item.popular && (
+                      <span class="item-badge popular-badge">Popular</span>
+                    )}
+                    {item.isNew && (
+                      <span class="item-badge new-badge">New</span>
+                    )}
+                    {item.isChefSpecial && (
+                      <span class="item-badge special-badge">Chef's Special</span>
+                    )}
+                  </div>
+                </div>
+
+                <div class="item-content-modern">
+                  <div class="item-header-modern">
+                    <h4 class="item-name-modern">{item.name}</h4>
+                    <div class="item-price-modern">
+                      <span class="price-amount">{item.price}</span>
+                    </div>
+                  </div>
+
+                  {item.description && (
+                    <p class="item-description-modern">{item.description}</p>
+                  )}
+
+                  <div class="item-actions">
+                    <button class="add-to-cart-modern">
+                      <span class="cart-icon">🛒</span>
+                      <span class="cart-text">Add to Cart</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+/* Modern Menu Section Styles */
+.modern-menu-section {
+  padding: 4rem 0;
+  background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+  position: relative;
+}
+
+.container-fluid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-header {
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-holographic {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: holographicText 3s ease-in-out infinite;
+}
+
+@keyframes holographicText {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.section-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.25rem;
+}
+
+/* Menu Grid */
+.menu-grid {
+  display: grid;
+  gap: 4rem;
+}
+
+.menu-category-section {
+  position: relative;
+}
+
+.category-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.category-icon-large {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.category-title-modern {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.category-description-modern {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.125rem;
+}
+
+/* Menu Items Container */
+.menu-items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2rem;
+}
+
+/* Modern Menu Item */
+.modern-menu-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.modern-menu-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.item-image-container {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gradient-mesh {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+.modern-menu-item:hover .item-image {
+  transform: scale(1.1);
+}
+
+.item-badges {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.item-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.new-badge {
+  background: #10B981;
+  color: white;
+}
+
+.popular-badge {
+  background: #F59E0B;
+  color: white;
+}
+
+.special-badge {
+  background: #8B5CF6;
+  color: white;
+}
+
+/* Item Content */
+.item-content-modern {
+  padding: 1.5rem;
+}
+
+.item-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.item-name-modern {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.25rem;
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.item-price-modern {
+  text-align: right;
+}
+
+.price-amount {
+  font-size: 1.375rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+.item-description-modern {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Item Actions */
+.item-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.add-to-cart-modern {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-to-cart-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.cart-icon {
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-items-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .category-header-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .item-header-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .add-to-cart-modern {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add to cart animations
+  document.querySelectorAll('.add-to-cart-modern').forEach(button => {
+    button.addEventListener('click', function(e) {
+      // Simulate adding to cart
+      this.style.background = '#10B981';
+      this.querySelector('.cart-text').textContent = 'Added!';
+      
+      setTimeout(() => {
+        this.style.background = '';
+        this.querySelector('.cart-text').textContent = 'Add to Cart';
+      }, 2000);
+    });
+  });
+});
+</script>
