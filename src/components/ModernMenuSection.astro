@@ -1,0 +1,1766 @@
+---
+export interface Props {
+  menu: any[];
+  config: any;
+  className?: string;
+}
+
+const { menu, config, className = '' } = Astro.props;
+
+// Enhanced menu processing with AI insights
+function enhanceMenuItems(menuData: any[], businessConfig: any) {
+  return menuData.map(section => ({
+    ...section,
+    items: section.items.map((item: any, index: number) => ({
+      ...item,
+      id: `item-${section.category.toLowerCase()}-${index}`,
+      tags: generateTags(item, businessConfig),
+      popularity: Math.random() * 100, // Simulated popularity score
+      dietaryInfo: generateDietaryInfo(item),
+      allergens: generateAllergens(item),
+      preparationTime: generatePrepTime(item),
+      nutritionScore: Math.floor(Math.random() * 100),
+      isNew: Math.random() < 0.2, // 20% chance of being new
+      isPopular: Math.random() < 0.3, // 30% chance of being popular
+      isChefSpecial: Math.random() < 0.1 // 10% chance of being chef's special
+    }))
+  }));
+}
+
+function generateTags(item: any, config: any) {
+  const tags: string[] = [];
+  const name = item.name?.toLowerCase() || '';
+  const description = item.description?.toLowerCase() || '';
+  
+  // Dietary tags
+  if (name.includes('veggie') || name.includes('vegetarian') || description.includes('vegetarian')) {
+    tags.push('vegetarian');
+  }
+  if (name.includes('vegan') || description.includes('vegan')) {
+    tags.push('vegan');
+  }
+  if (name.includes('gluten-free') || description.includes('gluten-free')) {
+    tags.push('gluten-free');
+  }
+  
+  // Spice level tags
+  if (name.includes('spicy') || description.includes('spicy') || description.includes('hot')) {
+    tags.push('spicy');
+  }
+  
+  // Preparation method tags
+  if (description.includes('grilled')) tags.push('grilled');
+  if (description.includes('fried')) tags.push('fried');
+  if (description.includes('baked')) tags.push('baked');
+  
+  return tags;
+}
+
+function generateDietaryInfo(item: any) {
+  const info: string[] = [];
+  const random = Math.random();
+  
+  if (random < 0.3) info.push('🌱 Vegetarian');
+  if (random < 0.15) info.push('🌿 Vegan');
+  if (random < 0.25) info.push('🌾 Gluten-Free');
+  if (random < 0.2) info.push('🥛 Dairy-Free');
+  
+  return info;
+}
+
+function generateAllergens(item: any) {
+  const allergens = ['Nuts', 'Dairy', 'Gluten', 'Soy', 'Eggs', 'Shellfish'];
+  const itemAllergens: string[] = [];
+  
+  allergens.forEach(allergen => {
+    if (Math.random() < 0.2) { // 20% chance for each allergen
+      itemAllergens.push(allergen);
+    }
+  });
+  
+  return itemAllergens;
+}
+
+function generatePrepTime(item: any) {
+  const times = ['5-10 min', '10-15 min', '15-20 min', '20-25 min', '25+ min'];
+  return times[Math.floor(Math.random() * times.length)];
+}
+
+const enhancedMenu = enhanceMenuItems(menu, config);
+---
+
+<section class={`modern-menu-section ${className}`} id="advanced-menu">
+  <!-- Import AI Content Generator -->
+  <div class="ai-recommendations-section">
+    <div id="aiRecommendations"></div>
+  </div>
+
+  <!-- Advanced Search and Filter Controls -->
+  <div class="menu-control-center glass-card">
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <input 
+          type="text" 
+          id="advancedMenuSearch" 
+          placeholder="Search dishes, ingredients, or dietary preferences..."
+          class="advanced-search-input modern-input"
+          autocomplete="off"
+        />
+        <div class="search-suggestions" id="searchSuggestions"></div>
+        <button class="search-clear-btn" id="clearSearch" style="display: none;">
+          <span>✕</span>
+        </button>
+      </div>
+      
+      <div class="voice-search-btn" id="voiceSearch" title="Voice Search">
+        <span class="voice-icon">🎤</span>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs-container">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">
+          <span class="tab-icon">🍽️</span>
+          <span class="tab-text">All Items</span>
+          <span class="tab-count" id="count-all">0</span>
+        </button>
+        
+        {enhancedMenu.map((section) => (
+          <button class="filter-tab" data-filter={section.category.toLowerCase()}>
+            <span class="tab-icon">{section.icon}</span>
+            <span class="tab-text">{section.category}</span>
+            <span class="tab-count" id={`count-${section.category.toLowerCase()}`}>0</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Advanced Filters -->
+    <div class="advanced-filters">
+      <div class="filter-section">
+        <h4 class="filter-title">Dietary Preferences</h4>
+        <div class="filter-chips">
+          <button class="filter-chip" data-dietary="vegetarian">
+            <span class="chip-icon">🌱</span>
+            <span>Vegetarian</span>
+          </button>
+          <button class="filter-chip" data-dietary="vegan">
+            <span class="chip-icon">🌿</span>
+            <span>Vegan</span>
+          </button>
+          <button class="filter-chip" data-dietary="gluten-free">
+            <span class="chip-icon">🌾</span>
+            <span>Gluten-Free</span>
+          </button>
+          <button class="filter-chip" data-dietary="dairy-free">
+            <span class="chip-icon">🥛</span>
+            <span>Dairy-Free</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <h4 class="filter-title">Sort By</h4>
+        <div class="sort-options">
+          <select class="sort-select modern-input" id="sortMenu">
+            <option value="default">Default Order</option>
+            <option value="popularity">Popularity</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="prep-time">Preparation Time</option>
+            <option value="nutrition">Nutrition Score</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <h4 class="filter-title">Price Range</h4>
+        <div class="price-range-slider">
+          <input type="range" id="priceMin" min="0" max="50" value="0" class="range-input">
+          <input type="range" id="priceMax" min="0" max="50" value="50" class="range-input">
+          <div class="price-labels">
+            <span id="priceMinLabel">$0</span>
+            <span id="priceMaxLabel">$50+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <button class="action-btn" id="surpriseMe">
+        <span class="btn-icon">🎲</span>
+        <span>Surprise Me</span>
+      </button>
+      <button class="action-btn" id="todaysSpecial">
+        <span class="btn-icon">⭐</span>
+        <span>Today's Special</span>
+      </button>
+      <button class="action-btn" id="quickOrder">
+        <span class="btn-icon">⚡</span>
+        <span>Quick Order</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Results Counter -->
+  <div class="results-header">
+    <div class="results-info">
+      <span class="results-count" id="resultsCount">Showing all items</span>
+      <button class="clear-filters-btn" id="clearAllFilters" style="display: none;">
+        Clear All Filters
+      </button>
+    </div>
+    
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid" title="Grid View">
+        <span>⊞</span>
+      </button>
+      <button class="view-btn" data-view="list" title="List View">
+        <span>☰</span>
+      </button>
+      <button class="view-btn" data-view="cards" title="Card View">
+        <span>⊟</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Grid -->
+  <div class="menu-display-container">
+    <div class="menu-grid" id="menuGridContainer">
+      {enhancedMenu.map((section) => (
+        <div class="menu-category-section" data-category={section.category.toLowerCase()}>
+          <div class="category-header-modern">
+            <div class="category-title-wrapper">
+              <span class="category-icon-large">{section.icon}</span>
+              <div class="category-info">
+                <h3 class="category-title-modern">{section.category}</h3>
+                <p class="category-description-modern">{section.description}</p>
+              </div>
+            </div>
+            <div class="category-stats">
+              <span class="item-count">{section.items.length} items</span>
+            </div>
+          </div>
+
+          <div class="menu-items-container" data-view="grid">
+            {section.items.map((item: any) => (
+              <div 
+                class="modern-menu-item" 
+                data-item-id={item.id}
+                data-category={section.category.toLowerCase()}
+                data-tags={item.tags.join(',')}
+                data-price={item.price?.replace('$', '') || '0'}
+                data-prep-time={item.preparationTime}
+                data-popularity={item.popularity}
+                data-nutrition={item.nutritionScore}
+              >
+                <div class="item-image-container">
+                  <div class="item-image gradient-mesh">
+                    <!-- Placeholder for actual images -->
+                  </div>
+                  
+                  <!-- Item Badges -->
+                  <div class="item-badges">
+                    {item.isNew && (
+                      <span class="item-badge new-badge">New</span>
+                    )}
+                    {item.isPopular && (
+                      <span class="item-badge popular-badge">Popular</span>
+                    )}
+                    {item.isChefSpecial && (
+                      <span class="item-badge special-badge">Chef's Special</span>
+                    )}
+                  </div>
+
+                  <!-- Quick Action Overlay -->
+                  <div class="item-overlay">
+                    <button class="quick-add-btn" data-item-id={item.id}>
+                      <span>Quick Add</span>
+                    </button>
+                    <button class="item-details-btn" data-item-id={item.id}>
+                      <span>View Details</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="item-content-modern">
+                  <div class="item-header-modern">
+                    <h4 class="item-name-modern">{item.name}</h4>
+                    <div class="item-price-modern">
+                      <span class="price-amount">{item.price}</span>
+                      {item.preparationTime && (
+                        <span class="prep-time">⏱️ {item.preparationTime}</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {item.description && (
+                    <p class="item-description-modern">{item.description}</p>
+                  )}
+
+                  <!-- Dietary Information -->
+                  {item.dietaryInfo.length > 0 && (
+                    <div class="dietary-info">
+                      {item.dietaryInfo.map((info: string) => (
+                        <span class="dietary-tag">{info}</span>
+                      ))}
+                    </div>
+                  )}
+
+                  <!-- Item Metrics -->
+                  <div class="item-metrics">
+                    <div class="popularity-score">
+                      <span class="score-label">Popularity</span>
+                      <div class="score-bar">
+                        <div class="score-fill" style={`width: ${item.popularity}%`}></div>
+                      </div>
+                    </div>
+                    
+                    <div class="nutrition-score">
+                      <span class="score-label">Nutrition</span>
+                      <div class="score-value">{item.nutritionScore}/100</div>
+                    </div>
+                  </div>
+
+                  <!-- Item Actions -->
+                  <div class="item-actions">
+                    <div class="quantity-controls">
+                      <button class="qty-btn minus" data-item-id={item.id}>-</button>
+                      <span class="qty-display" data-item-id={item.id}>0</span>
+                      <button class="qty-btn plus" data-item-id={item.id}>+</button>
+                    </div>
+                    
+                    <button class="add-to-cart-modern magnetic-button" data-item-id={item.id}>
+                      <span class="cart-icon">🛒</span>
+                      <span class="cart-text">Add to Cart</span>
+                      <div class="button-ripple"></div>
+                    </button>
+                  </div>
+
+                  <!-- Allergen Information -->
+                  {item.allergens.length > 0 && (
+                    <div class="allergen-info">
+                      <span class="allergen-label">⚠️ Contains:</span>
+                      <span class="allergen-list">{item.allergens.join(', ')}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- No Results Message -->
+    <div class="no-results-message" id="noResults" style="display: none;">
+      <div class="no-results-content">
+        <div class="no-results-icon">🔍</div>
+        <h3>No items found</h3>
+        <p>Try adjusting your search or filter criteria</p>
+        <button class="clear-filters-btn">Clear All Filters</button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" id="loadingState" style="display: none;">
+      <div class="loading-spinner"></div>
+      <p>Loading delicious options...</p>
+    </div>
+  </div>
+
+  <!-- Item Detail Modal -->
+  <div class="item-modal-overlay" id="itemModal" style="display: none;">
+    <div class="item-modal glass-card">
+      <button class="modal-close-btn" id="closeModal">✕</button>
+      <div class="modal-content" id="modalContent">
+        <!-- Modal content will be dynamically populated -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Modern Menu Section Styles */
+.modern-menu-section {
+  padding: 4rem 0;
+  background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+  position: relative;
+}
+
+/* Control Center */
+.menu-control-center {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  border-radius: 24px;
+}
+
+/* Advanced Search */
+.search-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.advanced-search-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1.5rem;
+  font-size: 1.125rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.advanced-search-input:focus {
+  border-color: #6366F1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(17, 17, 17, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  margin-top: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none;
+}
+
+.suggestion-item {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.2s ease;
+}
+
+.suggestion-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.voice-search-btn {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.voice-search-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.voice-icon {
+  font-size: 1.5rem;
+}
+
+/* Filter Tabs */
+.filter-tabs-container {
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.filter-tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 1rem;
+  min-width: max-content;
+}
+
+.filter-tab {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.filter-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.filter-tab.active {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  border-color: #6366F1;
+}
+
+.tab-icon {
+  font-size: 1.25rem;
+}
+
+.tab-text {
+  font-weight: 500;
+}
+
+.tab-count {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Advanced Filters */
+.advanced-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.filter-section {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filter-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.filter-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.filter-chip.active {
+  background: #6366F1;
+  border-color: #6366F1;
+}
+
+.chip-icon {
+  font-size: 1rem;
+}
+
+/* Price Range Slider */
+.price-range-slider {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.range-input {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  position: absolute;
+  pointer-events: none;
+}
+
+.range-input::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  background: #6366F1;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.price-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 1.125rem;
+}
+
+/* Results Header */
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.results-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.results-count {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.clear-filters-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.clear-filters-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.view-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.view-btn.active {
+  background: #6366F1;
+  border-color: #6366F1;
+}
+
+/* Menu Grid */
+.menu-display-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.menu-grid {
+  display: grid;
+  gap: 4rem;
+}
+
+.menu-category-section {
+  position: relative;
+}
+
+.category-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.category-icon-large {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.category-title-modern {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.category-description-modern {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.125rem;
+}
+
+.category-stats {
+  text-align: right;
+}
+
+.item-count {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+/* Menu Items Container */
+.menu-items-container[data-view="grid"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2rem;
+}
+
+.menu-items-container[data-view="list"] {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.menu-items-container[data-view="cards"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Modern Menu Item */
+.modern-menu-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.modern-menu-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.item-image-container {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.modern-menu-item:hover .item-image {
+  transform: scale(1.1);
+}
+
+.item-badges {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.item-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.new-badge {
+  background: #10B981;
+  color: white;
+}
+
+.popular-badge {
+  background: #F59E0B;
+  color: white;
+}
+
+.special-badge {
+  background: #8B5CF6;
+  color: white;
+}
+
+.item-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modern-menu-item:hover .item-overlay {
+  opacity: 1;
+}
+
+.quick-add-btn,
+.item-details-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quick-add-btn:hover,
+.item-details-btn:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+/* Item Content */
+.item-content-modern {
+  padding: 1.5rem;
+}
+
+.item-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.item-name-modern {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.25rem;
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.item-price-modern {
+  text-align: right;
+}
+
+.price-amount {
+  font-size: 1.375rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+.prep-time {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.item-description-modern {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Dietary Info */
+.dietary-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.dietary-tag {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Item Metrics */
+.item-metrics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+}
+
+.popularity-score {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.score-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.score-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10B981, #6366F1);
+  transition: width 0.5s ease;
+}
+
+.nutrition-score {
+  text-align: right;
+}
+
+.score-value {
+  color: #10B981;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* Item Actions */
+.item-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.qty-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.qty-display {
+  color: white;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.add-to-cart-modern {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-to-cart-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.cart-icon {
+  font-size: 1rem;
+}
+
+/* Allergen Info */
+.allergen-info {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #F59E0B;
+}
+
+.allergen-label {
+  font-weight: 600;
+  color: #F59E0B;
+}
+
+/* No Results */
+.no-results-message {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.no-results-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.no-results-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.no-results-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #6366F1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Item Modal */
+.item-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.item-modal {
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-control-center {
+    padding: 1.5rem;
+  }
+  
+  .search-container {
+    flex-direction: column;
+  }
+  
+  .advanced-filters {
+    grid-template-columns: 1fr;
+  }
+  
+  .filter-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .menu-items-container[data-view="grid"] {
+    grid-template-columns: 1fr;
+  }
+  
+  .category-header-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .item-header-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .item-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .add-to-cart-modern {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* List View Styles */
+.menu-items-container[data-view="list"] .modern-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.menu-items-container[data-view="list"] .item-image-container {
+  width: 120px;
+  height: 80px;
+  flex-shrink: 0;
+  margin-right: 1rem;
+}
+
+.menu-items-container[data-view="list"] .item-content-modern {
+  flex: 1;
+  padding: 0;
+}
+
+.menu-items-container[data-view="list"] .item-header-modern {
+  margin-bottom: 0.5rem;
+}
+
+.menu-items-container[data-view="list"] .item-metrics {
+  display: none;
+}
+
+/* Cards View Styles */
+.menu-items-container[data-view="cards"] .modern-menu-item {
+  border-radius: 16px;
+}
+
+.menu-items-container[data-view="cards"] .item-image-container {
+  height: 160px;
+}
+
+.menu-items-container[data-view="cards"] .item-content-modern {
+  padding: 1rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize menu functionality
+  initializeMenuSearch();
+  initializeFiltering();
+  initializeSorting();
+  initializeViewToggle();
+  initializeItemActions();
+  initializeVoiceSearch();
+  initializeModal();
+  updateItemCounts();
+});
+
+function initializeMenuSearch() {
+  const searchInput = document.getElementById('advancedMenuSearch');
+  const clearBtn = document.getElementById('clearSearch');
+  const suggestionsContainer = document.getElementById('searchSuggestions');
+  
+  searchInput?.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase().trim();
+    
+    if (searchTerm.length > 0) {
+      clearBtn.style.display = 'block';
+      showSearchSuggestions(searchTerm);
+    } else {
+      clearBtn.style.display = 'none';
+      hideSearchSuggestions();
+    }
+    
+    filterMenuItems();
+    updateResultsCount();
+  });
+  
+  clearBtn?.addEventListener('click', function() {
+    searchInput.value = '';
+    clearBtn.style.display = 'none';
+    hideSearchSuggestions();
+    filterMenuItems();
+    updateResultsCount();
+  });
+}
+
+function showSearchSuggestions(searchTerm) {
+  const suggestions = [
+    'Vegetarian options',
+    'Gluten-free dishes',
+    'Spicy food',
+    'Quick bites',
+    'Under $15',
+    'Popular items'
+  ];
+  
+  const matchingSuggestions = suggestions.filter(suggestion => 
+    suggestion.toLowerCase().includes(searchTerm)
+  );
+  
+  const suggestionsContainer = document.getElementById('searchSuggestions');
+  
+  if (matchingSuggestions.length > 0) {
+    suggestionsContainer.innerHTML = matchingSuggestions
+      .map(suggestion => `<div class="suggestion-item">${suggestion}</div>`)
+      .join('');
+    suggestionsContainer.style.display = 'block';
+    
+    // Add click handlers to suggestions
+    suggestionsContainer.querySelectorAll('.suggestion-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.getElementById('advancedMenuSearch').value = this.textContent;
+        hideSearchSuggestions();
+        filterMenuItems();
+      });
+    });
+  } else {
+    hideSearchSuggestions();
+  }
+}
+
+function hideSearchSuggestions() {
+  const suggestionsContainer = document.getElementById('searchSuggestions');
+  suggestionsContainer.style.display = 'none';
+}
+
+function initializeFiltering() {
+  // Category filter tabs
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      filterTabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      filterMenuItems();
+      updateResultsCount();
+    });
+  });
+  
+  // Dietary filter chips
+  const filterChips = document.querySelectorAll('.filter-chip');
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      this.classList.toggle('active');
+      filterMenuItems();
+      updateResultsCount();
+    });
+  });
+  
+  // Price range sliders
+  const priceMinSlider = document.getElementById('priceMin');
+  const priceMaxSlider = document.getElementById('priceMax');
+  const priceMinLabel = document.getElementById('priceMinLabel');
+  const priceMaxLabel = document.getElementById('priceMaxLabel');
+  
+  function updatePriceLabels() {
+    priceMinLabel.textContent = `$${priceMinSlider.value}`;
+    priceMaxLabel.textContent = priceMaxSlider.value === '50' ? '$50+' : `$${priceMaxSlider.value}`;
+  }
+  
+  priceMinSlider?.addEventListener('input', function() {
+    if (parseInt(this.value) >= parseInt(priceMaxSlider.value)) {
+      this.value = parseInt(priceMaxSlider.value) - 1;
+    }
+    updatePriceLabels();
+    filterMenuItems();
+    updateResultsCount();
+  });
+  
+  priceMaxSlider?.addEventListener('input', function() {
+    if (parseInt(this.value) <= parseInt(priceMinSlider.value)) {
+      this.value = parseInt(priceMinSlider.value) + 1;
+    }
+    updatePriceLabels();
+    filterMenuItems();
+    updateResultsCount();
+  });
+  
+  updatePriceLabels();
+  
+  // Clear all filters
+  const clearAllBtn = document.getElementById('clearAllFilters');
+  clearAllBtn?.addEventListener('click', function() {
+    // Reset all filters
+    document.getElementById('advancedMenuSearch').value = '';
+    document.getElementById('clearSearch').style.display = 'none';
+    filterTabs.forEach(tab => tab.classList.remove('active'));
+    document.querySelector('.filter-tab[data-filter="all"]').classList.add('active');
+    filterChips.forEach(chip => chip.classList.remove('active'));
+    priceMinSlider.value = 0;
+    priceMaxSlider.value = 50;
+    document.getElementById('sortMenu').value = 'default';
+    
+    updatePriceLabels();
+    filterMenuItems();
+    updateResultsCount();
+    this.style.display = 'none';
+  });
+}
+
+function initializeSorting() {
+  const sortSelect = document.getElementById('sortMenu');
+  sortSelect?.addEventListener('change', function() {
+    sortMenuItems(this.value);
+  });
+}
+
+function initializeViewToggle() {
+  const viewBtns = document.querySelectorAll('.view-btn');
+  const menuContainers = document.querySelectorAll('.menu-items-container');
+  
+  viewBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const view = this.getAttribute('data-view');
+      
+      viewBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      menuContainers.forEach(container => {
+        container.setAttribute('data-view', view);
+      });
+    });
+  });
+}
+
+function initializeItemActions() {
+  // Quantity controls
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('qty-btn')) {
+      const itemId = e.target.getAttribute('data-item-id');
+      const qtyDisplay = document.querySelector(`[data-item-id="${itemId}"].qty-display`);
+      const currentQty = parseInt(qtyDisplay.textContent);
+      
+      if (e.target.classList.contains('plus')) {
+        qtyDisplay.textContent = currentQty + 1;
+      } else if (e.target.classList.contains('minus') && currentQty > 0) {
+        qtyDisplay.textContent = currentQty - 1;
+      }
+    }
+    
+    // Add to cart
+    if (e.target.closest('.add-to-cart-modern')) {
+      const button = e.target.closest('.add-to-cart-modern');
+      const itemId = button.getAttribute('data-item-id');
+      
+      // Add ripple effect
+      const ripple = button.querySelector('.button-ripple');
+      const rect = button.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('animate');
+      
+      setTimeout(() => {
+        ripple.classList.remove('animate');
+      }, 600);
+      
+      // Simulate adding to cart
+      button.style.background = '#10B981';
+      button.querySelector('.cart-text').textContent = 'Added!';
+      
+      setTimeout(() => {
+        button.style.background = '';
+        button.querySelector('.cart-text').textContent = 'Add to Cart';
+      }, 2000);
+    }
+  });
+  
+  // Quick actions
+  document.getElementById('surpriseMe')?.addEventListener('click', function() {
+    const visibleItems = document.querySelectorAll('.modern-menu-item:not([style*="display: none"])');
+    if (visibleItems.length > 0) {
+      const randomItem = visibleItems[Math.floor(Math.random() * visibleItems.length)];
+      randomItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      randomItem.style.border = '2px solid #6366F1';
+      setTimeout(() => {
+        randomItem.style.border = '';
+      }, 3000);
+    }
+  });
+}
+
+function initializeVoiceSearch() {
+  const voiceBtn = document.getElementById('voiceSearch');
+  const searchInput = document.getElementById('advancedMenuSearch');
+  
+  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+    
+    voiceBtn?.addEventListener('click', function() {
+      recognition.start();
+      this.style.background = '#EF4444';
+    });
+    
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      searchInput.value = transcript;
+      searchInput.dispatchEvent(new Event('input'));
+    };
+    
+    recognition.onend = function() {
+      voiceBtn.style.background = '';
+    };
+  } else {
+    voiceBtn?.style.display = 'none';
+  }
+}
+
+function initializeModal() {
+  const modal = document.getElementById('itemModal');
+  const modalContent = document.getElementById('modalContent');
+  const closeBtn = document.getElementById('closeModal');
+  
+  // Open modal for item details
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('item-details-btn')) {
+      const itemId = e.target.getAttribute('data-item-id');
+      const item = document.querySelector(`[data-item-id="${itemId}"]`);
+      
+      if (item) {
+        showItemModal(item);
+      }
+    }
+  });
+  
+  closeBtn?.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+  
+  modal?.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+}
+
+function showItemModal(itemElement) {
+  const modal = document.getElementById('itemModal');
+  const modalContent = document.getElementById('modalContent');
+  
+  const itemName = itemElement.querySelector('.item-name-modern').textContent;
+  const itemPrice = itemElement.querySelector('.price-amount').textContent;
+  const itemDescription = itemElement.querySelector('.item-description-modern')?.textContent || '';
+  
+  modalContent.innerHTML = `
+    <div class="modal-item-details">
+      <div class="modal-item-image gradient-mesh" style="height: 300px; margin-bottom: 2rem;"></div>
+      <h2 style="color: white; margin-bottom: 1rem;">${itemName}</h2>
+      <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">${itemDescription}</p>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 2rem; font-weight: bold; background: linear-gradient(135deg, #6366F1, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${itemPrice}</span>
+        <button class="add-to-cart-modern" style="padding: 1rem 2rem;">
+          <span class="cart-icon">🛒</span>
+          <span>Add to Cart</span>
+        </button>
+      </div>
+    </div>
+  `;
+  
+  modal.style.display = 'flex';
+}
+
+function filterMenuItems() {
+  const searchTerm = document.getElementById('advancedMenuSearch')?.value.toLowerCase() || '';
+  const activeCategory = document.querySelector('.filter-tab.active')?.getAttribute('data-filter') || 'all';
+  const activeDietary = Array.from(document.querySelectorAll('.filter-chip.active')).map(chip => 
+    chip.getAttribute('data-dietary')
+  );
+  const priceMin = parseInt(document.getElementById('priceMin')?.value || 0);
+  const priceMax = parseInt(document.getElementById('priceMax')?.value || 50);
+  
+  const menuItems = document.querySelectorAll('.modern-menu-item');
+  let visibleCount = 0;
+  
+  menuItems.forEach(item => {
+    let shouldShow = true;
+    
+    // Search filter
+    if (searchTerm) {
+      const itemName = item.querySelector('.item-name-modern')?.textContent.toLowerCase() || '';
+      const itemDescription = item.querySelector('.item-description-modern')?.textContent.toLowerCase() || '';
+      const itemTags = item.getAttribute('data-tags') || '';
+      
+      if (!itemName.includes(searchTerm) && 
+          !itemDescription.includes(searchTerm) && 
+          !itemTags.includes(searchTerm)) {
+        shouldShow = false;
+      }
+    }
+    
+    // Category filter
+    if (activeCategory !== 'all') {
+      const itemCategory = item.getAttribute('data-category');
+      if (itemCategory !== activeCategory) {
+        shouldShow = false;
+      }
+    }
+    
+    // Dietary filters
+    if (activeDietary.length > 0) {
+      const itemTags = item.getAttribute('data-tags') || '';
+      const hasMatchingDietary = activeDietary.some(dietary => itemTags.includes(dietary));
+      if (!hasMatchingDietary) {
+        shouldShow = false;
+      }
+    }
+    
+    // Price filter
+    const itemPrice = parseFloat(item.getAttribute('data-price') || 0);
+    if (itemPrice < priceMin || (priceMax < 50 && itemPrice > priceMax)) {
+      shouldShow = false;
+    }
+    
+    // Show/hide item
+    if (shouldShow) {
+      item.style.display = 'block';
+      visibleCount++;
+    } else {
+      item.style.display = 'none';
+    }
+  });
+  
+  // Show/hide categories based on visible items
+  const categories = document.querySelectorAll('.menu-category-section');
+  categories.forEach(category => {
+    const visibleItems = category.querySelectorAll('.modern-menu-item:not([style*="display: none"])');
+    category.style.display = visibleItems.length > 0 ? 'block' : 'none';
+  });
+  
+  // Show no results message
+  const noResults = document.getElementById('noResults');
+  if (noResults) {
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+  
+  // Show/hide clear filters button
+  const clearBtn = document.getElementById('clearAllFilters');
+  const hasActiveFilters = searchTerm || activeCategory !== 'all' || activeDietary.length > 0 || 
+                          priceMin > 0 || priceMax < 50;
+  if (clearBtn) {
+    clearBtn.style.display = hasActiveFilters ? 'block' : 'none';
+  }
+}
+
+function sortMenuItems(sortBy) {
+  const categories = document.querySelectorAll('.menu-category-section');
+  
+  categories.forEach(category => {
+    const container = category.querySelector('.menu-items-container');
+    const items = Array.from(container.querySelectorAll('.modern-menu-item'));
+    
+    items.sort((a, b) => {
+      switch(sortBy) {
+        case 'popularity':
+          return parseFloat(b.getAttribute('data-popularity')) - parseFloat(a.getAttribute('data-popularity'));
+        case 'price-low':
+          return parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price'));
+        case 'price-high':
+          return parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price'));
+        case 'nutrition':
+          return parseFloat(b.getAttribute('data-nutrition')) - parseFloat(a.getAttribute('data-nutrition'));
+        default:
+          return 0;
+      }
+    });
+    
+    // Reorder DOM elements
+    items.forEach(item => container.appendChild(item));
+  });
+}
+
+function updateResultsCount() {
+  const visibleItems = document.querySelectorAll('.modern-menu-item:not([style*="display: none"])');
+  const resultsCount = document.getElementById('resultsCount');
+  
+  if (resultsCount) {
+    if (visibleItems.length === 0) {
+      resultsCount.textContent = 'No items found';
+    } else {
+      resultsCount.textContent = `Showing ${visibleItems.length} item${visibleItems.length !== 1 ? 's' : ''}`;
+    }
+  }
+}
+
+function updateItemCounts() {
+  const categories = document.querySelectorAll('.menu-category-section');
+  
+  categories.forEach(category => {
+    const categoryName = category.getAttribute('data-category');
+    const itemCount = category.querySelectorAll('.modern-menu-item').length;
+    const countElement = document.getElementById(`count-${categoryName}`);
+    
+    if (countElement) {
+      countElement.textContent = itemCount;
+    }
+  });
+  
+  // Update "all" count
+  const allItems = document.querySelectorAll('.modern-menu-item');
+  const allCountElement = document.getElementById('count-all');
+  if (allCountElement) {
+    allCountElement.textContent = allItems.length;
+  }
+}
+
+// Add CSS for button ripple animation
+const style = document.createElement('style');
+style.textContent = `
+  .button-ripple.animate {
+    transition: all 0.6s ease-out;
+    opacity: 0;
+  }
+`;
+document.head.appendChild(style);
+</script>
